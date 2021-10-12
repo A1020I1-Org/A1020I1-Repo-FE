@@ -3,7 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {SercurityModule} from "./sercurity/sercurity.module";
+import {SercurityModule} from "./security/sercurity.module";
+import {HttpClientModule} from "@angular/common/http";
+import {ToastrModule} from "ngx-toastr";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -12,7 +15,10 @@ import {SercurityModule} from "./sercurity/sercurity.module";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SercurityModule
+    SercurityModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
