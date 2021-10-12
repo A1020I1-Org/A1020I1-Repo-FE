@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
 import {ShowComputerComponent} from "./show-computer/show-computer.component";
 import {DeleteComputerComponent} from "./delete-computer/delete-computer.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 const routesComputer: Routes =[
   {path: 'listComputer', component: ShowComputerComponent},

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {IComputer} from "../../interface/IComputer";
 import {ComputerService} from "../../services/computer.service";
+import {DeleteComputerComponent} from "../delete-computer/delete-computer.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-show-computer',
@@ -9,7 +11,7 @@ import {ComputerService} from "../../services/computer.service";
 })
 export class ShowComputerComponent implements OnInit {
   listComputer: IComputer[] = [];
-  constructor(private computerService: ComputerService) { }
+  constructor(private computerService: ComputerService,private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.computerService.getAllComputer().subscribe(
@@ -25,5 +27,21 @@ export class ShowComputerComponent implements OnInit {
         console.log("Complete");
       }
     )
+  }
+
+  openDialog(computerId: string) {
+    this.computerService.getComputerById(computerId).subscribe((data)=>{
+      const dialog = this.dialog.open(DeleteComputerComponent,{
+        width: '500px',
+        data: data,
+        disableClose: true,
+        autoFocus: false
+      }
+      );
+      dialog.afterClosed().subscribe(result => {
+        this.ngOnInit();
+      });
+    })
+
   }
 }
