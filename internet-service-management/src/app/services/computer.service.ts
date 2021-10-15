@@ -11,6 +11,7 @@ export class ComputerService {
   readonly URL_LIST = "http://localhost:8080/computer/listComputer";
   readonly URL_DELETE = "http://localhost:8080/computer/deleteComputer";
   readonly URL_GET = "http://localhost:8080/computer/getInforComputer";
+  readonly URL_SEARCH = "http://localhost:8080/computer/searchComputer";
   constructor(private httpClient: HttpClient) { }
   getAllComputer():Observable<any>{
     return this.httpClient.get<any>(this.URL_LIST);
@@ -20,5 +21,11 @@ export class ComputerService {
   }
   getComputerById(id:string):Observable<IComputer>{
     return this.httpClient.get<IComputer>(this.URL_GET+ '/' + id);
+  }
+  searchComputer(idComputer: string,locationComputer: string,startUsedDateFromComputer: string,
+                 startUsedDateToComputer: string, typeComputer: string,statusComputer: string):Observable<IComputer>{
+  return this.httpClient.get<IComputer>(this.URL_SEARCH + '?computerId=' + idComputer + '&computerLocation='+locationComputer
+  +'&startUsedDateFromComputer='+startUsedDateFromComputer + '&startUsedDateToComputer='+startUsedDateToComputer + '&type='+typeComputer
+  +'&status='+statusComputer);
   }
 }

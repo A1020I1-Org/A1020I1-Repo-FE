@@ -6,33 +6,31 @@
         <table>
           <tr>
             <td><label class=" pr-3">Mã Máy Tính: </label></td>
-            <td><input  class="form-control " type="text" name="computer_id"></td>
+            <td><input  class="form-control " type="text"  [(ngModel)]="idComputer" [ngModelOptions]="{standalone:true}"></td>
             <td><label class="ml-4 pr-3 " id="date-form">Ngày Sử Dụng Máy Từ: </label></td>
-            <td> <input class="form-control " type="date" name="computer_startUsedDate"></td>
+            <td> <input class="form-control " type="date" [(ngModel)]="startUsedDateFromComputer" [ngModelOptions]="{standalone:true}"></td>
             <td> <label class="ml-4 pr-3 " id="status">Trạng Thái Sử Dụng: </label></td>
             <td>
-              <select class="form-control mr-5">
-                <option>Đang Sửa Chữa</option>
-                <option>Đang Hỏng</option>
-                <option>Bình Thường</option>
+              <select class="form-control mr-5" [(ngModel)]="statusComputer" [ngModelOptions]="{standalone:true}">
+                <option value="">Chọn...</option>
+                <option *ngFor="let status of listComputerStatus" [ngValue]="status.statusName">{{status.statusName}}</option>
               </select>
             </td>
             <td></td>
           </tr>
           <tr>
             <td><label class="" id="location">Vị Trí Máy: </label></td>
-            <td><input class="form-control" type="text" name="customer_id"></td>
+            <td><input class="form-control" type="text"[(ngModel)]="computerLocation" [ngModelOptions]="{standalone:true}"></td>
             <td> <label class="ml-4" id="date-to">Ngày Sử Dụng Máy Đến: </label></td>
-            <td><input class="form-control" type="date" name="computer_startUsedDate"></td>
+            <td><input class="form-control" type="date" [(ngModel)]="startUsedDateToComputer" [ngModelOptions]="{standalone:true}"></td>
             <td> <label class="ml-4" id="type">Loại Máy: </label></td>
             <td>
-              <select class="form-control">
-                <option>Loại 1</option>
-                <option>Loại 2</option>
-                <option>Loại 3</option>
+              <select class="form-control" [(ngModel)]="typeComputer" [ngModelOptions]="{standalone:true}">
+                <option value="">Chọn...</option>
+                <option *ngFor="let type of listComputerType" [ngValue]="type.typeName">{{type.typeName}}</option>
               </select>
             </td>
-            <td><button class="btn btn-success rounded-circle ml-4" type="submit" ><i class="fas fa-search-plus"></i></button></td>
+            <td><button class="btn btn-success rounded-circle ml-4" type="submit" (click)="searchComputer()" ><i class="fas fa-search-plus"></i></button></td>
           </tr>
         </table>
       </form>
@@ -78,5 +76,4 @@
       </table>
     </div>
   </div>
-
 </div>
