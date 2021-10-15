@@ -1,0 +1,61 @@
+<div class="wrap-pop-up" id="wrap-pop-up">
+  <div class="container">
+    <div class="row col-lg-12 col-sm-6 col-xl-6">
+      <div class="row" style="background: #cdd8fa; border-radius: 1rem 1rem 0 0">
+        <div class="msg-header col-lg-12 col-sm-12 col-xl-12">
+          <div class="msg-header-img">
+            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+          </div>
+          <div class="active-user">
+            <h4>Admin</h4>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="background: linear-gradient(120deg, #3299cc, #621818);">
+        <div class="chat-page col-lg-12 col-sm-12 col-xl-12 mt-3" style="margin: 0" id="chatPage">
+          <div *ngFor="let chat of chats">
+            <div class="row received-chats" *ngIf="chat.userName != roomName">
+              <div class="received-chats-img col-sm-2 col-lg-2 col-xl-2">
+                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="">
+              </div>
+              <div class="received-msg col-sm-10 col-lg-10 col-xl-10">
+                <div class="received-msg-inbox col-sm-12 col-lg-12 col-xl-12">
+                  <p class="text-wrap message">{{chat.message}}</p>
+                </div>
+                <div class="received-msg-inbox col-sm-12 col-lg-12 col-xl-12">
+                  <span class="received-time text-white small">{{chat.dateTime | date :'short'}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="row outgoing-chats" *ngIf="chat.userName == roomName">
+              <div class="outgoing-chats-msg col-sm-12 col-lg-12 col-xl-12">
+                <p class="text-wrap message">{{chat.message}}</p>
+              </div>
+              <div class="outgoing-chats-msg col-sm-12 col-lg-12 col-xl-12">
+                <div class="time text-white small">{{chat.dateTime | date :'short'}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" style="background: linear-gradient(120deg, #3299cc, #621818);">
+        <div class="msg-header mt-2 col-lg-12 col-sm-12 col-xl-12">
+          <form class="row input-group" [formGroup]="chatForm" (ngSubmit)="onsubmit()">
+            <div class="input-msg col-sm-11 col-lg-11 col-xl-11">
+              <input formControlName="message" id="message" type="text" class="form-control"
+                     placeholder="Nhập vào tin nhắn của bạn...">
+            </div>
+            <div class="col-sm-1 col-lg-1 col-xl-1 text-center" style="padding: 0 5px 0 0">
+              <button type="submit" class="btn icon-send">
+                <fa-icon [icon]="faPaperPlane"></fa-icon>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="icon-pop-up">
+  <fa-icon [icon]="faFacebookMessenger"></fa-icon>
+</div>
