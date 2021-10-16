@@ -10,17 +10,18 @@ import {TokenStorageService} from "../../service/token-storage.service";
 })
 export class HomeComponent implements OnInit {
   customerLogined!: Customer;
-
+  role!:string;
   constructor(private userService: UserService, private tokenStorage: TokenStorageService) {
-
   }
 
   ngOnInit(): void {
     this.customerLogined = this.tokenStorage.getUser().customer;
+    this.role=this.tokenStorage.getUser().roles;
   }
 
   signOut() {
     this.tokenStorage.signOut();
     window.location.href = "http://localhost:4200";
   }
+
 }

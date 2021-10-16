@@ -15,7 +15,6 @@ import {ToastrService} from "ngx-toastr";
 export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
-  errorMessage = '';
   roles: string[] = [];
 
   constructor(private userService: UserService, private router: Router, private tokenStorage: TokenStorageService,
