@@ -1,12 +1,16 @@
 <h1 class="container mt-5 text-center" style="color: darkblue">DANH SÁCH DỊCH VỤ</h1>
 <div class="container mt-3 d-flex justify-content-end">
   <form method="get">
-    <input type="text" class="btn btn-outline-success" placeholder="Tìm kiếm" name="searchName">
-    <button type="submit" class=" ml-2 fas fa-search-plus btn btn-success rounded-circle"></button>
+    <input type="text" class="btn btn-outline-success"
+           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="term"/>
+    <button class="btn btn-success rounded-circle ml-4" type="submit" >
+      <i class="fas fa-search-plus"></i>
+    </button>
   </form>
 </div>
 <div class="container">
-  <button class="fas fa-plus-circle btn btn-success"> Thêm mới dịch vụ</button>
+  <button class="fas fa-plus-circle btn btn-success"  [routerLink]="['/service-create']">
+    <i class="fas fa-plus-circle mr-2"></i>Thêm mới dịch vụ</button>
   <table class="table table-striped table-hover container mt-3" id="tableService">
     <thead style="background-color: #96ee4d">
     <tr>
@@ -20,51 +24,23 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <td>1</td>
-      <td>SV0001</td>
-      <td>Nước uống</td>
-      <td class="text-center">2</td>
-
-      <td>cái</td>
-      <td>10.000VNĐ</td>
+    <tr *ngFor="let service of listService">
+      <td>{{service.id}}</td>
+      <td>{{service.serviceId}}</td>
+      <td>{{service.serviceName}}</td>
+      <td>{{service.quantity}}</td>
+      <td>{{service.unit}}</td>
+      <td>{{service.price}}</td>
       <td>
-        <button class="fas fa-pencil-alt mr-2 border-0 btn btn-info"></button>
-        <button type="button" class="fas fa-trash-alt border-0 btn btn-danger" data-toggle="modal"
-                data-target="#exampleModal">
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>SV0002</td>
-      <td>Mỳ tôm</td>
-      <td class="text-center">2</td>
-      <td>cái</td>
-      <td>10.000VNĐ</td>
-      <td>
-        <button class="fas fa-pencil-alt mr-2 border-0 btn btn-info"></button>
-        <button type="button" class="fas fa-trash-alt border-0 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
-        </button>
-      </td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>SV0003</td>
-      <td>Thẻ card</td>
-      <td class="text-center">2</td>
-      <td>cái</td>
-      <td>10.000VNĐ</td>
-      <td>
-        <button class="fas fa-pencil-alt mr-2 border-0 btn btn-info"></button>
-        <button type="button" class="fas fa-trash-alt border-0 btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+        <button class=" mr-2 border-0 btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+        <button type="button" class="fas fa-trash-alt border-0 btn btn-danger"
+                (click)="openDialog(service.serviceId)">
         </button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-
 <div class="d-flex justify-content-end container">
   <button class="mr-3 btn btn-warning">Lưu Thay Đổi</button>
 </div>

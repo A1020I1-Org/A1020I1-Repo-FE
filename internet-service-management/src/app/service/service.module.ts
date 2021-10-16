@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceDeleteComponent } from './service-delete/service-delete.component';
-
+import {MatIconModule} from "@angular/material/icon";
 @NgModule({
     declarations: [
         ServiceListComponent,
@@ -12,7 +12,8 @@ import { ServiceDeleteComponent } from './service-delete/service-delete.componen
         ServiceListComponent
     ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatIconModule,
   ]
 })
 export class ServiceModule { }
