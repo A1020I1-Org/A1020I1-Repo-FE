@@ -2,14 +2,14 @@
 <div class="container mt-3 d-flex justify-content-end">
   <form method="get">
     <input type="text" class="btn btn-outline-success"
-           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="term"/>
+           placeholder="Tìm kiếm" name="searchName">
     <button class="btn btn-success rounded-circle ml-4" type="submit" >
       <i class="fas fa-search-plus"></i>
     </button>
   </form>
 </div>
 <div class="container">
-  <button class="fas fa-plus-circle btn btn-success"  [routerLink]="['/service-create']">
+  <button class="fas fa-plus-circle btn btn-success">
     <i class="fas fa-plus-circle mr-2"></i>Thêm mới dịch vụ</button>
   <table class="table table-striped table-hover container mt-3" id="tableService">
     <thead style="background-color: #96ee4d">

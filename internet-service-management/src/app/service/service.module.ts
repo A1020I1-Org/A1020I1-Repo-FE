@@ -3,6 +3,10 @@ import { CommonModule } from '@angular/common';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceDeleteComponent } from './service-delete/service-delete.component';
 import {MatIconModule} from "@angular/material/icon";
+import {RouterModule} from "@angular/router";
+import {FormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatToolbarModule} from "@angular/material/toolbar";
 @NgModule({
     declarations: [
         ServiceListComponent,
@@ -14,6 +18,10 @@ import {MatIconModule} from "@angular/material/icon";
   imports: [
     CommonModule,
     MatIconModule,
+    RouterModule,
+    FormsModule,
+    MatDialogModule,
+    MatToolbarModule
   ]
 })
 export class ServiceModule { }
