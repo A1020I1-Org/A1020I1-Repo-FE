@@ -2,8 +2,8 @@
 <div class="container mt-3 d-flex justify-content-end">
   <form method="get">
     <input type="text" class="btn btn-outline-success"
-           placeholder="Tìm kiếm" name="searchName">
-    <button class="btn btn-success rounded-circle ml-4" type="submit" >
+           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="nameSearch"/>
+    <button class="btn btn-success rounded-circle ml-4" type="submit" (click)="search()">
       <i class="fas fa-search-plus"></i>
     </button>
   </form>
@@ -24,8 +24,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let service of listService">
-      <td>{{service.id}}</td>
+    <tr *ngFor="let service of listService, index as i">
+      <td>{{i + 1}}</td>
       <td>{{service.serviceId}}</td>
       <td>{{service.serviceName}}</td>
       <td>{{service.quantity}}</td>
@@ -44,6 +44,7 @@
 <div class="d-flex justify-content-end container">
   <button class="mr-3 btn btn-warning">Lưu Thay Đổi</button>
 </div>
+
 <div class="container d-flex justify-content-end mt-3">
   <ul class="pagination">
     <li class="page-item"><a class="page-link" href="#">Trước</a></li>

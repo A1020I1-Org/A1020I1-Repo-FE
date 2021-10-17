@@ -7,23 +7,27 @@ import {IService} from "../interface/IService";
   providedIn: 'root'
 })
 export class ServiceService {
-  readonly URL_LIST = "http://localhost:8080/service/listService";
-  readonly URL_DELETE = "http://localhost:8080/service/deleteService";
-  readonly URL_GET = "http://localhost:8080/service/getServiceById";
+  API:string = "http://localhost:8080/service";
 
   constructor(
     private http: HttpClient) {
   }
 
   getAllService():Observable<any>{
-    return this.http.get<any>(this.URL_LIST);
+    return this.http.get<any>(this.API+'/list');
   }
 
   deleteServicesByID(servicesID: string): Observable<any>{
-    return this.http.delete<IService>(this.URL_DELETE + '/' + servicesID);
+    return this.http.delete<any>(this.API + '/delete/' + servicesID);
   }
 
-  getServicesById(servicesID: string):Observable<any>{
-    return this.http.get<IService>(this.URL_GET + '/' + servicesID);
+  getServicesById(servicesID: string):Observable<IService>{
+    return this.http.get<IService>(this.API + '/list/' + servicesID);
   }
+
+  search(nameSearch:string):Observable<IService>{
+    // @ts-ignore
+    return this.http.get(this.API + '/search' +'?serviceName_like=' + nameSearch
+    );
+  };
 }

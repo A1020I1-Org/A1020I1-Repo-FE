@@ -11,8 +11,9 @@ import {IService} from "../../interface/IService";
 })
 export class ServiceListComponent implements OnInit {
   listService: IService[] = [];
-  term: any;
-  p: any;
+  nameSearch='';
+  indexPagination: number = 1;
+  totalPagination: number | undefined;
 
   constructor(
     public servicesService: ServiceService,
@@ -22,11 +23,16 @@ export class ServiceListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getAllService();
+  }
+
+  getAllService(){
     this.servicesService.getAllService().subscribe(data => {
-      this.listService = data;
+      this.listService = data.content;
       console.log(this.listService);
     })
   }
+
   openDialog(servicesID: any): void {
     this.servicesService.getServicesById(servicesID).subscribe(dataOfServices => {
       const dialogRef = this.dialog.open(ServiceDeleteComponent, {
@@ -35,8 +41,15 @@ export class ServiceListComponent implements OnInit {
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.ngOnInit();
+        this.getAllService();
       });
+    });
+  };
+
+  search() {
+    this.servicesService.search(this.nameSearch).subscribe(data=>{
+      // @ts-ignore
+      this.listService =data;
     });
   }
 }

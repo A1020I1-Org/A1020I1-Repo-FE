@@ -7,6 +7,7 @@ import {RouterModule} from "@angular/router";
 import {FormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatToolbarModule} from "@angular/material/toolbar";
+import {ServiceRoutingModule} from "./service-routing.module";
 @NgModule({
     declarations: [
         ServiceListComponent,
@@ -21,7 +22,8 @@ import {MatToolbarModule} from "@angular/material/toolbar";
     RouterModule,
     FormsModule,
     MatDialogModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ServiceRoutingModule
   ]
 })
 export class ServiceModule { }

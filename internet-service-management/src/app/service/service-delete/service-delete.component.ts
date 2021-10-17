@@ -18,8 +18,8 @@ export class ServiceDeleteComponent implements OnInit {
     public servicesService: ServiceService) {}
 
   ngOnInit(){
-    this.deleteServicesID = this.data.data1.id;
-    this.servicesOfID = this.data.data1.id;
+    this.deleteServicesID = this.data.data1.serviceId;
+    this.servicesOfID = this.data.data1.serviceId;
   }
 
   deleteServices() {
