@@ -3,5 +3,6 @@ export class ChatModel {
   userName?: string;
   message?: string;
   status?: string;
-  dateTime?: string;
+  date?: string;
+  time?: string;
 }

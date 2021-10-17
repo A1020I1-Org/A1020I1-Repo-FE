@@ -115,29 +115,93 @@
           </div>
 
           <div class="position-relative">
-            <div class="chat-messages p-4">
+            <div class="chat-messages p-4" id="chatMessage" #chatMessage [scrollTop]="chatMessage.scrollHeight">
               <div *ngFor="let c of chats">
-                <div class="chat-message-left pb-4" *ngIf="c.userName == roomName">
+                <div class="chat-message-left pb-4" *ngIf="c.userName == roomName && c.date != yesterday && c.date != today"
+                     data-toggle="tooltip" data-placement="bottom" [title]="c.time|date:'short'">
                   <div>
                     <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1"
                          alt="Sharon Lessman" width="40" height="40">
-                    <div class="text-muted small text-nowrap mt-2">{{c.dateTime | date :'medium'}}</div>
                   </div>
-                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                  <div class="message flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
                     <div class="font-weight-bold mb-1">Máy 1</div>
                     {{c.message}}
+                    <div class="text-muted small text-nowrap mt-2" data-toggle="tooltip" data-placement="right"
+                         [title]="c.time">{{c.time| date:'short'}}</div>
                   </div>
                 </div>
 
-                <div class="chat-message-right mb-4" *ngIf="c.userName != roomName">
+                <div class="chat-message-right mb-4" *ngIf="c.userName != roomName && c.date != yesterday && c.date != today"
+                     data-toggle="tooltip" data-placement="bottom" [title]="c.time|date:'short'">
                   <div>
                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1"
                          alt="Chris Wood" width="40" height="40">
-                    <div class="text-muted small text-nowrap mt-2">{{c.dateTime | date :'medium'}}</div>
                   </div>
-                  <div class="flex-shrink-1 bg-light rounded py-2 px-3 mr-3">
+                  <div class="message flex-shrink-1 rounded py-2 px-3 mr-3"
+                       style="background-color: rgba(41,177,219,0.68)">
                     <div class="font-weight-bold mb-1">Bạn</div>
                     {{c.message}}
+                    <div class="text-muted small text-nowrap mt-2">{{c.time | date:'short'}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center" *ngIf="checkYesterday">Hôm qua,{{yesterday}}</div>
+              <div *ngFor="let c of chats">
+                <div class="chat-message-left pb-4" *ngIf="c.userName == roomName && c.date == yesterday"
+                     data-toggle="tooltip" data-placement="bottom" [title]="c.time|date:'short'">
+                  <div>
+                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1"
+                         alt="Sharon Lessman" width="40" height="40">
+                  </div>
+                  <div class="message flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                    <div class="font-weight-bold mb-1">Máy 1</div>
+                    {{c.message}}
+                    <div class="text-muted small text-nowrap mt-2" data-toggle="tooltip" data-placement="right"
+                         [title]="c.time">{{c.time| date:'shortTime'}}</div>
+                  </div>
+                </div>
+
+                <div class="chat-message-right mb-4" *ngIf="c.userName != roomName && c.date == yesterday"
+                     data-toggle="tooltip" data-placement="bottom" [title]="c.time|date:'short'">
+                  <div>
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1"
+                         alt="Chris Wood" width="40" height="40">
+                  </div>
+                  <div class="message flex-shrink-1 rounded py-2 px-3 mr-3"
+                       style="background-color: rgba(41,177,219,0.68)">
+                    <div class="font-weight-bold mb-1">Bạn</div>
+                    {{c.message}}
+                    <div class="text-muted small text-nowrap mt-2">{{c.time | date:'shortTime'}}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center" *ngIf="checkToday">Hôm nay,{{today}}</div>
+              <div *ngFor="let c of chats">
+                <div class="chat-message-left pb-4" *ngIf="c.userName == roomName && c.date == today"
+                     data-toggle="tooltip" data-placement="bottom" [title]="c.time|date:'short'">
+                  <div>
+                    <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="rounded-circle mr-1"
+                         alt="Sharon Lessman" width="40" height="40">
+                  </div>
+                  <div class="message flex-shrink-1 bg-light rounded py-2 px-3 ml-3">
+                    <div class="font-weight-bold mb-1">Máy 1</div>
+                    {{c.message}}
+                    <div class="text-muted small text-nowrap mt-2" data-toggle="tooltip" data-placement="right"
+                         [title]="c.time">{{c.time| date:'shortTime'}}</div>
+                  </div>
+                </div>
+
+                <div class="chat-message-right mb-4" *ngIf="c.userName != roomName && c.date == today"
+                     data-toggle="tooltip" data-placement="bottom" [title]="c.time|date:'short'">
+                  <div>
+                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle mr-1"
+                         alt="Chris Wood" width="40" height="40">
+                  </div>
+                  <div class="message flex-shrink-1 rounded py-2 px-3 mr-3"
+                       style="background-color: rgba(41,177,219,0.68)">
+                    <div class="font-weight-bold mb-1">Bạn</div>
+                    {{c.message}}
+                    <div class="text-muted small text-nowrap mt-2">{{c.time | date:'shortTime'}}</div>
                   </div>
                 </div>
               </div>
@@ -155,3 +219,4 @@
     </div>
   </div>
 </main>
+

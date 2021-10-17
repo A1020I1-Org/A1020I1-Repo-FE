@@ -1,7 +1,3 @@
-body{
-  margin-top:20px;
-  max-height: 100vh
-}
 
 .list-computer{
   display: flex;
@@ -38,6 +34,11 @@ body{
 .chat-message-right {
   flex-direction: row-reverse;
   margin-left: auto
+}
+
+.message{
+  max-width: 70%;
+  word-wrap: break-word;
 }
 .py-3 {
   padding-top: 1rem!important;
