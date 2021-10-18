@@ -1,0 +1,59 @@
+<div
+  style="background-size: cover;background-repeat: no-repeat;height: 100%;">
+  <div class="container py-5" style="border-radius: 5px">
+    <div style="padding: 15px 10%; background: rgb(255, 255, 255);">
+      <h2 class="alert" role="alert" style="text-align: center;background-color: #00BFFF; font-family: Roboto">Thông tin nhân viên</h2>
+      <hr>
+      <div align="center">
+        <form class="form-group" [formGroup]="viewEmployeeForm">
+          <div class="form-group row">
+            <label for="id" class="col-2">Mã nhân viên</label>
+            <input class="form-control col-10 " id="id" formControlName="employeeId">
+          </div>
+          <div class="form-group row">
+            <label for="name" class="col-2">Họ Tên</label>
+            <input class="form-control col-10 " id="name" formControlName="fullName">
+          </div>
+          <div class="form-group row ">
+            <label for="position" class="col-2">Vị trí </label>
+            <select formControlName="position" [compareWith]="compareFn" id="position" class="form-control col-10">
+              <option *ngFor="let pos of positionList" [ngValue]="pos">{{pos.positionName}}</option>
+            </select>
+          </div>
+          <div class="form-group row">
+            <label for="date" class="col-2">Ngày sinh</label>
+            <input class="form-control col-10 " id="date" formControlName="dateOfBirth" type="date">
+          </div>
+          <div class="form-group row">
+            <label for="phone" class="col-2">Số điện thoại </label>
+            <input class="form-control col-10 " id="phone" formControlName="phone">
+          </div>
+          <div class="form-group row">
+            <label for="startWorkDate" class="col-2">Ngày bắt đầu làm việc </label>
+            <input class="form-control col-10 " id="startWorkDate" formControlName="startWorkDate" type="date">
+          </div>
+          <div class="form-group row">
+            <label for="address" class="col-2">Địa Chỉ</label>
+            <input class="form-control col-10 " id="address" formControlName="address">
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-2">Email</label>
+            <input class="form-control col-10 " id="email" formControlName="Email">
+          </div>
+          <div class="form-group row">
+            <label for="level" class="col-2">Cấp bậc </label>
+            <input class="form-control col-10 " id="level" formControlName="level">
+          </div>
+          <div class="form-group row">
+            <label for="yearOfExp" class="col-2">Kinh nghiệm làm việc </label>
+            <input class="form-control col-10 " id="yearOfExp" formControlName="yearOfExp">
+          </div>
+        </form>
+        <div class="row col-lg-12 mt-2 ">
+          <button class="btn btn-danger" style="margin-left: 27em; margin-bottom: 1em">Quay lại</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
