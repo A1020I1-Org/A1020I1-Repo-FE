@@ -1,0 +1,22 @@
+{
+  "customers": [
+    {
+      "id": 1,
+      "customerId": "",
+      "fullName": "",
+      "dateOfBirth": "2021-10-07",
+      "phone": "",
+      "email": "",
+      "address": ""
+    },
+    {
+      "id": 2,
+      "customerId": "KH-0002",
+      "fullName": "Nguyen Tam",
+      "dateOfBirth": "1990-5-10",
+      "email": "tam@gmail.com",
+      "address": "Da Nang",
+      "phone": "098765432"
+    }
+  ]
+}
