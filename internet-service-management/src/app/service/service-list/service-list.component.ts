@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {ServiceService} from "../../services/service.service";
 import {ServiceDeleteComponent} from "../service-delete/service-delete.component";
@@ -11,9 +11,12 @@ import {IService} from "../../interface/IService";
 })
 export class ServiceListComponent implements OnInit {
   listService: IService[] = [];
-  nameSearch='';
+  nameSearch = '';
   indexPagination: number = 1;
-  totalPagination: number | undefined;
+  totalPagination: number =0;
+  p: any;
+  term: any;
+  // statusDelete: boolean = false;
 
   constructor(
     public servicesService: ServiceService,
@@ -24,12 +27,22 @@ export class ServiceListComponent implements OnInit {
 
   ngOnInit() {
     this.getAllService();
+    // this.statusDelete = false;
   }
 
-  getAllService(){
+  getPage(pageNum : number){
+    this.servicesService.getPageList(pageNum).subscribe(
+       data=> {
+         this.listService = data.content;
+         this.indexPagination = data.pageable.pageNumber +1;
+       }
+    )
+  }
+
+  getAllService() {
     this.servicesService.getAllService().subscribe(data => {
       this.listService = data.content;
-      console.log(this.listService);
+      this.totalPagination = data.totalPages;
     })
   }
 
@@ -42,14 +55,20 @@ export class ServiceListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         this.getAllService();
+        // this.servicesService.currentMessage.subscribe(status => {
+        //   this.statusDelete = status;
+        //   setTimeout(()=>{
+        //     this.statusDelete = false;
+        //     console.log(this.statusDelete);
+        //   }, 3000);
+        // })
       });
     });
   };
 
   search() {
-    this.servicesService.search(this.nameSearch).subscribe(data=>{
-      // @ts-ignore
-      this.listService =data;
+    this.servicesService.search(this.nameSearch).subscribe(data => {
+      this.listService = data;
     });
   }
 }

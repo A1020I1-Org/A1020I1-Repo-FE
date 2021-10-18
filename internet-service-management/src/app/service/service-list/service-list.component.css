@@ -1,0 +1,11 @@
+h1{
+  font-size: 50px;
+}
+td.text-left{
+  word-wrap: break-word;
+  max-width: 15px;
+}
+
+th{
+  font-size: 17px;
+}

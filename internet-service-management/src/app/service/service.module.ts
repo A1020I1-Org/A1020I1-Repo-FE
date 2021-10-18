@@ -8,10 +8,14 @@ import {FormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {ServiceRoutingModule} from "./service-routing.module";
+import {AppComponent} from "../app.component";
+import {NgxPaginationModule} from "ngx-pagination";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+
 @NgModule({
     declarations: [
         ServiceListComponent,
-        ServiceDeleteComponent
+        ServiceDeleteComponent,
     ],
     exports: [
         ServiceListComponent
@@ -23,7 +27,13 @@ import {ServiceRoutingModule} from "./service-routing.module";
     FormsModule,
     MatDialogModule,
     MatToolbarModule,
-    ServiceRoutingModule
-  ]
+    ServiceRoutingModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class ServiceModule { }
+export class ServiceModule {
+
+}

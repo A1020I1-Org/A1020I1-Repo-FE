@@ -2,7 +2,7 @@
 <div class="container mt-3 d-flex justify-content-end">
   <form method="get">
     <input type="text" class="btn btn-outline-success"
-           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="nameSearch"/>
+           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="term"/>
     <button class="btn btn-success rounded-circle ml-4" type="submit" (click)="search()">
       <i class="fas fa-search-plus"></i>
     </button>
@@ -10,7 +10,13 @@
 </div>
 <div class="container">
   <button class="fas fa-plus-circle btn btn-success">
-    <i class="fas fa-plus-circle mr-2"></i>Thêm mới dịch vụ</button>
+    <i class="fas fa-plus-circle mr-2"></i>Thêm mới dịch vụ
+  </button>
+  <!--  <div>-->
+  <!--    <div class="alert alert-info" *ngIf="statusDelete" role="alert">-->
+  <!--      Đã xóa thành công.-->
+  <!--    </div>-->
+  <!--  </div>-->
   <table class="table table-striped table-hover container mt-3" id="tableService">
     <thead style="background-color: #96ee4d">
     <tr>
@@ -19,17 +25,18 @@
       <th>Tên dịch vụ</th>
       <th>Số lượng</th>
       <th>Đơn vị</th>
-      <th>Giá</th>
+      <th>Giá (VNĐ)</th>
       <th>Lựa chọn</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let service of listService, index as i">
+    <tr *ngFor="let service of listService |filter:term
+    , index as i ">
       <td>{{i + 1}}</td>
-      <td>{{service.serviceId}}</td>
-      <td>{{service.serviceName}}</td>
+      <td class="text-left">{{service.serviceId}}</td>
+      <td class="text-left">{{service.serviceName}}</td>
       <td>{{service.quantity}}</td>
-      <td>{{service.unit}}</td>
+      <td class="text-left">{{service.unit}}</td>
       <td>{{service.prices}}</td>
       <td>
         <button class=" mr-2 border-0 btn btn-info"><i class="fas fa-pencil-alt"></i></button>
@@ -44,16 +51,26 @@
 <div class="d-flex justify-content-end container">
   <button class="mr-3 btn btn-warning">Lưu Thay Đổi</button>
 </div>
-
-<div class="container d-flex justify-content-end mt-3">
+<!--- Phân Trang--->
+<nav aria-label="..." class="d-flex justify-content-end mt-3 mr-5">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Trước</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">4</a></li>
-    <li class="page-item"><a class="page-link" href="#">5</a></li>
-    <li class="page-item"><a class="page-link" href="#">6</a></li>
-    <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+    <li class="page-item">
+      <a class="page-link" (click)="getPage(0)">Đầu</a>
+    </li>
+    <li class="page-item" >
+      <a class="page-link" tabindex="-1" *ngIf="(indexPagination-1)>0" (click)="getPage((indexPagination-2))">Trước</a>
+    </li>
+    <li class="page-item"><a class="page-link" *ngIf="(indexPagination-1)>0" (click)="getPage((indexPagination-2))">{{indexPagination - 1}}</a></li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link"(click)="getPage((indexPagination-1))">{{indexPagination}}</a>
+    </li>
+    <li class="page-item"><a class="page-link" *ngIf="(indexPagination +1)<= totalPagination" (click)="getPage((indexPagination))">{{indexPagination + 1}}</a></li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="(indexPagination +1)<= totalPagination" (click)="getPage((indexPagination))">Sau</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" (click)="getPage((totalPagination-1))">Cuối</a>
+    </li>
   </ul>
-</div>
+</nav>
+

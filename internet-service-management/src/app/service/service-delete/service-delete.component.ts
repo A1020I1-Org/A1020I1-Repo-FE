@@ -1,6 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {ServiceService} from "../../services/service.service";
+import {AlertService} from "../alert.service";
 
 @Component({
   selector: 'app-service-delete',
@@ -13,9 +14,10 @@ export class ServiceDeleteComponent implements OnInit {
   // @ts-ignore
   public servicesOfID;
   constructor(
-    public dialogRef: MatDialogRef<ServiceDeleteComponent>,
+    private dialogRef: MatDialogRef<ServiceDeleteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public servicesService: ServiceService) {}
+    public servicesService: ServiceService,
+    private alertService: AlertService) {}
 
   ngOnInit(){
     this.deleteServicesID = this.data.data1.serviceId;
@@ -24,7 +26,9 @@ export class ServiceDeleteComponent implements OnInit {
 
   deleteServices() {
     this.servicesService.deleteServicesByID(this.servicesOfID).subscribe(data =>{
+      // this.servicesService.statusDelete(true);
       this.dialogRef.close();
+      this.alertService.showAlertSuccess("Xoá dịch vụ thành công!");
     });
   }
 
