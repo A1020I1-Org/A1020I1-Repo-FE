@@ -41,8 +41,7 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
     // data page here
     this.serviceService.getPage().subscribe(
       (data) => {
-        let serviceArrayTam: Service[] = data.content;
-        console.log(serviceArrayTam);
+        console.log(data);
       }
     );
 
@@ -93,19 +92,7 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
     this.btnAddHidden = false;
     this.btnEditHidden = true;
 
-    // this.serviceArr.forEach(
-    //   (o, i, a) => {
-    //     this.serviceArrCheck[i] = this.serviceArr[i];
-    //     this.formGroupForUpdate[i] = this.formBuilder.group({
-    //       serviceId: ['',[Validators.pattern("^SV\\d{4}$"), Validators.required]],
-    //       serviceName: ['', Validators.required],
-    //       quantity: [''],
-    //       unit: [''],
-    //       prices: ['']
-    //     });
-    //   }
-    // );
-    this.ngOnInit();
+    this.getAllService();
 
     for (let i = 0; i <= this.sttForm; i++) {
       if (this.formGroupForAdd[i]){
@@ -143,11 +130,14 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
         this.serviceArr.push(this.formGroupForAdd[i].value);
         this.serviceArrCheck.push(this.formGroupForAdd[i].value);
         this.serviceArrForUpdate.push(this.formGroupForAdd[i].value);
-        this.serviceService.addOrUpdate(this.formGroupForAdd[i]).subscribe(
+        this.serviceService.addOrUpdate(this.formGroupForAdd[i], "add").subscribe(
           (data) => {},
-          (err) => {},
+          (err) => {
+            // if there is an error, please send a notification
+            this.getAllService();
+          },
           () => {
-            this.ngOnInit();
+            this.getAllService();
           }
         );
       }
@@ -214,11 +204,11 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
       (o, i) => {
         this.serviceArrCheck[i] = {serviceId: '', serviceName: '', quantity: 0, unit: '', prices: 0};
         if (o.get('serviceId')?.value != ''){
-          this.serviceService.addOrUpdate(this.formGroupForUpdate[i]).subscribe(
+          this.serviceService.addOrUpdate(this.formGroupForUpdate[i], "update").subscribe(
             (data) => {},
             (err) => {},
             () => {
-              this.ngOnInit();
+              this.getAllService();
               this.btnAddHidden = true;
               this.btnEditHidden = true;
             }

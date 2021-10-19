@@ -22,9 +22,9 @@ export class ServiceService {
     return this.httpClient.get<any>(this.apiService + '/list');
   }
 
-  addOrUpdate(formGroup: FormGroup): Observable<any>{
+  addOrUpdate(formGroup: FormGroup, action: any): Observable<any>{
     const id = formGroup.controls.serviceId.value;
-    if (!id){
+    if (action == "add"){
       return this.httpClient.post(this.apiService + '/create', formGroup.value);
     }else {
       return this.httpClient.patch(this.apiService + `/update/${id}`, formGroup.value);
