@@ -5,6 +5,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { HomeComponent } from './components/home/home.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { ForbidenComponent } from './forbiden/forbiden.component';
+import {SecurityRoutingModule} from "./security-routing.module";
 
 
 
@@ -19,9 +20,10 @@ import { ForbidenComponent } from './forbiden/forbiden.component';
     LoginComponent,
     HomeComponent
   ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        SecurityRoutingModule
+    ]
 })
 export class SercurityModule { }

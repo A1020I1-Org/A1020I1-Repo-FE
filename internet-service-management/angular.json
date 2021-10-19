@@ -36,8 +36,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
-              "src/assets/js/test.js",
-              "src/assets/home/sidebar-05/js/main.js"
+              "src/assets/home/sidebar-05/js/main.js",
+             "src/assets/sercurity/js/main.js"
             ]
           },
           "configurations": {

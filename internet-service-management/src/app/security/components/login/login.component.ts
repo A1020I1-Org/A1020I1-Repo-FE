@@ -16,14 +16,14 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   roles: string[] = [];
-
   constructor(private userService: UserService, private router: Router, private tokenStorage: TokenStorageService,
               private toastr: ToastrService) {
   }
 
   loginForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required),
+      username: new FormControl('', [Validators.required,Validators.minLength(4)]),
+      password: new FormControl('', [Validators.required,Validators.minLength(3),
+        Validators.pattern('^[A-Za-z0-9 -]*$')]),
     }
   );
 
@@ -41,7 +41,6 @@ export class LoginComponent implements OnInit {
       this.roles = this.tokenStorage.getUser().roles;
       for (const role of this.roles) {
         if (role === 'ROLE_USER') {
-          console.log(role);
           this.router.navigateByUrl('/home');
           break;
         } else {
@@ -70,6 +69,10 @@ export class LoginComponent implements OnInit {
             break;
           } else {
             this.router.navigateByUrl('/admin');
+            this.toastr.success("Đăng nhập thành công", 'Thông báo', {
+              timeOut: 2000,
+              extendedTimeOut: 1500
+            });
           }
         }
       },

@@ -19,21 +19,21 @@ export class UserService {
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
 
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({
-    //     'Content-Type': 'application/json',
-    //     'Authorization': `Bearer` + this.tokenStorage.getToken()
-    //   }),
-    //   'Access-Control-Allow-Origin': 'http://localhost:4200',
-    //   'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-    // };
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer` + this.tokenStorage.getToken()
+      }),
+      'Access-Control-Allow-Origin': 'http://localhost:4200',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    };
   }
 
-  login(user:any) {
-    return this.http.post<any>(AUTH_API + 'login', user, httpOptions);
-  }
-  // login(user: any): Observable<any> {
-  //   return this.http.post("http://localhost:8080/api/public/login", user, this.httpOptions);
+  // login(user:any) {
+  //   return this.http.post<any>(AUTH_API + 'login', user, httpOptions);
   // }
+  login(user: any): Observable<any> {
+    return this.http.post("http://localhost:8080/api/public/login", user, this.httpOptions);
+  }
 
 }

@@ -1,6 +1,6 @@
-<!--<div style="background: linear-gradient(-->
-<!--120deg-->
-<!--, #3299cc, #621818);">-->
+<div style="background: linear-gradient(
+120deg
+, #3299cc, #621818);">
   <section class="ftco-section">
     <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
       <div class="container">
@@ -15,14 +15,14 @@
               <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown"
                  aria-haspopup="true" aria-expanded="false" style="color:white;">Account management</a>
               <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" href="#" (click)="signOut()">Đăng xuất</a>
+                <a class="dropdown-item" (click)="signOut()" style="cursor: pointer">Đăng xuất</a>
                 <a class="dropdown-item" href="#">Page 2</a>
                 <a class="dropdown-item" href="#">Page 3</a>
                 <a class="dropdown-item" href="#">Page 4</a>
               </div>
             </li>
             <li class="nav-item"><a href="#" class="nav-link" style="color:white;">Hi, <span>
-                       {{customerLogined.fullName}}
+                       {{customerLogined.account.userName}}
                     </span> </a></li>
           </ul>
         </div>
@@ -33,7 +33,8 @@
 
   <div class="wrapper d-flex align-items-stretch">
     <nav id="sidebar">
-      <div class="custom-menu">
+      <div class="custom-menu" style=" background: #3445b4;
+          border-radius: 10px;">
         <button type="button" id="sidebarCollapse" class="btn btn-primary">
           <i class="fa fa-bars"></i>
           <span class="sr-only">Toggle Menu</span>
@@ -43,19 +44,19 @@
         <h1><a href="homeUser.html" class="logo">Menu cyber</a></h1>
         <ul class="list-unstyled components mb-5">
           <li class="active">
-            <a href="#"><span class="fa fa-home mr-3"></span> Prices List</a>
+            <a [routerLink]="'/admin'"><span class="fa fa-home mr-3"></span>Admin</a>
           </li>
           <li>
             <a href="#"><span class="fa fa-briefcase mr-3"></span> Account</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Payment</a>
+            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Thanh toán</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-suitcase mr-3"></span> Game popular</a>
+            <a href="#"><span class="fa fa-suitcase mr-3"></span> Game phổ biến</a>
           </li>
           <li>
-            <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
+            <a href="#"><span class="fa fa-cogs mr-3"></span> Dịch vụ</a>
           </li>
         </ul>
 
@@ -72,7 +73,7 @@
                   <h6 class="mb-0">Start time</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
-                  7h 12/12/2020
+                 {{orders_item.startTime}}
                 </div>
               </div>
               <hr>
@@ -133,4 +134,4 @@
       </div>
     </div>
   </div>
-<!--</div>-->
+</div>

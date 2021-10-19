@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
       if (currentUser.roles.includes('ROLE_USER')) {
         return true;
       } else {
-        this.router.navigate([''], {queryParams: {returnUrl: state.url}});
+        this.router.navigate([this.router.url], {queryParams: {returnUrl: state.url}});
         this.toastr.error('Bạn không có quyền truy cập!', 'Thông báo');
         return false;
       }

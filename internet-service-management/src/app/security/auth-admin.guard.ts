@@ -9,8 +9,10 @@ import {UserService} from "./service/user.service";
   providedIn: 'root'
 })
 export class AuthAdminGuard implements CanActivate {
+  private url!:string;
   constructor(private router: Router, private tokenStorageService: TokenStorageService, private toastr: ToastrService,private userService:UserService) {
   }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
@@ -19,7 +21,7 @@ export class AuthAdminGuard implements CanActivate {
       if (currentUser.roles.includes('ROLE_ADMIN'||'ROLE_EMPLOYEE')) {
         return true;
       } else {
-        this.router.navigate(['home'], {queryParams: {returnUrl: state.url}});
+        this.router.navigate([this.router.url], {queryParams: {returnUrl: state.url}});
         this.toastr.error('Bạn không có quyền truy cập!', 'Thông báo');
         return false;
       }
@@ -27,7 +29,6 @@ export class AuthAdminGuard implements CanActivate {
       this.router.navigate(['login'], {queryParams: {returnUrl: state.url}});
       return false;
     }
-
   }
 
 }

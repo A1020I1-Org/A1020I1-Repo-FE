@@ -1,26 +1,40 @@
-(function($) {
+// (function($) {
+// 	"use strict";
+//
+// 	var fullHeight = function() {
+//
+// 		$('.js-fullheight').css('height', $(window).height());
+// 		$(window).resize(function(){
+// 			$('.js-fullheight').css('height', $(window).height());
+// 		});
+//
+// 	};
+// 	fullHeight();
+//
+// 	$(".toggle-password").click(function() {
+//
+// 	  $(this).toggleClass("fa-eye fa-eye-slash");
+// 	  var input = $($(this).attr("toggle"));
+// 	  if (input.attr("type") == "password") {
+// 	    input.attr("type", "text");
+// 	  } else {
+// 	    input.attr("type", "password");
+// 	  }
+// 	});
+//
+// })();
+$( document ).ready(function() {
+  var fullHeight = function() {
 
-	"use strict";
+    $('.js-fullheight').css('height', $(window).height());
+    $(window).resize(function(){
+      $('.js-fullheight').css('height', $(window).height());
+    });
 
-	var fullHeight = function() {
+  };
+  fullHeight();
 
-		$('.js-fullheight').css('height', $(window).height());
-		$(window).resize(function(){
-			$('.js-fullheight').css('height', $(window).height());
-		});
-
-	};
-	fullHeight();
-
-	$(".toggle-password").click(function() {
-
-	  $(this).toggleClass("fa-eye fa-eye-slash");
-	  var input = $($(this).attr("toggle"));
-	  if (input.attr("type") == "password") {
-	    input.attr("type", "text");
-	  } else {
-	    input.attr("type", "password");
-	  }
-	});
-
-})(jQuery);
+  $('#sidebarCollapse').on('click', function () {
+    $('#sidebar').toggleClass('active');
+  });
+});

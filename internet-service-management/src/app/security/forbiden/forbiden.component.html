@@ -1,6 +1,25 @@
-<div style="padding-top: 20px;">
-  <input type="button" value=" Success Message" class="button" (click)="successmsg()">
-  <input type="button" value=" Error Message" class="button" (click)="errorsmsg()">
-  <input type="button" value=" Success Message" class="button" (click)="infotoastr()">
-  <input type="button" value=" Info Message" class="button" (click)="toastrwaring()">
-</div>
+<!--<div style="padding-top: 20px;">-->
+<!--  <input type="button" value=" Success Message" class="button" (click)="successmsg()">-->
+<!--  <input type="button" value=" Error Message" class="button" (click)="errorsmsg()">-->
+<!--  <input type="button" value=" Success Message" class="button" (click)="infotoastr()">-->
+<!--  <input type="button" value=" Info Message" class="button" (click)="toastrwaring()">-->
+<!--</div>-->
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+  <a class="navbar-brand" href="#">Trang chủ</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link"  [routerLink]="'login'">Đăng nhập<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/home'">Home user</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="'/admin'">Home admin</a>
+      </li>
+    </ul>
+  </div>
+</nav>
