@@ -35,10 +35,11 @@ export class EmployeeService {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload);
+          return downloadURL;
         });
       })
     ).subscribe();
-    return storageRef.getDownloadURL();
+    return this.storage.ref(this.basePath+"/"+fileUpload.file.name).getDownloadURL();
   }
 
   private saveFileData(fileUpload: FileUpload): void {

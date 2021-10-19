@@ -102,7 +102,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   selectFile(event: any): void {
-    this.selectedFiles = event.target.files[0];
+    this.selectedFiles = event.target.files;
   }
 
   upload(): void {
@@ -115,6 +115,7 @@ export class EmployeeCreateComponent implements OnInit {
         this.employeeService.pushFileToStorage(this.currentFileUpload).subscribe(
           url => {
             this.avtUrl=url;
+            console.log(url)
           },
           error => {
             console.log(error);
@@ -122,7 +123,6 @@ export class EmployeeCreateComponent implements OnInit {
         );
       }
     }
-    console.log("url:"+this.currentFileUpload?.url);
   }
 
   createEmployee() {
