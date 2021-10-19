@@ -9,7 +9,9 @@ import {IPosition} from "../interface/IPosition";
 export class PositionService {
   private API_POSITION = 'http://localhost:8080/position/listPosition';
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+
+  }
     getPositionList(): Observable<IPosition[]>{
       return this.httpClient.get<IPosition[]>(this.API_POSITION);
   }

@@ -12,13 +12,17 @@ import {finalize} from "rxjs/operators";
   providedIn: 'root'
 })
 export class EmployeeService {
-  readonly  API_CREATE = 'http://localhost:8080/employee/createEmployee';
-  readonly API_EDIT = 'http://localhost:8080/employee/updateEmployee';
-  readonly API_DETAIL = 'http://localhost:8080/employee/viewEmployee';
+  public API_CREATE = 'http://localhost:8080/employee/createEmployee';
+  public API_EDIT = 'http://localhost:8080/employee/updateEmployee';
+  private API_DETAIL = 'http://localhost:8080/employee/viewEmployee';
   private basePath = '/imgEmployee';
-
   constructor(public httpClient: HttpClient,private db: AngularFireDatabase, private storage: AngularFireStorage) {
-    };
+  };
+  httpOptions = {
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
+    'Access-Control-Allow-Origin': 'http://localhost:4200',
+    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+  };
 
   pushFileToStorage(fileUpload: FileUpload): Observable<string> {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
@@ -47,7 +51,7 @@ export class EmployeeService {
   }
 
   createEmployee(employee: IEmployee): Observable<any> {
-    return this.httpClient.post<any>(this.API_CREATE, employee);
+    return this.httpClient.post<IEmployee>(this.API_CREATE, employee, this.httpOptions);
   }
 
   getEmployeeById(employeeId: string | null): Observable<HttpEvent<any>> {

@@ -65,26 +65,26 @@ export class EmployeeCreateComponent implements OnInit {
       yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp, Validators.maxLength(50)]),
       address: new FormControl(''),
       avtUrl: new FormControl(''),
-      // username: new FormControl(''),
+      username: new FormControl(''),
       password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+~])[A-Za-z\\d!@#$%^&*()_+~]{6,}')]),
       confirmPassword: new FormControl('')
     },{validators:[validConfirmPassword("password","confirmPassword")]});
   }
   getAllProvince(){
     this.addressService.getAllProvince().subscribe(data =>{
-      this.provinces = data.results;
-    },
+        this.provinces = data.results;
+      },
       error => {
-      console.log("can not province");
+        console.log("can not province");
       }
-      )
+    )
   }
   getAllDistrict(province: string){
     this.temp = province.split("&")[1];
     this.addressService.getAllDistrict(this.temp).subscribe(data =>{
-      this.districts = data.results;
-      this.wards = [];
-    },
+        this.districts = data.results;
+        this.wards = [];
+      },
       error => {
         console.log("can not district");
       }
@@ -94,10 +94,10 @@ export class EmployeeCreateComponent implements OnInit {
   getAllWard(district: string){
     this.temp = district.split("&")[1];
     this.addressService.getAllWard(this.temp).subscribe(data =>{
-      this.wards = data.results;
-    },
+        this.wards = data.results;
+      },
       error => {
-      console.log("can not district");
+        console.log("can not district");
       })
   }
 

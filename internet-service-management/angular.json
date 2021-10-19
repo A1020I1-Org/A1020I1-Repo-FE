@@ -72,6 +72,10 @@
             },
             "development": {
               "browserTarget": "internet-service-management:build:development"
+            },
+            "options": {
+              "browserTarget": "rate-project:build",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
