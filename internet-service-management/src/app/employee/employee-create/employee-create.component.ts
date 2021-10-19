@@ -55,17 +55,17 @@ export class EmployeeCreateComponent implements OnInit {
     });
     this.employeeForm = new FormGroup({
       employeeId: new FormControl('', [Validators.required, Validators.pattern('^NV-\\d{4}$')]),
-      fullName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
+      fullName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern('^[a-zA-Z\'-\'\\sáàảãạăâắằấầặẵẫậéèẻ ẽẹếềểễệóêòỏõọôốồổỗộ ơớờởỡợíìỉĩịđùúủũụưứ� �ửữựÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠ ƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼ� ��ỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞ ỠỢỤỨỪỬỮỰỲỴÝỶỸửữựỵ ỷỹ]*$')]),
       position: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(20)]),
       dateOfBirth: new FormControl('', [Validators.required, validAgeValidators(18,35)]),
       startWorkDate: new FormControl('', [Validators.required, this.checkStartWorkDate]),
       phone: new FormControl('', [Validators.required, Validators.pattern(/^09[0-9]{9}$/)]),
       level: new FormControl('', [Validators.required, this.checkLevel, Validators.maxLength(50)]),
-      yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp, Validators.maxLength(50)]),
+      yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp, Validators.minLength(0),Validators.maxLength(100)]),
       address: new FormControl(''),
       avtUrl: new FormControl(''),
-      username: new FormControl(''),
+      userName: new FormControl('',[Validators.required]),
       password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+~])[A-Za-z\\d!@#$%^&*()_+~]{6,}')]),
       confirmPassword: new FormControl('')
     },{validators:[validConfirmPassword("password","confirmPassword")]});
@@ -126,6 +126,7 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   createEmployee() {
+    this.employeeForm.value.userName = this.employeeForm.value.email;
     this.employeeForm.value.avtUrl = this.avtUrl;
     this.employeeService.createEmployee(this.employeeForm.value).subscribe(data => {
       // @ts-ignore

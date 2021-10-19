@@ -30,6 +30,10 @@
                  employeeForm.controls.fullName.touched">Vui lòng nhập tên đầy đủ.
             </div>
             <div class="fontError mt-1 text-danger"
+                 *ngIf="employeeForm.controls.fullName.hasError('pattern') &&
+                 employeeForm.controls.fullName.touched">Không được nhập các kí tự đặc biệt.
+            </div>
+            <div class="fontError mt-1 text-danger"
                  *ngIf="employeeForm.controls.fullName.hasError('minlength') &&
                  employeeForm.controls.fullName.touched">Tên có kích thước bé hơn 5.
             </div>
@@ -221,6 +225,7 @@
             <img [src]="avtUrl" style="width: 100%">
           </div>
         </div>
+
 <!--        <div class="row">-->
 <!--          <div class="col-9"></div>-->
 <!--          <div class="col-3">-->

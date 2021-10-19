@@ -7,22 +7,25 @@ import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {FileUpload} from "../interface/FileUpload";
 import {finalize} from "rxjs/operators";
 
-
+// const API_CREATE = 'http://localhost:8080/employee/createEmployee';
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-  public API_CREATE = 'http://localhost:8080/employee/createEmployee';
+  private API_CREATE: string = 'http://localhost:8080/employee/createEmployee';
   public API_EDIT = 'http://localhost:8080/employee/updateEmployee';
   private API_DETAIL = 'http://localhost:8080/employee/viewEmployee';
   private basePath = '/imgEmployee';
-  constructor(public httpClient: HttpClient,private db: AngularFireDatabase, private storage: AngularFireStorage) {
-  };
-  httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'}),
-    'Access-Control-Allow-Origin': 'http://localhost:4200',
-    'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
-  };
+  httpOptions: any;
+  constructor(public httpClient: HttpClient, private db: AngularFireDatabase, private storage: AngularFireStorage) {
+    this.httpOptions = {
+      headers: new HttpHeaders({'Content-Type': 'application/json'}),
+      'Access-Control-Allow-Origin': 'http://localhost:4200',
+      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+    };
+  }
+
+
 
   pushFileToStorage(fileUpload: FileUpload): Observable<string> {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
@@ -51,11 +54,11 @@ export class EmployeeService {
       ref.limitToLast(numberItems));
   }
 
-  createEmployee(employee: IEmployee): Observable<any> {
+  createEmployee(employee: IEmployee): Observable<HttpEvent<any>> {
     return this.httpClient.post<IEmployee>(this.API_CREATE, employee, this.httpOptions);
   }
 
-  getEmployeeById(employeeId: string | null): Observable<HttpEvent<any>> {
+    getEmployeeById(employeeId: string | null): Observable<HttpEvent<any>> {
     return this.httpClient.get<any>(this.API_DETAIL + '/' + employeeId);
   }
 

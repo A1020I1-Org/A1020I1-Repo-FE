@@ -3,7 +3,6 @@ import {IPosition} from "./IPosition";
 import {IAccount} from "./IAccount";
 
 export interface IEmployee {
-  id: number;
   employeeId: string;
   fullName: string;
   dateOfBirth: string;
@@ -12,8 +11,9 @@ export interface IEmployee {
   position: IPosition;
   address: string;
   phone: string;
+  level: string;
   startWorkDate: string;
-  yearOfExp: string;
+  yearOfExp: number;
   avtUrl: string;
   msgStartWorkDate?: string;
   msgDateOfBirth?: string;
