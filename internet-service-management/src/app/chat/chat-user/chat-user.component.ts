@@ -1,5 +1,5 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
-import {faPaperPlane} from '@fortawesome/free-solid-svg-icons';
+import {Component, OnInit} from '@angular/core';
+import {faPaperPlane, faSmileBeam} from '@fortawesome/free-solid-svg-icons';
 import {faFacebookMessenger} from '@fortawesome/free-brands-svg-icons'
 import {ChatModel} from "../../model/Chat.model";
 import {FormControl, FormGroup} from "@angular/forms";
@@ -11,9 +11,13 @@ import {map} from "rxjs/operators";
   templateUrl: './chat-user.component.html',
   styleUrls: ['./chat-user.component.css']
 })
+
 export class ChatUserComponent implements OnInit {
+
+
   faFacebookMessenger = faFacebookMessenger;
   faPaperPlane = faPaperPlane;
+  faSmileBean = faSmileBeam;
 
   chat: ChatModel = {};
   roomName: string = "room1";
@@ -27,6 +31,14 @@ export class ChatUserComponent implements OnInit {
   yesterday: string = '';
   todayDate ?: Date;
   dateArr: Set<any> = new Set();
+  message = '';
+  showEmojiPicker = false;
+
+  toggleEmojiPicker() {
+    console.log(this.showEmojiPicker);
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
+
 
 
   constructor(private chatService: ChatService) {
@@ -37,6 +49,28 @@ export class ChatUserComponent implements OnInit {
       message: new FormControl('')
     });
     this.getAllMessages(this.roomName);
+  }
+
+  changeMess(event:any){
+    this.message = event.target.value;
+  }
+
+  addEmoji(event:any) {
+    console.log(this.message)
+    const { message } = this;
+    console.log(message);
+    console.log(`${event.emoji.native}`)
+    const text = `${message}${event.emoji.native}`;
+
+    this.message = text;
+  }
+
+  onFocus() {
+    console.log('focus');
+    this.showEmojiPicker = false;
+  }
+  onBlur() {
+    console.log('onblur')
   }
 
   getAllMessages(romeName: string) {

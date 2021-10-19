@@ -3,6 +3,7 @@ import {ChatService} from "../../service/chat.service";
 import {ChatModel} from "../../model/Chat.model";
 import {map} from "rxjs/operators";
 import {FormControl, FormGroup} from "@angular/forms";
+import {faSmileBeam} from "@fortawesome/free-solid-svg-icons";
 
 
 @Component({
@@ -11,6 +12,8 @@ import {FormControl, FormGroup} from "@angular/forms";
   styleUrls: ['./chat-admin.component.css']
 })
 export class ChatAdminComponent implements OnInit {
+
+  faSmileBean = faSmileBeam;
   chat: ChatModel = {};
   roomName: string = "room1";
   chats: ChatModel[] = [];
@@ -23,6 +26,13 @@ export class ChatAdminComponent implements OnInit {
   todayDate ?: Date;
   dateArr: Set<any> = new Set();
   statusSent: boolean = false;
+  message = '';
+  showEmojiPicker = false;
+
+  toggleEmojiPicker() {
+    console.log(this.showEmojiPicker);
+    this.showEmojiPicker = !this.showEmojiPicker;
+  }
 
   constructor(private chatService: ChatService) {
     this.getAllMessages(this.roomName);
@@ -32,6 +42,24 @@ export class ChatAdminComponent implements OnInit {
     this.chatForm = new FormGroup({
       message: new FormControl('')
     });
+  }
+
+  changeMess(event:any){
+    this.message = event.target.value;
+  }
+
+  addEmoji(event:any) {
+    const { message } = this;
+    const text = `${message}${event.emoji.native}`;
+    this.message = text;
+  }
+
+  onFocus() {
+    console.log('focus');
+    this.showEmojiPicker = false;
+  }
+  onBlur() {
+    console.log('onblur')
   }
 
   getAllMessages(romeName: string) {

@@ -8,7 +8,7 @@ import {AngularFireModule} from "@angular/fire/compat";
 import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
 import {environment} from "./environments/environment";
 import {ChatModule} from "./chat/chat.module";
-import {CustomerModule} from "./customer/customer.module";
+
 import {ReactiveFormsModule} from "@angular/forms";
 
 
@@ -23,8 +23,7 @@ import {ReactiveFormsModule} from "@angular/forms";
         FontAwesomeModule,
         AngularFireModule.initializeApp(environment.firebase),
         AngularFireDatabaseModule,
-        ChatModule,
-        CustomerModule
+        ChatModule
     ],
   providers: [],
   bootstrap: [AppComponent]

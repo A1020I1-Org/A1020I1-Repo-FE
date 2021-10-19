@@ -54,3 +54,18 @@
 .border-top {
   border-top: 1px solid #dee2e6!important;
 }
+
+fa-icon{
+  font-size: 30px;
+}
+
+.icon-emoji{
+  padding-right: 1%;
+}
+
+.pop-up-emoji {
+  position: absolute;
+  z-index: 50;
+  top: 10%;
+  right: 70%
+}

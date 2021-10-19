@@ -207,10 +207,15 @@
               </div>
             </div>
           </div>
-
+          <emoji-mart class="emoji-mart pop-up-emoji" set="facebook" *ngIf="showEmojiPicker"
+                      (emojiSelect)="addEmoji($event)" title="Pick your emoji…"
+          ></emoji-mart>
           <div class="flex-grow-0 py-3 px-4 border-top">
             <form class="input-group" [formGroup]="chatForm" (ngSubmit)="onsubmit()">
-              <input formControlName="message" type="text" class="form-control" placeholder="Nhập tin nhắn của bạn...">
+              <a class="icon-emoji" (click) ="toggleEmojiPicker()"><fa-icon [icon]="faSmileBean"></fa-icon></a>
+              <input style="height: 45px; box-shadow: none !important; " formControlName="message" type="text" class="form-control" placeholder="Nhập tin nhắn của bạn..."
+                     (change)="changeMess($event)" (blur)="onBlur()" (focus)="onFocus()"
+                     name="message" [(ngModel)]="message">
               <button type="submit" class="btn btn-primary">Gửi</button>
             </form>
           </div>

@@ -1,8 +1,8 @@
-.wrap-pop-up{
+.wrap-pop-up {
   position: absolute;
   bottom: 0;
   right: 5%;
-  max-width:350px ;
+  max-width: 350px;
   border-radius: 5rem 5rem 0 0;
   padding: -10% 10% -10% 10%;
 }
@@ -71,7 +71,8 @@ img {
   max-height: 300px;
   overflow-y: auto;
 }
-.received-chats{
+
+.received-chats {
   margin-bottom: 3%;
 }
 
@@ -105,7 +106,7 @@ img {
   word-wrap: break-word;
 }
 
-.received-time{
+.received-time {
   position: relative;
   float: left;
   color: white;
@@ -123,11 +124,12 @@ img {
   margin: 8px 0 0;
 }
 
-.outgoing-chats{
-  margin-bottom: 3% ;
+.outgoing-chats {
+  margin-bottom: 3%;
   padding-right: 1%;
   flex-direction: row-reverse;
 }
+
 .outgoing-chats-msg p {
   background: #7794e7 none repeat scroll 0 0;
   border-radius: 10px;
@@ -153,41 +155,41 @@ img {
   float: right;
 }
 
-.input-msg input{
+.input-msg input {
   border-radius: 2.5rem;
   box-shadow: none !important;
 }
 
-.icon-send fa-icon{
+.icon-send fa-icon {
   font-size: 25px;
   color: dodgerblue;
 }
 
-.icon-send{
+.icon-send {
   box-shadow: none !important;
 }
 
-.list-computer{
-  background:#1d1b31;
+.list-computer {
+  background: #1d1b31;
   padding: 0 0 50px 0;
   height: 571px;
 }
 
-.list-computer a{
+.list-computer a {
   margin: 0;
 }
 
-.list-computer h1{
+.list-computer h1 {
   font-size: 25px;
 }
 
-.header-list{
+.header-list {
   color: #E4E9F7;
-  margin:5px 0 10px 0;
+  margin: 5px 0 10px 0;
 }
 
 
-.item-pc-img{
+.item-pc-img {
   border-radius: 50%;
   width: 40px;
   margin-left: 5%;
@@ -195,67 +197,45 @@ img {
   float: left;
 }
 
-.item-pc-name{
+.item-pc-name {
   width: 100px;
   float: left;
   margin-top: 20px;
 }
 
-.item-pc-name h4{
+.item-pc-name h4 {
   font-size: 20px;
   margin-left: 10px;
   color: white;
 }
 
-.icon-pop-up{
+.icon-pop-up {
   position: absolute;
   bottom: 1%;
   right: 1%;
 }
 
-.icon-pop-up fa-icon{
+.icon-pop-up fa-icon {
   position: sticky;
   font-size: 250%;
   color: #3299cc;
 }
 
-/*.wrap-pop-up{*/
-/*  animation: fadein 3s;*/
-/*  -moz-animation: fadein 3s; !* Firefox *!*/
-/*  -webkit-animation: fadein 3s; !* Safari and Chrome *!*/
-/*  -o-animation: fadein 3s; !* Opera *!*/
-/*}*/
-/*@keyframes fadein {*/
-/*  from {*/
-/*    opacity:0;*/
-/*  }*/
-/*  to {*/
-/*    opacity:1;*/
-/*  }*/
-/*}*/
-/*@-moz-keyframes fadein { !* Firefox *!*/
-/*  from {*/
-/*    opacity:0;*/
-/*  }*/
-/*  to {*/
-/*    opacity:1;*/
-/*  }*/
-/*}*/
-/*@-webkit-keyframes fadein { !* Safari and Chrome *!*/
-/*  from {*/
-/*    opacity:0;*/
-/*  }*/
-/*  to {*/
-/*    opacity:1;*/
-/*  }*/
-/*}*/
-/*@-o-keyframes fadein { !* Opera *!*/
-/*  from {*/
-/*    opacity:0;*/
-/*  }*/
-/*  to {*/
-/*    opacity: 1;*/
-/*  }*/
-/*}*/
+.icon-emoji {
+  position: absolute;
+  z-index: 5;
+  right: 84%;
+  bottom: 13%;
+}
 
+.icon-emoji fa-icon {
+  font-size: 200%;
+  color: #3299cc;
+}
 
+.pop-up-emoji {
+  position: absolute;
+  z-index: 50;
+  top: -15%;
+  right: 70%
+}

@@ -4,6 +4,7 @@ import {ChatAdminComponent} from './chat-admin/chat-admin.component';
 import {ChatUserComponent} from './chat-user/chat-user.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {PickerModule} from "@ctrl/ngx-emoji-mart";
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     CommonModule,
     ReactiveFormsModule,
     FontAwesomeModule,
+    PickerModule
   ]
 })
 export class ChatModule {
