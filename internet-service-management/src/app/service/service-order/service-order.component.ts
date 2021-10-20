@@ -45,7 +45,7 @@ export class ServiceOrderComponent implements OnInit {
 
   addNewOrderService(){
     this.orderServiceCreateForm.value.OrderID = "OD-" + Math.floor(Math.random() * 10000);
-
+    this.orderServiceCreateForm.value.total = "";
     this.orderService.addNewOrder(this.orderServiceCreateForm.value).subscribe(data => {
       this.router.navigateByUrl('order').then(r => {});
     })
