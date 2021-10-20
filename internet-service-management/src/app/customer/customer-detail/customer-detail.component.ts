@@ -41,7 +41,7 @@ export class CustomerDetailComponent implements OnInit {
 
   editCustomer() {
     this.customerService.editCustomer(this.customerEditForm.value, this.idCustomer).subscribe(data =>{
-      this.router.navigateByUrl('customer-list').then(r => {});
+      // this.router.navigateByUrl('customer-detail').then(r => {});
     })
   }
 

@@ -2,12 +2,12 @@
   "customers": [
     {
       "id": 1,
-      "customerId": "",
-      "fullName": "",
+      "customerId": "KH-0001",
+      "fullName": "ngoc cuong",
       "dateOfBirth": "2021-10-07",
-      "phone": "",
-      "email": "",
-      "address": ""
+      "email": "cuong@gmail.com",
+      "address": "da nang",
+      "phone": "098765432"
     },
     {
       "id": 2,
