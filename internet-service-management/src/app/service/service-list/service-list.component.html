@@ -2,7 +2,7 @@
 <div class="container mt-3 d-flex justify-content-end">
   <form method="get">
     <input type="text" class="btn btn-outline-success"
-           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="term"/>
+           placeholder="Tìm kiếm" name="searchName" [(ngModel)]="searchName"/>
     <button class="btn btn-success rounded-circle ml-4" type="submit" (click)="search()">
       <i class="fas fa-search-plus"></i>
     </button>
@@ -12,11 +12,6 @@
   <button class="fas fa-plus-circle btn btn-success">
     <i class="fas fa-plus-circle mr-2"></i>Thêm mới dịch vụ
   </button>
-  <!--  <div>-->
-  <!--    <div class="alert alert-info" *ngIf="statusDelete" role="alert">-->
-  <!--      Đã xóa thành công.-->
-  <!--    </div>-->
-  <!--  </div>-->
   <table class="table table-striped table-hover container mt-3" id="tableService">
     <thead style="background-color: #96ee4d">
     <tr>
@@ -30,7 +25,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let service of listService |filter:term
+    <tr *ngFor="let service of listService
     , index as i ">
       <td>{{i + 1}}</td>
       <td class="text-left">{{service.serviceId}}</td>

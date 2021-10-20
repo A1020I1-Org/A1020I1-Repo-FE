@@ -11,12 +11,11 @@ import {IService} from "../../interface/IService";
 })
 export class ServiceListComponent implements OnInit {
   listService: IService[] = [];
-  nameSearch = '';
+  searchName = '';
   indexPagination: number = 1;
   totalPagination: number =0;
   p: any;
   term: any;
-  // statusDelete: boolean = false;
 
   constructor(
     public servicesService: ServiceService,
@@ -27,7 +26,6 @@ export class ServiceListComponent implements OnInit {
 
   ngOnInit() {
     this.getAllService();
-    // this.statusDelete = false;
   }
 
   getPage(pageNum : number){
@@ -55,20 +53,14 @@ export class ServiceListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         this.getAllService();
-        // this.servicesService.currentMessage.subscribe(status => {
-        //   this.statusDelete = status;
-        //   setTimeout(()=>{
-        //     this.statusDelete = false;
-        //     console.log(this.statusDelete);
-        //   }, 3000);
-        // })
       });
     });
   };
 
   search() {
-    this.servicesService.search(this.nameSearch).subscribe(data => {
-      this.listService = data;
+    this.servicesService.search(this.searchName).subscribe(data => {
+      // @ts-ignore
+      this.listService = data.content;
     });
   }
 }

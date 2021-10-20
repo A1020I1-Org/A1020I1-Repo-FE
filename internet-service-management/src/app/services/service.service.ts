@@ -15,9 +15,9 @@ export class ServiceService {
     private http: HttpClient) {
   }
 
-  statusDelete(status:boolean){
-    this.statusSource.next(status);
-  }
+  // statusDelete(status:boolean){
+  //   this.statusSource.next(status);
+  // }
 
   getAllService():Observable<any>{
     return this.http.get<any>(this.API+'/list');
@@ -31,8 +31,8 @@ export class ServiceService {
     return this.http.get<IService>(this.API + '/list/' + servicesID);
   }
 
-  search(nameSearch:string):Observable<IService[]>{
-    return this.http.get<IService[]>(this.API + '/search' +'?serviceName_like=' + nameSearch
+  search(searchName:string):Observable<IService[]>{
+    return this.http.get<IService[]>(this.API + '/search' +'?searchName=' + searchName
     );
   };
 
