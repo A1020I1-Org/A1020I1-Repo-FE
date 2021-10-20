@@ -1,3 +1,4 @@
+
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
@@ -10,6 +11,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {ToastrModule} from "ngx-toastr";
 import { CreateEmployeeComponent } from './employee/create-employee/create-employee.component';
 import {RouterModule} from "@angular/router";
+import {ComputerModule} from "./computer/computer.module";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import {RouterModule} from "@angular/router";
     ToastrModule.forRoot(),
     EmployeeModule,
     RouterModule
+    ComputerModule
   ],
   providers: [],
   exports: [
