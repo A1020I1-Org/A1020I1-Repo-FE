@@ -1,0 +1,48 @@
+{
+  "services": [
+    {
+      "id": 1,
+      "serviceId": "DV-0001",
+      "serviceName": "bia",
+      "unit": "lon",
+      "quantity": "20",
+      "prices": "20000"
+    },
+    {
+      "id": 2,
+      "serviceId": "DV-0002",
+      "serviceName": "mi tom",
+      "unit": "goi",
+      "quantity": "20",
+      "prices": "10000"
+    },
+    {
+      "id": 3,
+      "serviceId": "DV-0003",
+      "serviceName": "ruou",
+      "unit": "chai",
+      "quantity": "20",
+      "prices": "15000"
+    }
+  ],
+  "orderServices": [
+    {
+      "id": 1,
+      "OrderID": "OD-0001",
+      "serviceId": "DV-0001",
+      "serviceName": "bia",
+      "quantity": "2",
+      "unit": "lon",
+      "total": "40000"
+    },
+    {
+      "id": 2,
+      "OrderID": "OD-0002",
+      "serviceId": "DV-0002",
+      "serviceName": "mi tom",
+      "quantity": "1",
+      "unit": "goi",
+      "total": "10000"
+    }
+  ]
+}
