@@ -24,11 +24,11 @@
                       <input matInput formControlName="fullName" [hidden]="!fullNameDisplay.hidden" (blur)="fullNameDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editFullName>
                       <mat-hint align="end">{{editFullName.value.length}} / 128</mat-hint>
                     </mat-form-field>
-                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.fullName.errors?.required && customerEditForm.controls.fullName?.touched">Please enter your name</p>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.fullName.errors?.required && customerEditForm.controls.fullName?.touched">vui lòng nhập họ và tên!</p>
                   </td>
                   <td class="col-1">
                     <button mat-icon-button (mousedown)="editCustomer(); fullNameDisplay.hidden = false;" *ngIf="fullNameDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
-                    <button mat-icon-button (click)="editCustomer();fullNameDisplay.hidden = true;" *ngIf="!fullNameDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="fullNameDisplay.hidden = true;" *ngIf="!fullNameDisplay.hidden"><mat-icon>edit</mat-icon></button>
                   </td>
                 </tr>
               </table>
@@ -45,12 +45,11 @@
                       <input matInput type="date" formControlName="dateOfBirth" [hidden]="!dateOfBirthDisplay.hidden" (blur)="dateOfBirthDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editDateOfBirth>
                       <mat-hint align="end">{{editDateOfBirth.value.length}} / 128</mat-hint>
                     </mat-form-field>
-                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.dateOfBirth.errors?.required && customerEditForm.controls.dateOfBirth?.touched">Please choose data of birthay</p>
-
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.dateOfBirth.errors?.required && customerEditForm.controls.dateOfBirth?.touched">vui lòng chọn ngày, tháng, năm sinh!</p>
                   </td>
                   <td class="col-1">
                     <button mat-icon-button (mousedown)="editCustomer(); dateOfBirthDisplay.hidden = false;" *ngIf="dateOfBirthDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
-                    <button mat-icon-button (click)="editCustomer();dateOfBirthDisplay.hidden = true;" *ngIf="!dateOfBirthDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="dateOfBirthDisplay.hidden = true;" *ngIf="!dateOfBirthDisplay.hidden"><mat-icon>edit</mat-icon></button>
                   </td>
                 </tr>
               </table>
@@ -65,12 +64,12 @@
                       <input matInput formControlName="email" [hidden]="!emailDisplay.hidden" (blur)="emailDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editEmail>
                       <mat-hint align="end">{{editEmail.value.length}} / 128</mat-hint>
                     </mat-form-field>
-                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.email.errors?.required && customerEditForm.controls.email?.touched">Please enter the email</p>
-
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.email.errors?.required && customerEditForm.controls.email?.touched">vui lòng nhập email!</p>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.email.errors?.email && customerEditForm.controls.email?.touched">email không đúng định dạng</p>
                   </td>
                   <td class="col-1">
                     <button mat-icon-button (mousedown)="editCustomer(); emailDisplay.hidden = false;" *ngIf="emailDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
-                    <button mat-icon-button (click)="editCustomer();emailDisplay.hidden = true;" *ngIf="!emailDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="emailDisplay.hidden = true;" *ngIf="!emailDisplay.hidden"><mat-icon>edit</mat-icon></button>
                   </td>
                 </tr>
               </table>
@@ -87,12 +86,11 @@
                       <input matInput formControlName="address" [hidden]="!addressDisplay.hidden" (blur)="addressDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editAddress>
                       <mat-hint align="end">{{editAddress.value.length}} / 128</mat-hint>
                     </mat-form-field>
-                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.address.errors?.required && customerEditForm.controls.address?.touched">Please enter the address</p>
-
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.address.errors?.required && customerEditForm.controls.address?.touched">Vui lòng nhập địa chỉ!</p>
                   </td>
                   <td class="col-1">
                     <button mat-icon-button (mousedown)="editCustomer(); addressDisplay.hidden = false;" *ngIf="addressDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
-                    <button mat-icon-button (click)="editCustomer();addressDisplay.hidden = true;" *ngIf="!addressDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="addressDisplay.hidden = true;" *ngIf="!addressDisplay.hidden"><mat-icon>edit</mat-icon></button>
                   </td>
                 </tr>
               </table>
@@ -109,11 +107,12 @@
                       <input matInput formControlName="phone" [hidden]="!phoneDisplay.hidden" (blur)="phoneDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editPhone>
                       <mat-hint align="end">{{editPhone.value.length}} / 128</mat-hint>
                     </mat-form-field>
-                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.phone.errors?.required && customerEditForm.controls.phone?.touched">Please enter the phone</p>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.phone.errors?.required && customerEditForm.controls.phone?.touched">vui lòng nhập số điện thoại</p>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.phone.errors?.pattern && customerEditForm.controls.phone?.touched">Số điện thoại không đúng định dạng</p>
                   </td>
                   <td class="col-1">
                     <button mat-icon-button (mousedown)="editCustomer(); phoneDisplay.hidden = false;" *ngIf="phoneDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
-                    <button mat-icon-button (click)="editCustomer();phoneDisplay.hidden = true;" *ngIf="!phoneDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button (click)="phoneDisplay.hidden = true;" *ngIf="!phoneDisplay.hidden"><mat-icon>edit</mat-icon></button>
                   </td>
                 </tr>
               </table>
