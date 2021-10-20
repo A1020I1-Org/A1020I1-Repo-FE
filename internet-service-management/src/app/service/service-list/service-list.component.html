@@ -1,9 +1,9 @@
 <h1 class="container mt-5 text-center" style="color: darkblue">DANH SÁCH DỊCH VỤ</h1>
 <div class="container mt-3 d-flex justify-content-end">
-  <form method="get">
-    <input type="text" class="btn btn-outline-success"
+  <form>
+    <input type="text" class="btn btn-outline-success" (keyup.enter)="search()"
            placeholder="Tìm kiếm" name="searchName" [(ngModel)]="searchName"/>
-    <button class="btn btn-success rounded-circle ml-4" type="submit" (click)="search()">
+    <button class="btn btn-success rounded-circle ml-4" (click)="search()">
       <i class="fas fa-search-plus"></i>
     </button>
   </form>
@@ -46,6 +46,7 @@
 <div class="d-flex justify-content-end container">
   <button class="mr-3 btn btn-warning">Lưu Thay Đổi</button>
 </div>
+
 <!--- Phân Trang--->
 <nav aria-label="..." class="d-flex justify-content-end mt-3 mr-5">
   <ul class="pagination">
