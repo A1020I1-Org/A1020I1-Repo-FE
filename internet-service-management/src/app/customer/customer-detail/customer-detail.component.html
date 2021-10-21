@@ -1,0 +1,137 @@
+<h2 class="text-center">Account Information</h2>
+<div class="container-fluid" style="width: 60%">
+  <form class="mx-auto mt-4" >
+    <div class="card border-dark" style="width: 100%">
+      <div class="card-body">
+        <div class="col-lg-12" *ngIf="customer">
+          <div class="row">
+            <div class="form-group col-lg-6">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Username: </strong></td>
+                  <td class="col-6" >ngoc.cuong</td>
+                  <td class="col-1"></td>
+                </tr>
+              </table>
+            </div>
+            <div class="form-group col-lg-6" [formGroup]="customerEditForm">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Full name:</strong></td>
+                  <td class="col-6" >
+                    <span #fullNameDisplay >{{customer.fullName}}</span>
+                    <mat-form-field *ngIf="fullNameDisplay.hidden">
+                      <input matInput formControlName="fullName" [(ngModel)]="customer.fullName" [hidden]="!fullNameDisplay.hidden" (blur)="fullNameDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editFullName>
+                      <mat-hint align="end">{{editFullName.value.length}} / 128</mat-hint>
+                    </mat-form-field>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.fullName.errors?.required && customerEditForm.controls.fullName?.touched">vui lòng nhập họ và tên!</p>
+                  </td>
+                  <td class="col-1">
+                    <button mat-icon-button (mousedown)="editCustomer(); fullNameDisplay.hidden = false;" *ngIf="fullNameDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
+                    <button mat-icon-button (click)="fullNameDisplay.hidden = true;" *ngIf="!fullNameDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6" [formGroup]="customerEditForm">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Date Of Birth: </strong></td>
+                  <td class="col-6" >
+                    <span #dateOfBirthDisplay >{{customer.dateOfBirth}}</span>
+                    <mat-form-field *ngIf="dateOfBirthDisplay.hidden">
+                      <input matInput type="date" [(ngModel)]="customer.dateOfBirth" formControlName="dateOfBirth" [hidden]="!dateOfBirthDisplay.hidden" (blur)="dateOfBirthDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editDateOfBirth>
+                      <mat-hint align="end">{{editDateOfBirth.value.length}} / 128</mat-hint>
+                    </mat-form-field>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.dateOfBirth.errors?.required && customerEditForm.controls.dateOfBirth?.touched">vui lòng chọn ngày, tháng, năm sinh!</p>
+                  </td>
+                  <td class="col-1">
+                    <button mat-icon-button (mousedown)="editCustomer(); dateOfBirthDisplay.hidden = false;" *ngIf="dateOfBirthDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
+                    <button mat-icon-button (click)="dateOfBirthDisplay.hidden = true;" *ngIf="!dateOfBirthDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="form-group col-lg-6" [formGroup]="customerEditForm">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Email</strong></td>
+                  <td class="col-6" >
+                    <span #emailDisplay >{{customer.email}}</span>
+                    <mat-form-field *ngIf="emailDisplay.hidden">
+                      <input matInput [(ngModel)]="customer.email" formControlName="email" [hidden]="!emailDisplay.hidden" (blur)="emailDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editEmail>
+                      <mat-hint align="end">{{editEmail.value.length}} / 128</mat-hint>
+                    </mat-form-field>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.email.errors?.required && customerEditForm.controls.email?.touched">vui lòng nhập email!</p>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.email.errors?.email && customerEditForm.controls.email?.touched">email không đúng định dạng</p>
+                  </td>
+                  <td class="col-1">
+                    <button mat-icon-button (mousedown)="editCustomer(); emailDisplay.hidden = false;" *ngIf="emailDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
+                    <button mat-icon-button (click)="emailDisplay.hidden = true;" *ngIf="!emailDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6" [formGroup]="customerEditForm">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Address: </strong></td>
+                  <td class="col-6" >
+                    <span #addressDisplay >{{customer.address}}</span>
+                    <mat-form-field *ngIf="addressDisplay.hidden">
+                      <input matInput [(ngModel)]="customer.address" formControlName="address" [hidden]="!addressDisplay.hidden" (blur)="addressDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editAddress>
+                      <mat-hint align="end">{{editAddress.value.length}} / 128</mat-hint>
+                    </mat-form-field>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.address.errors?.required && customerEditForm.controls.address?.touched">Vui lòng nhập địa chỉ!</p>
+                  </td>
+                  <td class="col-1">
+                    <button mat-icon-button (mousedown)="editCustomer(); addressDisplay.hidden = false;" *ngIf="addressDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
+                    <button mat-icon-button (click)="addressDisplay.hidden = true;" *ngIf="!addressDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group col-lg-6" [formGroup]="customerEditForm">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Phone: </strong></td>
+                  <td class="col-6">
+                    <span #phoneDisplay >{{customer.phone}}</span>
+                    <mat-form-field *ngIf="phoneDisplay.hidden">
+                      <input matInput [(ngModel)]="customer.phone" formControlName="phone" [hidden]="!phoneDisplay.hidden" (blur)="phoneDisplay.hidden=false;" minlength="3" maxlength="50" autofocus #editPhone>
+                      <mat-hint align="end">{{editPhone.value.length}} / 128</mat-hint>
+                    </mat-form-field>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.phone.errors?.required && customerEditForm.controls.phone?.touched">vui lòng nhập số điện thoại</p>
+                    <p class="form-text text-danger" *ngIf="customerEditForm.controls.phone.errors?.pattern && customerEditForm.controls.phone?.touched">Số điện thoại không đúng định dạng</p>
+                  </td>
+                  <td class="col-1">
+                    <button mat-icon-button (mousedown)="editCustomer(); phoneDisplay.hidden = false;" *ngIf="phoneDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
+                    <button mat-icon-button (click)="phoneDisplay.hidden = true;" *ngIf="!phoneDisplay.hidden"><mat-icon>edit</mat-icon></button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="form-group col-lg-6">
+              <table class="col-lg-12">
+                <tr>
+                  <td class="col-3"><strong>Password: </strong></td>
+                  <td class="col-6">**********</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+<!--        <div class="text-muted d-flex justify-content-center">-->
+<!--          <button class="btn btn-success">Save</button>-->
+<!--        </div>-->
+      </div>
+    </div>
+  </form>
+</div>
+
