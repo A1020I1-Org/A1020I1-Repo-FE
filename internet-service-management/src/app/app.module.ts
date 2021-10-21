@@ -5,17 +5,19 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CustomerModule} from "./customer/customer.module";
 import { HttpClientModule} from "@angular/common/http";
+import {EmployeeModule} from "./employee/employee.module";
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CustomerModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        CustomerModule,
+        HttpClientModule,
+        EmployeeModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

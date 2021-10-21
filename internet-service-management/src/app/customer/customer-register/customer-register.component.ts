@@ -7,11 +7,10 @@ import {CustomerRegister} from "../../model/CustomerRegister";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {regexUnicode} from "../../share/regexNameVn";
 import {validAgeValidators} from "../../share/valid-age.validators";
-import validate = WebAssembly.validate;
 import {validPasswordValidators} from "../../share/valid-password.validators";
-import {IUserName} from "../../interface/IUserName";
 import {RegisterService} from "../../services/RegisterService";
 import {validUserNameValidators} from "../../share/valid-user-name.validators";
+import {validExitsEmailValidator} from "../../share/valid-exits-email.validator";
 
 @Component({
   selector: 'app-customer-register',
@@ -29,7 +28,9 @@ export class CustomerRegisterComponent implements OnInit {
   registerForm !: FormGroup;
   checkUserName: boolean = false;
   address: string = "";
-  id : number = 1;
+  id: number = 1;
+  checkExistEmail: boolean = false;
+  disable: boolean = true;
 
   constructor(private _addressService: AddressService,
               private _registerService: RegisterService) {
@@ -42,7 +43,7 @@ export class CustomerRegisterComponent implements OnInit {
       dateOfBirth: new FormControl('', [Validators.required, validAgeValidators(16, 100)]),
       idCard: new FormControl('', [Validators.required, Validators.pattern("^(([0-9]{12})|([0-9]{9})){1}$")]),
       phone: new FormControl('', [Validators.required, Validators.pattern("^(090)|(091)[0-9]{7}$")]),
-      email:new FormControl('',[Validators.required,Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email, validExitsEmailValidator(this.checkExistEmail)]),
       province: new FormControl(' '),
       district: new FormControl(' '),
       ward: new FormControl(' '),
@@ -51,6 +52,7 @@ export class CustomerRegisterComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,15}$")]),
       confirmPassword: new FormControl('', [Validators.required])
     }, {validators: [validPasswordValidators("password", "confirmPassword")]})
+    this.checkDisable();
   }
 
   getAllProvince() {
@@ -89,26 +91,49 @@ export class CustomerRegisterComponent implements OnInit {
     )
   }
 
+  checkEmail(event: any) {
+    this._registerService.checkEmail(event.target.value).subscribe(
+      data => {
+        this.checkExistEmail = data;
+      }
+    )
+  }
+
   checkUser(event: any) {
     this._registerService.checkUser(event.target.value).subscribe(
       data => {
-        console.log(data);
         this.checkUserName = data;
       }
     )
   }
 
+  checkDisable(){
+    console.log(this.checkExistEmail || this.checkUserName || this.registerForm.invalid)
+    this.disable = this.checkExistEmail || this.checkUserName || this.registerForm.invalid;
+  }
+
   onSubmit() {
-    this.id = Math.random()*1000;
+    this.id = Math.random() * 1000;
     const formValue = this.registerForm.value;
-    this.address = formValue.ward + ', ' + formValue.district.split("&")[0] + ', ' + formValue.province.split("&")[0];
-    this.customerRegister = new CustomerRegister(this.id,formValue.fullName,formValue.dateOfBirth,
-      formValue.email,this.address,formValue.phone,true,formValue.idCard,formValue.userName,formValue.password)
-    this._registerService.register(this.customerRegister).subscribe(data=>{
+    if (formValue.ward == " " && formValue.district == " " && formValue.province == " ") {
+      this.address = "";
+    } else {
+      if (formValue.ward == " " && formValue.district == " " && formValue.province != " ") {
+        this.address = formValue.province.split("&")[0];
+      }
+      if (formValue.ward == " " && formValue.district != " " && formValue.province != " ") {
+        this.address = formValue.district.split("&")[0] + ', ' + formValue.province.split("&")[0];
+      } else {
+        this.address = formValue.ward + ', ' + formValue.district.split("&")[0] + ', ' + formValue.province.split("&")[0];
+      }
+    }
+    this.customerRegister = new CustomerRegister(this.id, formValue.fullName, formValue.dateOfBirth,
+      formValue.email, this.address, formValue.phone, true, formValue.idCard, formValue.userName, formValue.password)
+    this._registerService.register(this.customerRegister).subscribe(
+      data => {
         console.log(data);
-    },error => {
-      console.log(error)
-    });
-    console.log(this.customerRegister);
+      }, error => {
+        console.log(error)
+      });
   }
 }

@@ -1,9 +1,9 @@
 import {AbstractControl, ValidationErrors, ValidatorFn} from "@angular/forms";
 
-export function validUserNameValidators(check : boolean, userName: string): ValidatorFn {
+export function validExitsEmailValidator(check : boolean): ValidatorFn {
   return (control: AbstractControl): ValidationErrors => {
     if (check) {
-      return {'invalidUser': true};
+      return {'invalidEmail': true};
     }
     // @ts-ignore
     return null;
