@@ -1,4 +1,6 @@
-
+import {StatisticalModule} from "./statistical/statistical.module";
+import {HttpClientModule} from "@angular/common/http";
+import {ChartsModule} from "ng2-charts";
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
@@ -14,6 +16,7 @@ import {RouterModule} from "@angular/router";
 import {ComputerModule} from "./computer/computer.module";
 import {ReactiveFormsModule} from "@angular/forms";
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,9 +26,11 @@ import {ReactiveFormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    StatisticalModule,
+    HttpClientModule,
+    ChartsModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     BrowserAnimationsModule,
     MatDialogModule,
     ToastrModule.forRoot(),
