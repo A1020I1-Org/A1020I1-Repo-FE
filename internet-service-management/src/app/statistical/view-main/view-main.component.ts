@@ -16,10 +16,10 @@ export class ViewMainComponent  implements OnInit {
   statusErrorStart: boolean= false;
   messageErrorEnd: string = '';
   statusErrorEnd: boolean= false;
-  startTime: string = '';
+  startTime: string = '2020-12-31';
   endTime: string = '';
-  labelY: string = "Hour";
-  labelX: string = "Computer";
+  labelY: string = "Giờ chơi";
+  labelX: string = "Máy tính";
   barChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -58,23 +58,22 @@ export class ViewMainComponent  implements OnInit {
     this.mode = mode;
     switch (mode) {
       case 'computer':
-        this.labelY = 'Time';
-        this.labelX = 'Computer';
+        this.labelY = 'Giờ chơi';
+        this.labelX = 'Máy tính';
         break;
       case 'month':
-        this.labelY = 'Money';
-        this.labelX = 'Month';
+        this.labelY = 'Tiền';
+        this.labelX = 'Tháng';
         break;
       case 'account':
         this.labelY = '';
-        this.labelX = 'Account';
+        this.labelX = 'Tài khoản';
         break;
     }
   }
 
   onSubmit(){
     if(this.validatingValue()){
-      this.barChartLegend = true;
       this.barChartLabels = [];
       switch (this.mode) {
         case 'computer':
@@ -87,10 +86,12 @@ export class ViewMainComponent  implements OnInit {
           this.viewByAccount();
           break;
       }
+      this.barChartLegend = true;
     }
   }
 
   validatingValue(): boolean{
+    const regexDate = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[13-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/g;
     let startTime = new Date(this.startTime);
     let endTime = new Date(this.endTime);
     let now = new Date();
@@ -99,25 +100,39 @@ export class ViewMainComponent  implements OnInit {
     let betweenEnd = (now.getTime() - endTime.getTime()) / (1000 * 60 * 60 * 24);
     this.statusErrorStart = false;
     this.statusErrorEnd = false;
-    if(this.mode === 'account'){
-      if(betweenStart < 0){
-        this.statusErrorStart = true;
-        this.messageErrorStart = 'Start date must be less than or equal to current date';
-      }
+    if(betweenStart < 0){
+      this.statusErrorStart = true;
+      this.messageErrorStart = 'Ngày bắt đầu phải bé hơn hoặc bằng ngày hiện tại';
+    }else if(betweenStart > 7306){
+      this.statusErrorStart = true;
+      this.messageErrorStart = 'Trang web chỉ thống kê trong khoảng thời gian 20 năm';
     }
     if(betweenEnd < 0 && this.mode !== 'account'){
       this.statusErrorEnd = true;
-      this.messageErrorEnd = 'End date must be less than or equal to current date';
+      this.messageErrorEnd = 'Ngày kết thúc phải bé hơn hoặc bằng ngày hiện tại';
+    }else if(betweenStart > 7306 && this.mode !== 'account'){
+      this.statusErrorEnd = true;
+      this.messageErrorEnd = 'Trang web chỉ thống kê trong khoảng thời gian 20 năm';
     }
     if(this.statusErrorEnd || this.statusErrorStart){
       return false;
     }
     if(betweenDay < 1 && this.mode !== 'account'){
       this.statusErrorEnd = true;
-      this.messageErrorEnd = 'The end date must be 24 hours greater than the start date';
+      this.messageErrorEnd = 'Ngày kết thúc phải lớn hơn ngày bắt đầu 24h';
+      return false;
+    }
+    if(betweenDay > 7305 && this.mode !== 'account'){
+      this.statusErrorEnd = true;
+      this.messageErrorEnd = 'Trang web chỉ thống kê trong khoảng thời gian 20 năm';
       return false;
     }
     return true;
+  }
+
+  revertDate(date: string): string{
+    let str: string[] = date.split('-');
+    return str[2] + '-' + str[1] + '-' + str[0];
   }
 
   viewByComputer(){
@@ -129,7 +144,7 @@ export class ViewMainComponent  implements OnInit {
       });
       this.barChartData = [{
         data: datas,
-        label: 'Time' ,
+        label: 'Giờ chơi' ,
         backgroundColor: 'rgb(102, 102, 255)',
         borderColor: 'rgb(102, 102, 255)'
       }];
@@ -150,12 +165,12 @@ export class ViewMainComponent  implements OnInit {
       });
       this.barChartData = [{
         data: totalMoneyComputer,
-        label: 'Computer' ,
+        label: 'Máy tính' ,
         backgroundColor: 'rgb(102, 102, 255)',
         borderColor: 'rgb(102, 102, 255)'
       },{
         data: totalMoneyService,
-        label: 'Service' ,
+        label: 'Dịch vụ' ,
         backgroundColor: 'rgb(255, 153, 0)',
         borderColor: 'rgb(255, 153, 0)'
       }];
@@ -176,12 +191,12 @@ export class ViewMainComponent  implements OnInit {
       });
       this.barChartData = [{
         data: totalTime,
-        label: 'Time' ,
+        label: 'Giờ chơi' ,
         backgroundColor: 'rgb(102, 102, 255)',
         borderColor: 'rgb(102, 102, 255)'
       },{
         data: totalMoney,
-        label: 'Money' ,
+        label: 'Tiền' ,
         backgroundColor: 'rgb(255, 153, 0)',
         borderColor: 'rgb(255, 153, 0)'
       }];
