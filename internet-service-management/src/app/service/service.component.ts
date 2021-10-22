@@ -41,7 +41,7 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
     // data page here
     this.serviceService.getPage().subscribe(
       (data) => {
-        console.log(data);
+        console.log(data.content);
       }
     );
 
@@ -70,9 +70,9 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
           this.formGroupForUpdate[i] = this.formBuilder.group({
             serviceId: ['', [Validators.pattern("^SV\\d{4}$"), Validators.required]],
             serviceName: ['', [Validators.required]],
-            quantity: ['', [Validators.required]],
+            quantity: ['', [Validators.required, Validators.min(1)]],
             unit: ['', [Validators.required]],
-            prices: ['', [Validators.required]]
+            prices: ['', [Validators.required, Validators.min(1000)]]
           });
         }
 
@@ -89,6 +89,7 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
   }
 
   btnAddService() {
+
     this.btnAddHidden = false;
     this.btnEditHidden = true;
 
@@ -101,9 +102,9 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
       this.formGroupForAdd[i] = this.formBuilder.group({
         serviceId: ['',[Validators.pattern("^SV\\d{4}$"), Validators.required]],
         serviceName: ['', [Validators.required]],
-        quantity: ['', [Validators.required]],
+        quantity: ['', [Validators.required, Validators.min(1)]],
         unit: ['', [Validators.required]],
-        prices: ['', [Validators.required]]
+        prices: ['', [Validators.required, Validators.min(1000)]]
       });
     }
     this.sttForm++;
@@ -122,21 +123,33 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
   }
 
   submitAddService() {
+    $('#contentModalAddOrUpdate').empty();
     this.btnAddHidden = true;
     this.btnEditHidden = true;
 
     if (this.formGroupForAdd.length > 0) {
       for (let i = 0; i < this.formGroupForAdd.length; i++) {
+
+        let serviceIdTmp = this.formGroupForAdd[i].get('serviceId')?.value.toString().trim();
+        this.formGroupForAdd[i].controls.serviceName.setValue(this.formGroupForAdd[i].controls.serviceName.value.toString().trim());
+
         this.serviceArr.push(this.formGroupForAdd[i].value);
         this.serviceArrCheck.push(this.formGroupForAdd[i].value);
         this.serviceArrForUpdate.push(this.formGroupForAdd[i].value);
         this.serviceService.addOrUpdate(this.formGroupForAdd[i], "add").subscribe(
           (data) => {},
           (err) => {
+            jQuery('#contentModalAddOrUpdate').append(`<h4 class="text-danger">Add failed ${serviceIdTmp}</h4>`);
+            // @ts-ignore
+            jQuery('#modalAddOrUpdate').modal();
+            console.log(err);
             // if there is an error, please send a notification
             this.getAllService();
           },
           () => {
+            jQuery('#contentModalAddOrUpdate').append(`<h4 class="text-success">Add success ${serviceIdTmp}</h4>`);
+            // @ts-ignore
+            jQuery('#modalAddOrUpdate').modal();
             this.getAllService();
           }
         );
@@ -161,9 +174,9 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
         this.formGroupForUpdate[i] = this.formBuilder.group({
           serviceId: [this.serviceArrForUpdate[i].serviceId, [Validators.pattern("^SV\\d{4}$"), Validators.required]],
           serviceName: [this.serviceArrForUpdate[i].serviceName, [Validators.required]],
-          quantity: [this.serviceArrForUpdate[i].quantity, [Validators.required]],
+          quantity: [this.serviceArrForUpdate[i].quantity, [Validators.required, Validators.min(1)]],
           unit: [this.serviceArrForUpdate[i].unit, [Validators.required]],
-          prices: [this.serviceArrForUpdate[i].prices, [Validators.required]]
+          prices: [this.serviceArrForUpdate[i].prices, [Validators.required, Validators.min(1000)]]
         });
       }
     }
@@ -176,9 +189,9 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
     this.formGroupForUpdate[index] = this.formBuilder.group({
       serviceId: ['',[Validators.pattern("^SV\\d{4}$"), Validators.required]],
       serviceName: ['', [Validators.required]],
-      quantity: ['', [Validators.required]],
+      quantity: ['', [Validators.required, Validators.min(1)]],
       unit: ['', [Validators.required]],
-      prices: ['', [Validators.required]]
+      prices: ['', [Validators.required, Validators.min(1000)]]
     });
 
     let countFormGroupForUpdateExist: number = 0;
@@ -197,6 +210,8 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
   }
 
   submitEditService() {
+
+    $('#contentModalAddOrUpdate').empty();
     this.btnAddHidden = true;
     this.btnEditHidden = true;
 
@@ -204,10 +219,24 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
       (o, i) => {
         this.serviceArrCheck[i] = {serviceId: '', serviceName: '', quantity: 0, unit: '', prices: 0};
         if (o.get('serviceId')?.value != ''){
+
+          let serviceIdTmp = this.formGroupForUpdate[i].get('serviceId')?.value.toString().trim();
+          this.formGroupForUpdate[i].controls.serviceName.setValue(this.formGroupForUpdate[i].controls.serviceName.value.toString().trim());
+
           this.serviceService.addOrUpdate(this.formGroupForUpdate[i], "update").subscribe(
             (data) => {},
-            (err) => {},
+            (err) => {
+              jQuery('#contentModalAddOrUpdate').append(`<h4 class="text-danger">Edit failed ${serviceIdTmp}</h4>`);
+              // @ts-ignore
+              jQuery('#modalAddOrUpdate').modal();
+              console.log(err);
+              // if there is an error, please send a notification
+              this.getAllService();
+            },
             () => {
+              jQuery('#contentModalAddOrUpdate').append(`<h4 class="text-success">Edit success ${serviceIdTmp}</h4>`);
+              // @ts-ignore
+              jQuery('#modalAddOrUpdate').modal();
               this.getAllService();
               this.btnAddHidden = true;
               this.btnEditHidden = true;
@@ -227,10 +256,10 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
 
           this.formGroupForUpdate[i] = this.formBuilder.group({
             serviceId: ['',[Validators.pattern("^SV\\d{4}$"), Validators.required]],
-            serviceName: [''],
-            quantity: [''],
-            unit: [''],
-            prices: ['']
+            serviceName: ['', [Validators.required]],
+            quantity: ['', [Validators.required, Validators.min(1)]],
+            unit: ['', [Validators.required]],
+            prices: ['', [Validators.required, Validators.min(1000)]]
           });
         }
       }
@@ -271,8 +300,13 @@ export class ServiceComponent implements OnInit, AfterContentChecked {
         }
       }
     }
+  }
 
-    console.log('ngAfterContentChecked');
+  compareWith(c1: any, c2: any) {
+    if (c1 != null && c2 != null) {
+      return c1.id === c2.id;
+    }
+    return false;
   }
 
 }
