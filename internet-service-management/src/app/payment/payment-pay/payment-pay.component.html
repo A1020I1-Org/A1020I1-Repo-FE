@@ -24,6 +24,8 @@
                                 class="text-danger mt-2">Hãy nhập số tiền nhận</div>
                             <p *ngIf="formExchange.controls.moneyRecived.errors?.min && formExchange.controls.moneyRecived.touched"
                                 class="text-danger mt-1">Số tiền nhận phải lớn hơn tiền thanh toán</p>
+                            <p *ngIf="formExchange.controls.moneyRecived.errors?.pattern && formExchange.controls.moneyRecived.touched"
+                                class="text-danger mt-1">Sô tiền phải là định dạng kiểu số</p>
                         </div>
                     </div>
                 </form>

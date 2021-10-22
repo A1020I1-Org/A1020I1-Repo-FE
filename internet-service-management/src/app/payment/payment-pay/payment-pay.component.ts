@@ -32,7 +32,7 @@ export class PaymentPayComponent implements OnInit {
   ngOnInit(): void {
     this.payment = this.data.data;
     this.formExchange = this.formBuilder.group({
-      moneyRecived: ['', [Validators.required, Validators.min(this.payment.totalPayment)]],
+      moneyRecived: ['', [Validators.required, Validators.min(this.payment.totalPayment), Validators.pattern('^[0-9]*$')]],
     })
   }
 
@@ -55,9 +55,10 @@ export class PaymentPayComponent implements OnInit {
         verticalPosition: 'top',
         panelClass: ["custom-style"]
       });
-      this.paymentService.getPaymentCustomerById(1);
-      this.router.navigateByUrl('/payment-customer');
+      // this.paymentService.getPaymentCustomerById(this.payment.id);
       this.dialogRef.close();
+      this.router.navigateByUrl('list-payment');
+      this.paymentService.getListPayment();
     })
   }
 

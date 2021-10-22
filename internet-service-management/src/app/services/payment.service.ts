@@ -50,4 +50,9 @@ export class PaymentService {
     const url = `${this.APIList}?page=${pageNum}`;
     return this.http.get<any>(url);
   }
+
+  getPageSearch(searchName: string, pageNum: number): Observable<any> {
+    const url = this.APISearch + '?searchName=' + searchName + '&page=' + pageNum;
+    return this.http.get<any>(url);
+  }
 }

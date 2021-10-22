@@ -25,7 +25,7 @@ export class PaymentListComponent implements OnInit {
   }
 
   getPage(pageNum: number) {
-    this.paymentService.getPageList(pageNum).subscribe(
+    this.paymentService.getPageSearch(this.searchName, pageNum).subscribe(
       data => {
         this.payments = data.content;
         this.indexPagination = data.pageable.pageNumber + 1;
@@ -56,6 +56,9 @@ export class PaymentListComponent implements OnInit {
         width: '600px',
         data: { data: dataPay },
         disableClose: true
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        this.ngOnInit();
       });
     })
   }
