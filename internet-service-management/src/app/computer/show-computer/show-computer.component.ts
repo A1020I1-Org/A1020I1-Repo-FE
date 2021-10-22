@@ -7,49 +7,44 @@ import {ComputerTypeService} from "../../services/computer-type.service";
 import {ComputerStatusService} from "../../services/computer-status.service";
 import {IType} from "../../interface/IType";
 import {IStatus} from "../../interface/IStatus";
+import {FormControl, FormGroup} from "@angular/forms";
+import {AlertService} from "../alert.service";
+
+
+
+
 
 @Component({
   selector: 'app-show-computer',
   templateUrl: './show-computer.component.html',
   styleUrls: ['./show-computer.component.css']
 })
+
 export class ShowComputerComponent implements OnInit {
   listComputer: IComputer[] = [];
   listComputerType: IType[] = [];
   listComputerStatus: IStatus[] = [];
-  startUsedDateToComputer: string="";
-  typeComputer= '';
-  idComputer: string="";
-  startUsedDateFromComputer: string="";
-  statusComputer = '';
-  computerLocation: string="";
+  searchComputer!: FormGroup;
+  indexPagination: number = 1;
+  totalPagination: number = 0;
   constructor(private computerService: ComputerService,private dialog: MatDialog,private computerTypeService: ComputerTypeService,
-  private computerStatusService: ComputerStatusService) { }
+  private computerStatusService: ComputerStatusService,private alertService: AlertService) {
+
+
+  }
 
   ngOnInit(): void {
-    this.computerService.getAllComputer().subscribe(
-      (data)=>{
-        let page:IComputer[] = data.content;
-        this.listComputer = page;
-        console.log(data);
-        },
-      ()=>{
-        console.log("Error");
-      },
-      ()=>{
-        console.log("Complete");
-      }
-    );
-    this.computerTypeService.getAllType().subscribe((data)=>{
-      // @ts-ignore
-      this.listComputerType = data;
-    });
-    this.computerStatusService.getAllStatus().subscribe((data)=>{
-      // @ts-ignore
-      this.listComputerStatus = data;
-      // this.listComputerStatus.unshift({statusId : 0, statusName : ''});
+
+    this.getList();
+    this.searchComputer = new FormGroup({
+      idComputer: new FormControl(''),
+      startUsedDateFromComputer: new FormControl(''),
+      statusComputer: new FormControl(''),
+      computerLocation: new FormControl(''),
+      startUsedDateToComputer: new FormControl(''),
+      typeComputer: new FormControl(''),
     })
-  }
+  };
 
   openDialog(computerId: string) {
     this.computerService.getComputerById(computerId).subscribe((data)=>{
@@ -67,30 +62,119 @@ export class ShowComputerComponent implements OnInit {
 
   }
 
-  searchComputer() {
-    if(this.idComputer == ''){
-      this.idComputer = "";
+  search() {
+    if(this.searchComputer.value.idComputer == ''){
+      this.searchComputer.value.idComputer = "";
     };
-    if(this.computerLocation == ''){
-      this.computerLocation = "";
-    };
-
-    if(this.startUsedDateFromComputer == ''){
-      this.startUsedDateFromComputer = "1000-01-01";
+    if(this.searchComputer.value.computerLocation == ''){
+      this.searchComputer.value.computerLocation = "";
     };
 
-    if(this.startUsedDateToComputer == ''){
-      this.startUsedDateToComputer = "9999-12-31";
+    if(this.searchComputer.value.startUsedDateFromComputer == ''){
+      this.searchComputer.value.startUsedDateFromComputer = "1000-01-01";
     };
-    if(this.typeComputer == ''){
-      this.typeComputer = "";
+    if(this.searchComputer.value.startUsedDateToComputer == ''){
+      this.searchComputer.value.startUsedDateToComputer = "9999-12-31";
     };
-    if(this.statusComputer == ''){
-      this.statusComputer = "";
+    if(this.searchComputer.value.typeComputer == ''){
+      this.searchComputer.value.typeComputer = "";
+    };
+    if(this.searchComputer.value.statusComputer == ''){
+      this.searchComputer.value.statusComputer = "";
     };
 
-    this.computerService.searchComputer(this.idComputer,this.computerLocation, this.startUsedDateFromComputer, this.startUsedDateToComputer,
-      this.typeComputer, this.statusComputer).subscribe((data)=>{
+    this.computerService.searchComputer(this.searchComputer.value.idComputer,this.searchComputer.value.computerLocation,
+      this.searchComputer.value.startUsedDateFromComputer, this.searchComputer.value.startUsedDateToComputer,
+      this.searchComputer.value.typeComputer, this.searchComputer.value.statusComputer).subscribe(
+        (data)=>{
+
+      // @ts-ignore
+      this.listComputer = data.content;
+      console.log("Đây là search"+this.listComputer);
+
+
+    },
+      ()=>{
+          this.alertService.showAlertSuccess("Không thể tìm kiếm máy như theo yêu cầu!");
+      }
+    )
+  }
+  getPage(pageNum: number){
+
+    this.computerService.getPageList(pageNum).subscribe(data =>{
+      this.listComputer = data.content;
+      this.indexPagination = data.pageable.pageNumber + 1;
+    });
+    // if(this.searchComputer.value.startUsedDateFromComputer == ''){
+    //   this.searchComputer.value.startUsedDateFromComputer = "1000-01-01";
+    // };
+    // if(this.searchComputer.value.startUsedDateToComputer == ''){
+    //   this.searchComputer.value.startUsedDateToComputer = "9999-12-31";
+    // };
+    // this.computerService.getPageSearch(pageNum,this.searchComputer.value.idComputer,this.searchComputer.value.computerLocation,
+    //   this.searchComputer.value.startUsedDateFromComputer, this.searchComputer.value.startUsedDateToComputer,
+    //   this.searchComputer.value.typeComputer, this.searchComputer.value.statusComputer).subscribe(data=>{
+    //
+    //   this.listComputer = data.content;
+    //   this.indexPagination = data.pageable.pageNumber + 1;
+    // })
+  }
+
+  getList() {
+    this.computerService.getAllComputer().subscribe(
+      (data)=>{
+
+        this.listComputer = data.content;
+        this.totalPagination = data.totalPages;
+        console.log(data);
+      },
+      ()=>{
+        console.log("Error");
+      },
+      ()=>{
+        console.log("Complete");
+      }
+    );
+
+    this.computerTypeService.getAllType().subscribe((data)=>{
+      // @ts-ignore
+      this.listComputerType = data;
+    });
+    this.computerStatusService.getAllStatus().subscribe((data)=>{
+      // @ts-ignore
+      this.listComputerStatus = data;
+      // this.listComputerStatus.unshift({statusId : 0, statusName : ''});
+    })
+  }
+
+  pageRefresh() {
+    this.ngOnInit();
+  }
+
+  searchEnter($event: KeyboardEvent) {
+    if(this.searchComputer.value.idComputer == ''){
+      this.searchComputer.value.idComputer = "";
+    };
+    if(this.searchComputer.value.computerLocation == ''){
+      this.searchComputer.value.computerLocation = "";
+    };
+
+    if(this.searchComputer.value.startUsedDateFromComputer == ''){
+      this.searchComputer.value.startUsedDateFromComputer = "1000-01-01";
+    };
+    if(this.searchComputer.value.startUsedDateToComputer == ''){
+      this.searchComputer.value.startUsedDateToComputer = "9999-12-31";
+    };
+    if(this.searchComputer.value.typeComputer == ''){
+      this.searchComputer.value.typeComputer = "";
+    };
+    if(this.searchComputer.value.statusComputer == ''){
+      this.searchComputer.value.statusComputer = "";
+    };
+
+    this.computerService.searchComputer(this.searchComputer.value.idComputer,this.searchComputer.value.computerLocation,
+      this.searchComputer.value.startUsedDateFromComputer, this.searchComputer.value.startUsedDateToComputer,
+      this.searchComputer.value.typeComputer, this.searchComputer.value.statusComputer).subscribe((data)=>{
 
       // @ts-ignore
       this.listComputer = data.content;

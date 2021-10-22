@@ -25,4 +25,8 @@ export class DeleteComputerComponent implements OnInit {
       this.alertService.showAlertSuccess("Xóa máy tính thành công!");
     })
   }
+
+  notDelete() {
+    this.alertService.showAlertSuccess("Hủy bỏ thành công!");
+  }
 }

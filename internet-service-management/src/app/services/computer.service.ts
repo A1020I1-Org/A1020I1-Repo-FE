@@ -8,13 +8,24 @@ import {IComputer} from "../interface/IComputer";
 })
 export class ComputerService {
   computer!: IComputer[];
-  readonly URL_LIST = "http://localhost:8080/computer/listComputer";
-  readonly URL_DELETE = "http://localhost:8080/computer/deleteComputer";
-  readonly URL_GET = "http://localhost:8080/computer/getInforComputer";
-  readonly URL_SEARCH = "http://localhost:8080/computer/searchComputer";
+  readonly URL_LIST = "http://localhost:8080/computer";
+  readonly URL_DELETE = "http://localhost:8080/computer/delete";
+  readonly URL_GET = "http://localhost:8080/computer/getInfor";
+  readonly URL_SEARCH = "http://localhost:8080/computer/search";
   constructor(private httpClient: HttpClient) { }
+
   getAllComputer():Observable<any>{
-    return this.httpClient.get<any>(this.URL_LIST);
+    return this.httpClient.get<any>(this.URL_LIST+ '/list');
+  }
+  getPageList(pageNum: number): Observable<any>{
+
+    return this.httpClient.get<any>(this.URL_LIST + '/list?page=' +pageNum);
+  }
+  getPageSearch(pageNumber: number,idComputer: string,locationComputer: string,startUsedDateFromComputer: string,
+                startUsedDateToComputer: string, typeComputer: string,statusComputer: string):Observable<any>{
+    return this.httpClient.get<any>(this.URL_SEARCH + '?page=' + pageNumber + '&computerId=' + idComputer + '&computerLocation='+locationComputer
+      +'&startUsedDateFromComputer='+startUsedDateFromComputer + '&startUsedDateToComputer='+startUsedDateToComputer + '&type='+typeComputer
+      +'&status='+statusComputer);
   }
   deleteComputer(id:string):Observable<IComputer>{
     return this.httpClient.delete<IComputer>(this.URL_DELETE + '/' + id);
