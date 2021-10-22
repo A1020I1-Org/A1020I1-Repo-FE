@@ -11,14 +11,16 @@ import {ServiceRoutingModule} from "./service-routing.module";
 import {AppComponent} from "../app.component";
 import {NgxPaginationModule} from "ngx-pagination";
 import {Ng2SearchPipeModule} from "ng2-search-filter";
+import { DeleteAllComponent } from './delete-all/delete-all.component';
 
 @NgModule({
     declarations: [
         ServiceListComponent,
         ServiceDeleteComponent,
+        DeleteAllComponent
     ],
     exports: [
-        ServiceListComponent
+        ServiceListComponent,
     ],
   imports: [
     CommonModule,

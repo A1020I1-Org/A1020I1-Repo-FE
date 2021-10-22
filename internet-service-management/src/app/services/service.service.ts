@@ -15,16 +15,15 @@ export class ServiceService {
     private http: HttpClient) {
   }
 
-  // statusDelete(status:boolean){
-  //   this.statusSource.next(status);
-  // }
-
   getAllService():Observable<any>{
     return this.http.get<any>(this.API+'/list');
   }
 
   deleteServicesByID(servicesID: string): Observable<any>{
     return this.http.delete<any>(this.API + '/delete/' + servicesID);
+  }
+  deleteAllServices(): Observable<any>{
+    return this.http.delete<any>(this.API + '/deleteAll');
   }
 
   getServicesById(servicesID: string):Observable<IService>{
@@ -36,8 +35,8 @@ export class ServiceService {
     );
   };
 
-  getPageList(pageNum:number):Observable<any>{
-    const url = `${this.API}/list?page=${pageNum}`;
+  getPageList(pageNum: number,searchName:string):Observable<any>{
+    const url = this.API + '/search' + '?page=' + pageNum +'&searchName=' + searchName;
     return this.http.get<any>(url);
   }
 }

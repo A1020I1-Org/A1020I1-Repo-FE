@@ -3,6 +3,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ServiceService} from "../../services/service.service";
 import {ServiceDeleteComponent} from "../service-delete/service-delete.component";
 import {IService} from "../../interface/IService";
+import {DeleteAllComponent} from "../delete-all/delete-all.component";
 
 @Component({
   selector: 'app-service-list',
@@ -29,7 +30,7 @@ export class ServiceListComponent implements OnInit {
   }
 
   getPage(pageNum : number){
-    this.servicesService.getPageList(pageNum).subscribe(
+    this.servicesService.getPageList(pageNum,this.searchName).subscribe(
        data=> {
          this.listService = data.content;
          this.indexPagination = data.pageable.pageNumber +1;
@@ -59,8 +60,19 @@ export class ServiceListComponent implements OnInit {
 
   search() {
     this.servicesService.search(this.searchName).subscribe(data => {
+      console.log(data);
       // @ts-ignore
       this.listService = data.content;
+    });
+  }
+
+  openDialogDeleteAll() {
+    const dialogRef = this.dialog.open(DeleteAllComponent, {
+      width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.ngOnInit();
     });
   }
 }

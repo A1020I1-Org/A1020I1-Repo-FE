@@ -9,11 +9,13 @@ import {ServiceModule} from "./service/service.module";
 import {ToastrModule} from 'ngx-toastr';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminHomeComponent } from './admin-home/admin-home.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminHomeComponent
   ],
   imports: [
     BrowserModule,

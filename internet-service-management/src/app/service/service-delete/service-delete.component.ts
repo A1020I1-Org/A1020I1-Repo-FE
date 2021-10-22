@@ -26,7 +26,6 @@ export class ServiceDeleteComponent implements OnInit {
 
   deleteServices() {
     this.servicesService.deleteServicesByID(this.servicesOfID).subscribe(data =>{
-      // this.servicesService.statusDelete(true);
       this.dialogRef.close();
       this.alertService.showAlertSuccess("Xoá dịch vụ thành công!");
     });

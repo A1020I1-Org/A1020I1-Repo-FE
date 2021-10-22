@@ -5,9 +5,11 @@ import {CommonModule} from "@angular/common";
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {AdminHomeComponent} from "../admin-home/admin-home.component";
 
 const routes: Routes = [
-  {path: 'service-list', component: ServiceListComponent}
+  {path: 'service-list', component: ServiceListComponent},
+  {path: 'admin-home', component: AdminHomeComponent}
 ];
 
 @NgModule({
