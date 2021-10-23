@@ -23,9 +23,10 @@ export class ComputerService {
   }
   getPageSearch(pageNumber: number,idComputer: string,locationComputer: string,startUsedDateFromComputer: string,
                 startUsedDateToComputer: string, typeComputer: string,statusComputer: string):Observable<any>{
-    return this.httpClient.get<any>(this.URL_SEARCH + '?page=' + pageNumber + '&computerId=' + idComputer + '&computerLocation='+locationComputer
-      +'&startUsedDateFromComputer='+startUsedDateFromComputer + '&startUsedDateToComputer='+startUsedDateToComputer + '&type='+typeComputer
-      +'&status='+statusComputer);
+   const url = this.URL_SEARCH + '?page=' + pageNumber + '&computerId=' + idComputer + '&computerLocation='+locationComputer
+     +'&startUsedDateFromComputer='+startUsedDateFromComputer + '&startUsedDateToComputer='+startUsedDateToComputer + '&type='+typeComputer
+     +'&status='+statusComputer;
+   return this.httpClient.get<any>(url)
   }
   deleteComputer(id:string):Observable<IComputer>{
     return this.httpClient.delete<IComputer>(this.URL_DELETE + '/' + id);

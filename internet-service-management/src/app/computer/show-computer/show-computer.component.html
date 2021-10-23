@@ -5,23 +5,24 @@
       <form class="form-group" [formGroup]="searchComputer" (ngSubmit)="search()" (keydown)="searchEnter($event)">
         <table>
           <tr>
-            <td><label class=" pr-3">Mã Máy Tính: </label></td>
+            <td><label class=" pr-3 pt-2">Mã Máy Tính: </label></td>
             <td><input  class="form-control " type="text" formControlName="idComputer"  maxlength=10 trim="" ></td>
-            <td><label class="ml-4 pr-3 " id="date-form">Ngày Sử Dụng Máy Từ: </label></td>
+            <td><label class="ml-4 pr-3 pt-2 " id="date-form">Ngày Sử Dụng Máy Từ: </label></td>
             <td> <input class="form-control " type="date" formControlName="startUsedDateFromComputer"></td>
-            <td> <label class="ml-4 pr-3 " id="status">Trạng Thái Sử Dụng: </label></td>
+            <td> <label class="ml-4 pr-3 pt-2 " id="status">Trạng Thái Sử Dụng: </label></td>
             <td>
               <select class="form-control mr-5" formControlName="statusComputer">
                 <option value="">Chọn...</option>
                 <option *ngFor="let status of listComputerStatus" [ngValue]="status.statusName">{{status.statusName}}</option>
               </select>
             </td>
-            <td></td>
+            <td><button class="btn btn-success rounded-circle ml-1" type="submit" ><i class="fas fa-search-plus"></i>
+            </button> </td>
           </tr>
           <tr>
             <td><label class="" id="location">Vị Trí Máy: </label></td>
             <td><input class="form-control" type="text" formControlName="computerLocation" maxlength=15 trim=""></td>
-            <td> <label class="ml-4" id="date-to">Ngày Sử Dụng Máy Đến: </label></td>
+            <td> <label class="ml-4 pt-2"  id="date-to">Ngày Sử Dụng Máy Đến: </label></td>
             <td><input class="form-control" type="date" formControlName="startUsedDateToComputer"></td>
             <td> <label class="ml-4" id="type">Loại Máy: </label></td>
             <td>
@@ -30,9 +31,9 @@
                 <option *ngFor="let type of listComputerType" [ngValue]="type.typeName">{{type.typeName}}</option>
               </select>
             </td>
-            <td><button class="btn btn-success rounded-circle ml-1" type="submit" ><i class="fas fa-search-plus"></i>
-            </button>
+            <td>
               <a class=" btn btn-secondary rounded-circle ml-1" (click)="pageRefresh()"><i class="fas fa-sync-alt"></i></a>
+
             </td>
           </tr>
         </table>
