@@ -26,6 +26,8 @@
                                 class="text-danger mt-1">Số tiền nhận phải lớn hơn tiền thanh toán</p>
                             <p *ngIf="formExchange.controls.moneyRecived.errors?.pattern && formExchange.controls.moneyRecived.touched"
                                 class="text-danger mt-1">Sô tiền phải là định dạng kiểu số</p>
+                            <p *ngIf="formExchange.controls.moneyRecived.errors?.max && formExchange.controls.moneyRecived.touched"
+                                class="text-danger mt-1">Sô tiền tối đa được 100 triệu</p>
                         </div>
                     </div>
                 </form>
@@ -36,9 +38,10 @@
                 </div>
                 <hr>
                 <div class="row d-flex justify-content-around mt-5">
-                    <button *ngIf="!statusExchange" class="btn btn-primary" (click)="calculatorExchange();"
+                    <button *ngIf="!statusExchange" class="btn btn-warning text-white" (click)="calculatorExchange();"
                         [disabled]="formExchange.invalid">Tính tiền</button>
-                    <button *ngIf="statusExchange" class="btn btn-primary" (click)="pay();">Xác nhận thanh toán</button>
+                    <button *ngIf="statusExchange" class="btn btn-warning text-white" (click)="pay();">Xác nhận thanh
+                        toán</button>
                 </div>
             </div>
         </div> <!-- End -->
