@@ -4,7 +4,6 @@ import { LoginComponent } from './components/login/login.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { HomeComponent } from './components/home/home.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import { ForbidenComponent } from './forbiden/forbiden.component';
 import {SecurityRoutingModule} from "./security-routing.module";
 
 
@@ -14,7 +13,6 @@ import {SecurityRoutingModule} from "./security-routing.module";
         LoginComponent,
         AdminComponent,
         HomeComponent,
-        ForbidenComponent
     ],
   exports: [
     LoginComponent,

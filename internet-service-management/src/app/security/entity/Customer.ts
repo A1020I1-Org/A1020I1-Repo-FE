@@ -4,7 +4,7 @@ import {Orders} from "./Orders";
 export interface Customer {
   customerId: number;
   account: Account;
-  orders: Orders;
+  orderHour: Orders;
   fullName: string;
   email: string;
   dateOfBirth: string;

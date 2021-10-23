@@ -3,6 +3,7 @@ import {UserService} from "../../service/user.service";
 import {Router} from "@angular/router";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {Customer} from "../../entity/Customer";
+import {Employee} from "../../entity/Employee";
 
 @Component({
   selector: 'app-admin',
@@ -11,13 +12,14 @@ import {Customer} from "../../entity/Customer";
 })
 export class AdminComponent implements OnInit {
 
-  customerLogined!: Customer;
+  employeeLogined!: Employee;
   role!:string;
   constructor(private userService: UserService, private tokenStorage: TokenStorageService,private router:Router) {
   }
 
   ngOnInit(): void {
-    this.customerLogined = this.tokenStorage.getUser().customer;
+    this.employeeLogined = this.tokenStorage.getUser().employee;
+    console.log(this.employeeLogined)
   }
 
   signOut() {

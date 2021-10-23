@@ -4,6 +4,7 @@ import {Customer} from "../../entity/Customer";
 import {TokenStorageService} from "../../service/token-storage.service";
 import {Router} from "@angular/router";
 import {Orders} from "../../entity/Orders";
+import {LoadCssService} from "../../service/load-css.service";
 
 @Component({
   selector: 'app-home',
@@ -14,20 +15,19 @@ import {Orders} from "../../entity/Orders";
 export class HomeComponent implements OnInit {
   customerLogined!: Customer;
   role!: string;
-  orders: any;
-  orders_item!: Orders;
+  orders_hour!: Orders;
   startTime!: string;
 
-  constructor(private userService: UserService, private tokenStorage: TokenStorageService, private router: Router) {
-
+  constructor(private userService: UserService, private tokenStorage: TokenStorageService,
+              private router: Router,private loadCssService:LoadCssService) {
   }
 
   ngOnInit(): void {
-    this.customerLogined = this.tokenStorage.getUser().customer;
-    this.orders = this.tokenStorage.getUser().customer.orders;
-    for (let item of this.orders) {
-      this.orders_item = item
-    }
+
+
+    this.loadCssService.loadScript('assets/home/sidebar-05/js/main.js');
+    this.customerLogined = this.tokenStorage.getUser();
+    this.orders_hour = this.tokenStorage.getUser().orderHour;
     this.role = this.tokenStorage.getUser().roles;
   }
 

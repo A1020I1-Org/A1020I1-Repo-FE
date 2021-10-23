@@ -5,9 +5,6 @@ import {TokenStorageService} from "./token-storage.service";
 import {Customer} from "../entity/Customer";
 const AUTH_API = 'http://localhost:8080/api/public/';
 
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
 @Injectable({
   providedIn: 'root'
 })
@@ -18,20 +15,16 @@ export class UserService {
   role!: string;
 
   constructor(private http: HttpClient, private tokenStorage: TokenStorageService) {
-
     this.httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': `Bearer` + this.tokenStorage.getToken()
+        'Authorization': `Bearer` + this.tokenStorage.getToken(),
+        'Access-Control-Allow-Origin': 'http://localhost:4200',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
       }),
-      'Access-Control-Allow-Origin': 'http://localhost:4200',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
     };
   }
 
-  // login(user:any) {
-  //   return this.http.post<any>(AUTH_API + 'login', user, httpOptions);
-  // }
   login(user: any): Observable<any> {
     return this.http.post("http://localhost:8080/api/public/login", user, this.httpOptions);
   }
