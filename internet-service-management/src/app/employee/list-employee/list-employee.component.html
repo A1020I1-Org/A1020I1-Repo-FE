@@ -97,25 +97,25 @@
     </div>
   </div>
 </div>
-<div style="position: relative">
-  <nav aria-label="Page navigation example" class="page">
-    <ul class="pagination" style="max-height: 34px">
-      <li class="page-item"><a class="page-link" [hidden]="page==0" (click)="page =0;getList()">Đầu</a></li>
-      <li class="page-item"><a class="page-link" [hidden]="page==0" (click)="page =page - 1;getList()">Trang Trước</a>
-      </li>
-      <li class="page-item">
-        <input style="height: 38px; width: 50px;box-shadow: none !important;" #pageInput (change)="page= $any($event.target).value -1 " type="text"
-               class="form-control text-right rounded-0" [placeholder]="page +1">
-      </li>
-      <li class="page-item">
-        <span class="page-link">/{{pageable}}</span>
-      </li>
-      <li class="page-item"><a class="page-link" [hidden]="page >= pageable - 1" (click)="page= page +1; getList()">Trang
-        kế</a></li>
-      <li class="page-item"><a class="page-link"
-                               [hidden]="page >= pageable- 1 && page<pageable"
-                               (click)="page= pageable -1; getList()">Cuối</a></li>
-    </ul>
-  </nav>
-</div>
+<nav aria-label="..." class="page d-flex justify-content-end mt-3 mr-5">
+  <ul class="pagination">
+    <li class="page-item">
+      <a class="page-link" (click)="getPage(0)">Đầu</a>
+    </li>
+    <li class="page-item" >
+      <a class="page-link" tabindex="-1" *ngIf="(indexPagination-1)>0" (click)="getPage((indexPagination-2))">Trước</a>
+    </li>
+    <li class="page-item"><a class="page-link" *ngIf="(indexPagination-1)>0" (click)="getPage((indexPagination-2))">{{indexPagination - 1}}</a></li>
+    <li class="page-item active" aria-current="page">
+      <a class="page-link"(click)="getPage((indexPagination-1))">{{indexPagination}}</a>
+    </li>
+    <li class="page-item"><a class="page-link" *ngIf="(indexPagination +1)<= totalPagination" (click)="getPage((indexPagination))">{{indexPagination + 1}}</a></li>
+    <li class="page-item">
+      <a class="page-link" *ngIf="(indexPagination +1)<= totalPagination" (click)="getPage((indexPagination))">Sau</a>
+    </li>
+    <li class="page-item">
+      <a class="page-link" (click)="getPage((totalPagination-1))">Cuối</a>
+    </li>
+  </ul>
+</nav>
 
