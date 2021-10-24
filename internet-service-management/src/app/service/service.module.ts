@@ -1,25 +1,41 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ServiceComponent } from './service.component';
-import {HttpClientModule} from "@angular/common/http";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceDeleteComponent } from './service-delete/service-delete.component';
+import {MatIconModule} from "@angular/material/icon";
 import {RouterModule} from "@angular/router";
-import {DataTablesModule} from "angular-datatables";
-
-
+import {FormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {ServiceRoutingModule} from "./service-routing.module";
+import {AppComponent} from "../app.component";
+import {NgxPaginationModule} from "ngx-pagination";
+import {Ng2SearchPipeModule} from "ng2-search-filter";
+import { DeleteAllComponent } from './delete-all/delete-all.component';
 
 @NgModule({
-  declarations: [
-    ServiceComponent
-  ],
+    declarations: [
+        ServiceListComponent,
+        ServiceDeleteComponent,
+        DeleteAllComponent
+    ],
+    exports: [
+        ServiceListComponent,
+    ],
   imports: [
     CommonModule,
-    HttpClientModule,
-    ReactiveFormsModule,
+    MatIconModule,
+    RouterModule,
     FormsModule,
-    RouterModule.forRoot([
-      {path: "service", component: ServiceComponent}
-    ])
-  ]
+    MatDialogModule,
+    MatToolbarModule,
+    ServiceRoutingModule,
+    NgxPaginationModule,
+    Ng2SearchPipeModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
-export class ServiceModule { }
+export class ServiceModule {
+
+}

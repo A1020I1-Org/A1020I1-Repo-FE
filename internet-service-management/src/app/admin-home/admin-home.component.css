@@ -1,0 +1,12 @@
+.item-link{
+  font-size: 1.4rem;
+}
+
+th, td{
+  font-size: 1.2rem;
+  padding: 10px;
+}
+
+html, body{
+  height: 100%;
+}
