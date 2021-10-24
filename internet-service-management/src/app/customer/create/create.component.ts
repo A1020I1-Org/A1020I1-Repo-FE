@@ -38,7 +38,7 @@ export class CreateComponent implements OnInit {
   ngOnInit(): void {
     this.getAllProvince();
     this.form = new FormGroup({
-      fullName: new FormControl('', [Validators.required]),
+      fullName: new FormControl('', [Validators.required, Validators.pattern("^([a-zA-Z ])*$")]),
       province: new FormControl(''),
       district: new FormControl(''),
       commune: new FormControl(''),

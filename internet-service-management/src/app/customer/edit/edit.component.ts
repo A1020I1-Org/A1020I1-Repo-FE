@@ -41,7 +41,7 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
         customerId: new FormControl('', [Validators.required]),
-        fullName: new FormControl('', [Validators.required]),
+        fullName: new FormControl('', [Validators.required, Validators.pattern("^([a-zA-Z ])*$")]),
         province: new FormControl(''),
         district: new FormControl(''),
         commune: new FormControl(''),
