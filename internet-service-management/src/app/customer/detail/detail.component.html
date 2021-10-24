@@ -12,16 +12,16 @@
           <div class="col-6">
             <div class="row">
               <div class="col-10 m-auto">
-                <label for="name"><strong>Họ tên:</strong><span class="text-danger">* &nbsp;&nbsp;</span></label>
+                <label for="fullName"><strong>Họ tên:</strong><span class="text-danger">* &nbsp;&nbsp;</span></label>
 
-                <span #fullNameDisplay >{{customer?.fullName}}</span>
+                <span #fullNameDisplay >{{customer.fullName}}</span>
                 <mat-form-field *ngIf="fullNameDisplay.hidden" [style.width.px]=350>
-                  <input matInput id="name" formControlName="fullName" [hidden]="!fullNameDisplay.hidden" (blur)="fullNameDisplay.hidden=false;" minlength="3" maxlength="50" width="100%" autofocus #editFullName>
+                  <input matInput id="fullName" formControlName="fullName" [(ngModel)]="customer.fullName" [hidden]="!fullNameDisplay.hidden" (blur)="fullNameDisplay.hidden=false;" minlength="3" maxlength="50" width="100%" autofocus #editFullName>
                   <mat-hint align="end">{{editFullName.value.length}} / 128</mat-hint>
                 </mat-form-field>
 
-                <div class="alert alert-danger col-12 mt-1" *ngIf="form.get('name')?.invalid && form.get('name')?.touched && form.get('name')?.errors?.required">Họ tên không được để trống</div>
-                <div class="alert alert-danger col-12 mt-1" *ngIf="form.get('name')?.invalid && form.get('name')?.dirty && form.get('name')?.errors?.pattern">Họ tên không đúng quy định</div>
+                <div class="alert alert-danger col-12 mt-1" *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.touched && form.get('fullName')?.errors?.required">Họ tên không được để trống.</div>
+                <div class="alert alert-danger col-12 mt-1" *ngIf="form.get('fullName')?.invalid && form.get('fullName')?.dirty && form.get('fullName')?.errors?.pattern">Họ tên không đúng quy định.</div>
               </div>
               <div class="col-2 m-auto">
                 <button mat-icon-button (click)="submit(); fullNameDisplay.hidden = false;" *ngIf="fullNameDisplay.hidden"><mat-icon>check_circle</mat-icon></button>
@@ -35,7 +35,7 @@
             <label ><strong>Username:</strong><span class="text-danger">&nbsp;&nbsp;</span></label>
             <a>{{customer?.username}}</a>
             <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('username')?.invalid && form.get('username')?.touched &&
-             form.get('username')?.errors?.required">Username không được để trống</div>
+             form.get('username')?.errors?.required">Username không được để trống.</div>
           </div>
         </div>
         <div class="row mt-3">
@@ -50,9 +50,9 @@
                   <mat-hint align="end">{{editEmail.value.length}} / 128</mat-hint>
                 </mat-form-field>
 
-                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('email')?.invalid && form.get('email')?.touched && form.get('email')?.errors?.required">Email không được để trống
+                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('email')?.invalid && form.get('email')?.touched && form.get('email')?.errors?.required">Email không được để trống.
                 </div>
-                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('name')?.invalid && form.get('email')?.dirty && form.get('email')?.errors?.pattern">Email không đúng quy định
+                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('email')?.invalid && form.get('email')?.dirty && form.get('email')?.errors?.pattern">Email không đúng quy định.
                 </div>
               </div>
               <div class="col-2 m-auto">
@@ -73,9 +73,9 @@
                   <mat-hint align="end">{{editDateOfBirth.value.length}} / 128</mat-hint>
                 </mat-form-field>
 
-                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched &&form.get('dateOfBirth')?.errors?.required">Ngày sinh không được để trống
+                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched &&form.get('dateOfBirth')?.errors?.required">Ngày sinh không được để trống.
                 </div>
-                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched &&form.get('dateOfBirth').hasError('invalidAge')">Tối thiểu 16 tuổi
+                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('dateOfBirth')?.invalid && form.get('dateOfBirth')?.touched &&form.get('dateOfBirth').hasError('invalidAge')">Tối thiểu 16 tuổi.
                 </div>
               </div>
               <div class="col-2 m-auto">
@@ -94,14 +94,14 @@
             <div class="row" [hidden]="!addressDisplay.hidden" (blur)="addressDisplay.hidden=false;">
               <div class="col-12 d-inline-flex">
                 <div class="col-4">
-                  <select class="form-control" formControlName="province" id="province"
+                  <select class="form-control" formControlName="province" id="province" (load)="getAllDistrict(province.value)"
                           #province (change)="getAllDistrict(province.value)">
                     <option hidden [value]="">Thành phố/Tỉnh</option>
                     <option *ngFor="let p of provinces" [value]="p.province_name" >{{p.province_name}}</option>
                   </select>
                 </div>
                 <div class="col-4">
-                  <select class="form-control" formControlName="district" id="district"
+                  <select class="form-control" formControlName="district" id="district" (load)="getAllWard(district.value)"
                           #district (change)="getAllWard(district.value)" >
                     <option hidden [value]="">Quận/Huyện</option>
                     <option *ngFor="let d of districts" [value]="d.district_name" >{{d.district_name}}</option>
@@ -133,9 +133,9 @@
                   <mat-hint align="end">{{editPhone.value.length}} / 128</mat-hint>
                 </mat-form-field>
 
-                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched &&form.get('phone')?.errors?.required">SĐT không được để trống
+                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched &&form.get('phone')?.errors?.required">SĐT không được để trống.
                 </div>
-                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('phone')?.invalid && form.get('phone')?.dirty &&form.get('phone')?.errors?.pattern">SĐT phải có 10-12 số
+                <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('phone')?.invalid && form.get('phone')?.dirty &&form.get('phone')?.errors?.pattern">SĐT phải có 10-12 số.
                 </div>
               </div>
               <div class="col-2 m-auto">
@@ -158,9 +158,9 @@
 
 <!--            <input type="password" class="form-control" id="password" formControlName="password" >-->
 
-            <div class="alert alert-danger col-12 mt-2" *ngIf=" form.get('password').touched && form.get('password').hasError('required')">Password không được để trống
+            <div class="alert alert-danger col-12 mt-2" *ngIf=" form.get('password').touched && form.get('password').hasError('required')">Password không được để trống.
             </div>
-            <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('password').touched && form.get('password').hasError('pattern')">Password cần chứa 8-20 kí tự, tối thiểu 1 chữ viết hoa và 1 kí tự đặc biệt </div>
+            <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('password').touched && form.get('password').hasError('pattern')">Password cần chứa 8-20 kí tự, tối thiểu 1 chữ viết hoa và 1 kí tự đặc biệt. </div>
           </div>
           <div class="col-5">
             <label for="passwordRetype"><strong>Nhập lại mật khẩu</strong></label><span class="text-danger"> *</span>
@@ -172,10 +172,10 @@
 
 <!--            <input type="password" class="form-control" id="passwordRetype" formControlName="passwordRetype" >-->
 
-            <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('passwordRetype').touched && form.get('passwordRetype').hasError('required')">Please retype password
+            <div class="alert alert-danger col-12 mt-2" *ngIf="form.get('passwordRetype').touched && form.get('passwordRetype').hasError('required')">Please retype password.
             </div>
             <div class="alert alert-danger col-12 mt-2"
-                 *ngIf="form.errors?.invalidPassword && form.get('passwordRetype').touched ">Password retype mismatch
+                 *ngIf="form.errors?.invalidPassword && form.get('passwordRetype').touched ">Password retype mismatch.
             </div>
           </div>
           <div class="col-2">

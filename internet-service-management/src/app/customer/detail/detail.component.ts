@@ -22,6 +22,8 @@ export class DetailComponent implements OnInit {
   provinces: Province[] = [];
   districts: District[] = [];
   communes: Commune[] = [];
+  editSuccess: boolean = false;
+
   temp: string = "";
 
   constructor(public customerService: CustomerService,
@@ -59,10 +61,10 @@ export class DetailComponent implements OnInit {
           fullName: new FormControl(this.customer.fullName, [Validators.required]),
           province: new FormControl(this.customer.province),
           district: new FormControl(this.customer.district),
-          commune: new FormControl(''),
+          commune: new FormControl(this.customer.commune),
           email: new FormControl(this.customer.email, [Validators.required]),
           phone: new FormControl(this.customer.phone, [Validators.required, Validators.pattern("^([0-9]{10}|[0-9]{12})$")]),
-          dateOfBirth: new FormControl('', [Validators.required, ageValidator(16)]),
+          dateOfBirth: new FormControl(this.customer.dateOfBirth, [Validators.required, ageValidator(16)]),
           status: new FormControl(this.customer.status, [Validators.required]),
           username: new FormControl(this.customer.username, [Validators.required]),
           password: new FormControl(this.customer.password, [Validators.required,
@@ -120,7 +122,7 @@ export class DetailComponent implements OnInit {
   submit(){
     if (this.form.valid) {
       this.customerService.edit(this.customerId, this.form.value).subscribe(res => {
-        // this.router.navigate(['customer/index'])
+        this.editSuccess = true;
       })
     }
   }
