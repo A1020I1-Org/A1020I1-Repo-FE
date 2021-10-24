@@ -11,14 +11,16 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {ToastrModule} from "ngx-toastr";
 import { CreateEmployeeComponent } from './employee/create-employee/create-employee.component';
 import {RouterModule} from "@angular/router";
+import {DetailEmployeeComponent} from "./employee/detail-employee/detail-employee.component";
 import {ComputerModule} from "./computer/computer.module";
 import {ReactiveFormsModule} from "@angular/forms";
+
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateEmployeeComponent,
-
+    DetailEmployeeComponent
   ],
   imports: [
     BrowserModule,

@@ -10,8 +10,8 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
-  getAllEmployee(page : number): Observable<any>{
-    return this.http.get<any>(this.API + '/listEmployee?page=' + page);
+  getAllEmployee(): Observable<any>{
+    return this.http.get<any>(this.API + '/listEmployee');
   }
   getAllAddress(): Observable<any>{
     return this.http.get<any>(this.API + '/listAddress');
@@ -20,7 +20,13 @@ export class EmployeeService {
                  address: string, positionId: string): Observable<any> {
     return this.http.get<any>(this.API + '/searchEmployee?idEmp=' + idEmp + '&dateStart=' +
       dateStart + '&dateEnd=' + dateEnd + '&workStart=' + workStart + '&workEnd=' + workEnd +
-      '&address=' + address + '&positionId=' + positionId);
+      '&address=' + address + '&positionId=' + positionId );
+  }
+  getsearchEmployee(idEmp: string, dateStart: string, dateEnd: string, workStart: string, workEnd: string,
+                 address: string, positionId: string,page: number): Observable<any> {
+    return this.http.get<any>(this.API + '/searchEmployee?idEmp=' + idEmp + '&dateStart=' +
+      dateStart + '&dateEnd=' + dateEnd + '&workStart=' + workStart + '&workEnd=' + workEnd +
+      '&address=' + address + '&positionId=' + positionId +'&page=' + page);
   }
   deleteEmployee(id: string): Observable<any>{
     return this.http.delete<any>(this.API + '/deleteEmployee/' + id);
