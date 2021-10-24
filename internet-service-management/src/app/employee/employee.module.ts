@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {CustomerModule} from "../customer/customer.module";
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
+  exports: [
+  ],
   imports: [
-    CommonModule
+    CommonModule,
   ]
 })
 export class EmployeeModule { }
