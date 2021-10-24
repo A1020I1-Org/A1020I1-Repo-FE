@@ -8,46 +8,46 @@
         <form class="form-group" [formGroup]="viewEmployeeForm">
           <div class="form-group row">
             <label for="id" class="col-2">Mã nhân viên</label>
-            <input class="form-control col-10 " id="id" formControlName="employeeId">
+            <input type="text" class="form-control col-10 " id="id" formControlName="employeeId" readonly>
           </div>
           <div class="form-group row">
             <label for="name" class="col-2">Họ Tên</label>
-            <input class="form-control col-10 " id="name" formControlName="fullName">
+            <input type="text" class="form-control col-10 " id="name" formControlName="fullName" readonly>
           </div>
           <div class="form-group row ">
             <label for="position" class="col-2">Vị trí </label>
-            <select formControlName="position" [compareWith]="compareFn" id="position" class="form-control col-10">
+            <select formControlName="position" [compareWith]="compareFn" id="position" class="form-control col-10" readonly>
               <option *ngFor="let pos of positionList" [ngValue]="pos.positionId">{{pos.positionName}}</option>
             </select>
           </div>
           <div class="form-group row">
             <label for="date" class="col-2">Ngày sinh</label>
-            <input class="form-control col-10 " id="date" formControlName="dateOfBirth" type="date">
+            <input class="form-control col-10 " id="date" formControlName="dateOfBirth" type="date" readonly>
           </div>
           <div class="form-group row">
             <label for="phone" class="col-2">Số điện thoại </label>
-            <input class="form-control col-10 " id="phone" formControlName="phone">
+            <input class="form-control col-10 " id="phone" formControlName="phone" readonly>
           </div>
           <div class="form-group row">
             <label for="startWorkDate" class="col-2">Ngày bắt đầu làm việc </label>
-            <input class="form-control col-10 " id="startWorkDate" formControlName="startWorkDate" type="date">
+            <input class="form-control col-10 " id="startWorkDate" formControlName="startWorkDate" type="date" readonly>
           </div>
           <div class="form-group row" formGroupName="address">
             <label class="col-2">Địa chỉ</label>
             <div class="col-3">
-              <select class="form-control" formControlName="province" id="province" #province (change)="getAllDistrict(province.value)">
+              <select class="form-control" formControlName="province" id="province" #province (change)="getAllDistrict(province.value)" readonly>
                 <option selected value=" ">Thành Phố/Tỉnh</option>
                 <option *ngFor="let p of provinces" [value]="p.province_name+'&'+p.province_id" >{{p.province_name}}</option>
               </select>
             </div>
             <div class="col-3">
-              <select class="form-control" formControlName="district" id="district" #district (change)="getAllWard(district.value)">
+              <select class="form-control" formControlName="district" id="district" #district (change)="getAllWard(district.value)" readonly>
                 <option selected value=" ">Quận/Huyện</option>
                 <option *ngFor="let d of districts" [value]="d.district_name+'&'+d.district_id" >{{d.district_name}}</option>
               </select>
             </div>
             <div class="col-4">
-              <select class="form-control" formControlName="ward" id="ward">
+              <select class="form-control" formControlName="ward" id="ward" readonly>
                 <option selected value=" ">Phường/Xã</option>
                 <option *ngFor="let w of wards" [value]="w.ward_name + '&' + w.ward_id">{{w.ward_name}}</option>
               </select>
@@ -57,15 +57,15 @@
 
           <div class="form-group row">
             <label for="email" class="col-2">Email</label>
-            <input class="form-control col-10 " id="email" formControlName="email">
+            <input class="form-control col-10 " id="email" formControlName="email" readonly>
           </div>
           <div class="form-group row">
             <label for="level" class="col-2">Cấp bậc </label>
-            <input class="form-control col-10 " id="level" formControlName="level">
+            <input class="form-control col-10 " id="level" formControlName="level"readonly>
           </div>
           <div class="form-group row">
             <label for="yearOfExp" class="col-2">Kinh nghiệm làm việc </label>
-            <input class="form-control col-10 " id="yearOfExp" formControlName="yearOfExp">
+            <input class="form-control col-10 " id="yearOfExp" formControlName="yearOfExp" readonly>
           </div>
         </form>
         <div class="row col-lg-12 mt-2 ">
@@ -76,3 +76,4 @@
 
   </div>
 </div>
+

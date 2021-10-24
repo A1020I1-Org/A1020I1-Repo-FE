@@ -57,7 +57,7 @@ export class EmployeeDetailComponent implements OnInit {
       confirmPassword: new FormControl('')
     });
     this.activatedRoute.paramMap.subscribe((paramMap) =>{
-      this.employeeService.getEmployeeById("NV-1111").subscribe((data =>{
+      this.employeeService.getEmployeeById("NV-0101").subscribe((data =>{
         let addressArr = data.address.split(',');
         this.getAllDistrict(addressArr[0]);
         this.getAllWard(addressArr[1]);
