@@ -29,10 +29,6 @@ import {MatInputModule} from "@angular/material/input";
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    // MatDialogModule,
-    // BrowserAnimationsModule,
-    // NgxPaginationModule,
-    // MatButtonModule
   ],
 })
 export class CustomerModule { }

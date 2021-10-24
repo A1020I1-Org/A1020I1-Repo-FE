@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {Customer} from "../interface/Customer";
+import {Customer} from "../../interface/Customer";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Province} from "../interface/Province";
-import {District} from "../interface/District";
-import {Commune} from "../interface/Commune";
-import {CustomerService} from "../services/customer.service";
-import {AddressSelectService} from "../services/address-select.service";
+import {Province} from "../../interface/Province";
+import {District} from "../../interface/District";
+import {Commune} from "../../interface/Commune";
+import {CustomerService} from "../../services/customer.service";
+import {AddressSelectService} from "../../services/address-select.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ageValidator, passwordConfirm} from "../customer.validator";
 
@@ -16,9 +16,9 @@ import {ageValidator, passwordConfirm} from "../customer.validator";
 })
 export class DetailComponent implements OnInit {
 
-  customerId!: number;
-  customer!: Customer;
-  form!: FormGroup;
+  customerId: number;
+  customer: Customer;
+  form: FormGroup;
   provinces: Province[] = [];
   districts: District[] = [];
   communes: Commune[] = [];
@@ -50,6 +50,7 @@ export class DetailComponent implements OnInit {
       }
     );
     this.getAllProvince();
+
     this.customerId = this.route.snapshot.params['id'];
     this.customerService.getById(this.customerId).subscribe((data: Customer) => {
       this.customer = data;
@@ -118,7 +119,7 @@ export class DetailComponent implements OnInit {
 
   submit(){
     if (this.form.valid) {
-      this.customerService.info(this.customerId, this.form.value).subscribe(res => {
+      this.customerService.edit(this.customerId, this.form.value).subscribe(res => {
         // this.router.navigate(['customer/index'])
       })
     }

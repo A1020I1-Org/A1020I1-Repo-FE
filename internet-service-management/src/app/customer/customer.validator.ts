@@ -10,7 +10,6 @@ export function passwordConfirm(password:string, passwordRetype:string): Validat
     if (control.get(password)?.value != control.get(passwordRetype)?.value) {
       return {"invalidPassword": true}
     }
-    // @ts-ignore
     return null;
   };
 }

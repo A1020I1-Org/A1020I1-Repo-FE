@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {Customer} from "../interface/Customer";
+import {Customer} from "../../interface/Customer";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {CustomerService} from "../services/customer.service";
+import {CustomerService} from "../../services/customer.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Province} from "../interface/Province";
-import {District} from "../interface/District";
-import {Commune} from "../interface/Commune";
-import {AddressSelectService} from "../services/address-select.service";
+import {Province} from "../../interface/Province";
+import {District} from "../../interface/District";
+import {Commune} from "../../interface/Commune";
+import {AddressSelectService} from "../../services/address-select.service";
 import {ageValidator, passwordConfirm} from "../customer.validator";
 
 @Component({
@@ -16,9 +16,9 @@ import {ageValidator, passwordConfirm} from "../customer.validator";
 })
 export class EditComponent implements OnInit {
 
-  customerId!: number;
-  customer!: Customer;
-  form!: FormGroup;
+  customerId: number;
+  customer: Customer;
+  form: FormGroup;
   provinces: Province[] = [];
   districts: District[] = [];
   communes: Commune[] = [];

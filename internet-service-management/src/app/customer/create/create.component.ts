@@ -8,14 +8,14 @@ import {
   ValidatorFn,
   Validators
 } from "@angular/forms";
-import {CustomerService} from "../services/customer.service";
+import {CustomerService} from "../../services/customer.service";
 import {Router} from "@angular/router";
-import {Customer} from "../interface/Customer";
+import {Customer} from "../../interface/Customer";
 import {ageValidator, passwordConfirm} from "../customer.validator";
-import {Province} from "../interface/Province";
-import {District} from "../interface/District";
-import {Commune} from "../interface/Commune";
-import {AddressSelectService} from "../services/address-select.service";
+import {Province} from "../../interface/Province";
+import {District} from "../../interface/District";
+import {Commune} from "../../interface/Commune";
+import {AddressSelectService} from "../../services/address-select.service";
 
 @Component({
   selector: 'app-create',
@@ -23,7 +23,7 @@ import {AddressSelectService} from "../services/address-select.service";
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-  form!: FormGroup;
+  form: FormGroup;
   provinces: Province[] = [];
   districts: District[] = [];
   communes: Commune[] = [];
