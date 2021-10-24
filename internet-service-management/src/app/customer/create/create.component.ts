@@ -28,6 +28,8 @@ export class CreateComponent implements OnInit {
   districts: District[] = [];
   communes: Commune[] = [];
   temp: string = "";
+  createSuccess: boolean = false;
+  existingUsername: boolean = false;
 
   constructor(public customerService: CustomerService,
               public addressSelectService: AddressSelectService,
@@ -40,11 +42,12 @@ export class CreateComponent implements OnInit {
       province: new FormControl(''),
       district: new FormControl(''),
       commune: new FormControl(''),
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required,
+        Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")]),
       phone: new FormControl('', [Validators.required, Validators.pattern("^([0-9]{10}|[0-9]{12})$")]),
       dateOfBirth: new FormControl('', [Validators.required, ageValidator(16)]),
       status: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required]),
+      username: new FormControl('', [Validators.required, Validators.pattern("^([0-9a-z]{4,20})$")]),
       password: new FormControl('', [Validators.required,
         Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")]),
       passwordRetype: new FormControl('', [Validators.required])
@@ -87,6 +90,11 @@ export class CreateComponent implements OnInit {
       })
   }
 
+  checkExist(username: string){
+    this.customerService.checkExistingUsername(username).subscribe(data =>{
+      this.existingUsername = data;
+    })
+  }
 
   get f(){
     return this.form.controls;
@@ -96,10 +104,18 @@ export class CreateComponent implements OnInit {
     return c1 && c2 ? c1.customerId === c2.customerId : c1 === c2;
   }
 
+  fadeOutLink() {
+    setTimeout( () => {
+      this.createSuccess = false;
+    }, 2000);
+  }
+
   submit(){
     if (this.form.valid){
       this.customerService.create(this.form.value).subscribe(res => {
         // this.router.navigate(['customer/create'])
+        this.createSuccess = true;
+        this.fadeOutLink();
       })
     }
   }
