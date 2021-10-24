@@ -11,6 +11,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import {environment} from "../environments/environment"
 import {EmployeeModule} from "./employee/employee.module";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {EmployeeModule} from "./employee/employee.module";
     AngularFireDatabaseModule,
     AngularFireStorageModule,
     EmployeeModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
   ],

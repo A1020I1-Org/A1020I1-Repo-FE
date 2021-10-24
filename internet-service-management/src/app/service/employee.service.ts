@@ -6,15 +6,16 @@ import {AngularFireDatabase, AngularFireList} from "@angular/fire/compat/databas
 import {AngularFireStorage} from "@angular/fire/compat/storage";
 import {FileUpload} from "../interface/FileUpload";
 import {finalize} from "rxjs/operators";
+import {IEmployeeCreate} from "../interface/IEmployeeCreate";
+import {Employee} from "../interface/Employee";
 
-// const API_CREATE = 'http://localhost:8080/employee/createEmployee';
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
   private API_CREATE: string = 'http://localhost:8080/employee/createEmployee';
-  public API_EDIT = 'http://localhost:8080/employee/updateEmployee';
-  private API_DETAIL = 'http://localhost:8080/employee/viewEmployee';
+  private API_EDIT: string = 'http://localhost:8080/employee/updateEmployee';
+  private API_DETAIL: string = 'http://localhost:8080/employee/viewEmployee';
   private basePath = '/imgEmployee';
   httpOptions: any;
   constructor(public httpClient: HttpClient, private db: AngularFireDatabase, private storage: AngularFireStorage) {
@@ -54,16 +55,18 @@ export class EmployeeService {
       ref.limitToLast(numberItems));
   }
 
-  createEmployee(employee: IEmployee): Observable<HttpEvent<any>> {
-    return this.httpClient.post<IEmployee>(this.API_CREATE, employee, this.httpOptions);
+  createEmployee(employee: IEmployeeCreate): Observable<HttpEvent<any>> {
+    console.log(employee)
+    return this.httpClient.post<IEmployeeCreate>(this.API_CREATE, employee, this.httpOptions);
   }
 
-    getEmployeeById(employeeId: string | null): Observable<HttpEvent<any>> {
-    return this.httpClient.get<any>(this.API_DETAIL + '/' + employeeId);
+  getEmployeeById(employeeId: string): Observable<IEmployeeCreate> {
+    return this.httpClient.get<IEmployeeCreate>(this.API_DETAIL + '/' + employeeId) ;
   }
 
-  editEmployee(employeeId: string,employee: IEmployee): Observable<HttpEvent<any>> {
-    return this.httpClient.put<any>(this.API_EDIT + '/' + employeeId, employee);
+  editEmployee(employeeId: string,employee: Employee): Observable<void> {
+    return this.httpClient.put<void>(this.API_EDIT + '/' + employeeId, employee);
   }
+
 
 }

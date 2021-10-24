@@ -6,12 +6,12 @@ import {Router} from "@angular/router";
 import {formatDate} from "@angular/common";
 import {validAgeValidators} from "../../share/checkAge.validation";
 import {PositionService} from "../../service/position.service";
-import {IPosition} from "../../interface/IPosition";
 import {IProvince} from "../../interface/IProvince";
 import {IDistrict} from "../../interface/IDistrict";
 import {IWard} from "../../interface/IWard";
 import {AddressService} from "../../service/address.service";
 import {validConfirmPassword} from "../../share/ConfirmPassword.validator";
+import {AlertService} from "../AlertService";
 
 @Component({
   selector: 'app-employee-create',
@@ -22,7 +22,7 @@ export class EmployeeCreateComponent implements OnInit {
 
   selectedFiles?: FileList;
   currentFileUpload?: FileUpload;
-  positionLists!: IPosition[];
+  positionList: any;
   percentage = 0;
   employeeForm!: FormGroup;
   msgCode= '';
@@ -38,24 +38,22 @@ export class EmployeeCreateComponent implements OnInit {
   districts: IDistrict[] = [];
   wards: IWard[] = [];
   temp: string = "";
-  // province: IProvince = {};
-  // district: IDistrict = {};
-  // ward: IWard = {};
+  address: string = "";
+
+
 
 
   constructor(private employeeService : EmployeeService,
               private positionService: PositionService,
               private addressService: AddressService,
+              private alertService: AlertService,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.getAllProvince();
-    this.positionService.getPositionList().subscribe(data => {
-      this.positionLists = data;
-    });
     this.employeeForm = new FormGroup({
       employeeId: new FormControl('', [Validators.required, Validators.pattern('^NV-\\d{4}$')]),
       fullName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern('^[a-zA-Z\'-\'\\sáàảãạăâắằấầặẵẫậéèẻ ẽẹếềểễệóêòỏõọôốồổỗộ ơớờởỡợíìỉĩịđùúủũụưứ� �ửữựÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠ ƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼ� ��ỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞ ỠỢỤỨỪỬỮỰỲỴÝỶỸửữựỵ ỷỹ]*$')]),
+      // positionId: new FormControl(),
       position: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(20)]),
       dateOfBirth: new FormControl('', [Validators.required, validAgeValidators(18,35)]),
@@ -63,12 +61,21 @@ export class EmployeeCreateComponent implements OnInit {
       phone: new FormControl('', [Validators.required, Validators.pattern(/^09[0-9]{9}$/)]),
       level: new FormControl('', [Validators.required, this.checkLevel, Validators.maxLength(50)]),
       yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp, Validators.minLength(0),Validators.maxLength(100)]),
-      address: new FormControl(''),
+      address: new FormGroup({
+        province: new FormControl(''),
+        district: new FormControl(''),
+        ward: new FormControl('')
+      }),
       avtUrl: new FormControl(''),
       userName: new FormControl('',[Validators.required]),
       password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+~])[A-Za-z\\d!@#$%^&*()_+~]{6,}')]),
       confirmPassword: new FormControl('')
     },{validators:[validConfirmPassword("password","confirmPassword")]});
+
+    this.getAllProvince();
+    this.positionService.getPositionList().subscribe(data => {
+      this.positionList = data;
+    });
   }
   getAllProvince(){
     this.addressService.getAllProvince().subscribe(data =>{
@@ -114,7 +121,9 @@ export class EmployeeCreateComponent implements OnInit {
         this.currentFileUpload = new FileUpload(file);
         this.employeeService.pushFileToStorage(this.currentFileUpload).subscribe(
           url => {
-            this.avtUrl=url;
+            // this.employeeForm.value.avtUrl = url;
+            this.avtUrl = url;
+            // this.isImage = true;
             console.log(url)
           },
           error => {
@@ -126,9 +135,24 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   createEmployee() {
-    this.employeeForm.value.userName = this.employeeForm.value.email;
-    this.employeeForm.value.avtUrl = this.avtUrl;
-    this.employeeService.createEmployee(this.employeeForm.value).subscribe(data => {
+    this.employeeForm.value.url = this.avtUrl;
+    console.log(this.avtUrl);
+    this.employeeService.createEmployee({
+          employeeId: this.employeeForm.controls.employeeId.value + '',
+          fullName: this.employeeForm.controls.fullName.value ,
+          positionId: this.employeeForm.controls.position.value,
+          dateOfBirth: this.employeeForm.controls.dateOfBirth.value ,
+          email: this.employeeForm.controls.email.value,
+          address: this.employeeForm.controls.address.value.province + ',' + this.employeeForm.controls.address.value.district + ','
+          + this.employeeForm.controls.address.value.ward + '',
+          phone: this.employeeForm.controls.phone.value,
+          startWorkDate: this.employeeForm.controls.startWorkDate.value,
+          level: this.employeeForm.controls.level.value ,
+          yearOfExp: this.employeeForm.controls.yearOfExp.value ,
+          userName: this.employeeForm.controls.userName.value ,
+          password: this.employeeForm.controls.password.value ,
+          avtUrl: this.avtUrl
+    }).subscribe(data => {
       // @ts-ignore
       if (data.status === false) {
         // @ts-ignore
@@ -141,8 +165,11 @@ export class EmployeeCreateComponent implements OnInit {
         this.msgDateOfBirth = data.msgDateOfBirth;
         // @ts-ignore
         this.msgStartWorkDate = data.msgStartWorkDate;
+        this.alertService.showMessageErrors('Thêm mới thất bại');
+      }else {
+        this.router.navigateByUrl('/listEmployee');
+        this.alertService.showAlertSuccess('Thêm mới thành công');
       }
-      this.router.navigateByUrl('/listEmployee');
     });
   }
 
@@ -189,8 +216,4 @@ export class EmployeeCreateComponent implements OnInit {
   checkYearOfExp(data: AbstractControl): any {
     return (data.value >= 0 && data.value < 50) ? null : {invalidYearOfExp: true};
   }
-
-
-
-
 }

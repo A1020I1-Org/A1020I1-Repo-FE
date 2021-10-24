@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FileUpload} from "../../interface/FileUpload";
 import {IPosition} from "../../interface/IPosition";
 import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {EmployeeService} from "../../service/employee.service";
 import {PositionService} from "../../service/position.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {IProvince} from "../../interface/IProvince";
 import {IDistrict} from "../../interface/IDistrict";
 import {IWard} from "../../interface/IWard";
 import {AddressService} from "../../service/address.service";
 import {validAgeValidators} from "../../share/checkAge.validation";
 import {formatDate} from "@angular/common";
+import {validConfirmPassword} from "../../share/ConfirmPassword.validator";
+import {ToastrService} from "ngx-toastr";
+import {Employee} from "../../interface/Employee";
 
 @Component({
   selector: 'app-employee-edit',
@@ -21,10 +24,9 @@ export class EmployeeEditComponent implements OnInit {
 
   selectedFiles?: FileList;
   currentFileUpload?: FileUpload;
-  positionLists!: IPosition[];
+  positionList: any;
   percentage = 0;
-  employeeForm!: FormGroup;
-  msgCode= '';
+  msgCode = '';
   msgDateOfBirth = '';
   msgStartWorkDate = '';
   msgEmail = '';
@@ -33,60 +35,174 @@ export class EmployeeEditComponent implements OnInit {
   msgImage = '';
   isImage = false;
   avtUrl!: string;
+  address: string = "";
   provinces: IProvince[] = [];
   districts: IDistrict[] = [];
   wards: IWard[] = [];
   temp: string = "";
   province: IProvince = {};
-  employeeFormEdit: any;
+  employeeEditForm!: FormGroup;
+  id!: string;
+  employee!: Employee;
 
-  constructor(private employeeService : EmployeeService,
+
+  constructor(private employeeService: EmployeeService,
               private positionService: PositionService,
               private addressService: AddressService,
-              private router: Router) { }
+              private activatedRoute: ActivatedRoute,
+              public toastr: ToastrService,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.getAllProvince();
-    this.positionService.getPositionList().subscribe(data => {
-      this.positionLists = data;
-    });
-    this.employeeForm = new FormGroup({
+    this.getPositionList();
+    // this.activatedRoute.paramMap.subscribe(param =>{
+    //   this.id = <string>param.get('id');
+    this.employeeEditForm = new FormGroup({
       employeeId: new FormControl('', [Validators.required, Validators.pattern('^NV-\\d{4}$')]),
-      fullName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
+      fullName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern('^[a-zA-Z\'-\'\\sáàảãạăâắằấầặẵẫậéèẻ ẽẹếềểễệóêòỏõọôốồổỗộ ơớờởỡợíìỉĩịđùúủũụưứ� �ửữựÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠ ƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼ� ��ỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞ ỠỢỤỨỪỬỮỰỲỴÝỶỸửữựỵ ỷỹ]*$')]),
+      // positionId: new FormControl(),
       position: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(50)]),
-      dateOfBirth: new FormControl('', [Validators.required, validAgeValidators(18,35)]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(20)]),
+      dateOfBirth: new FormControl('', [Validators.required, validAgeValidators(18, 35)]),
       startWorkDate: new FormControl('', [Validators.required, this.checkStartWorkDate]),
       phone: new FormControl('', [Validators.required, Validators.pattern(/^09[0-9]{9}$/)]),
-      level: new FormControl('', [Validators.required, this.checkLevel]),
-      yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp]),
-      address: new FormControl(''),
+      level: new FormControl('', [Validators.required, this.checkLevel, Validators.maxLength(50)]),
+      yearOfExp: new FormControl('', [Validators.required, this.checkYearOfExp, Validators.minLength(0), Validators.maxLength(100)]),
+      address: new FormGroup({
+        province: new FormControl(''),
+        district: new FormControl(''),
+        ward: new FormControl('')
+      }),
       avtUrl: new FormControl(''),
-      username: new FormControl(''),
+      userName: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required, Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*()_+~])[A-Za-z\\d!@#$%^&*()_+~]{6,}')]),
       confirmPassword: new FormControl('')
+    }, {
+      validators: [validConfirmPassword("password", "confirmPassword")]
     });
+    this.employeeService.getEmployeeById("NV-1111").subscribe(data => {
+      console.log(data);
+      let addressArr = data.address.split(',');
+      this.getAllDistrict(addressArr[0]);
+      this.getAllWard(addressArr[1]);
+      this.employeeEditForm.patchValue({
+        employeeId: data.employeeId,
+        fullName: data.fullName,
+        position: data.positionId,
+        dateOfBirth: data.dateOfBirth,
+        email: data.email,
+        address: {
+          province: addressArr[0],
+          district: addressArr[1],
+          ward: addressArr[2]
+        },
+        phone: data.phone,
+        startWorkDate: data.startWorkDate,
+        level: data.level,
+        yearOfExp: data.yearOfExp,
+        userName: data.userName,
+        password: data.password,
+        avtUrl: data.avtUrl
+      });
+      this.avtUrl = data.avtUrl;
+      console.log(this.employeeEditForm)
+
+    });
+
   }
 
   editEmployee() {
-    this.employeeForm.value.account.userName = this.employeeForm.value.email;
-    // @ts-ignore
-    this.employeeService.editEmployee(this.employeeForm.value).subscribe(data => {
-      // @ts-ignore
-      if (data.status === false) {
-        // @ts-ignore
-        this.msgEmail = data.msgEmail;
-        // @ts-ignore
-        this.msgPassword = data.msgPassword;
-        // @ts-ignore
-        this.msgCode = data.msgCode;
-        // @ts-ignore
-        this.msgDateOfBirth = data.msgDateOfBirth;
-        // @ts-ignore
-        this.msgStartWorkDate = data.msgStartWorkDate;
+
+    const formValue = this.employeeEditForm.value;
+    if (formValue.address.ward == " " && formValue.address.district == " " && formValue.address.province == " ") {
+      this.address = "";
+    } else {
+      if (formValue.address.ward == " " && formValue.address.district == " " && formValue.address.province != " ") {
+        this.address = formValue.address.province;
       }
-      this.router.navigateByUrl('employee-list');
-    });
+      if (formValue.address.ward == " " && formValue.address.district != " " && formValue.address.province != " ") {
+        this.address = formValue.address.district + ', ' + formValue.address.province;
+      } else {
+        this.address = formValue.address.ward + ', ' + formValue.address.district + ', ' + formValue.address.province;
+      }
+    }
+    this.employee = new Employee(formValue.employeeId, formValue.fullName, formValue.dateOfBirth, formValue.email, this.address,
+      formValue.phone, formValue.level, formValue.startWorkDate, formValue.yearOfExp, formValue.avtUrl,
+      formValue.position, formValue.userName, formValue.password);
+    console.log(this.employee);
+    this.employeeService.editEmployee(this.employeeEditForm.value.employeeId, this.employee).subscribe(data => {
+        // this.router.navigateByUrl('employee-list');
+
+      }, error => {
+        console.log(error)
+      }
+    );
+
+  }
+
+  getAllProvince() {
+    this.addressService.getAllProvince().subscribe(data => {
+        this.provinces = data.results;
+      },
+      error => {
+        console.log("can not province");
+      }
+    )
+  }
+
+  getAllDistrict(province: string) {
+    console.log(province);
+    this.temp = province.split("&")[1];
+    this.addressService.getAllDistrict(this.temp).subscribe(data => {
+        this.districts = data.results;
+        this.wards = [];
+      },
+      error => {
+        console.log("can not district");
+      }
+    )
+  }
+
+  getAllWard(district: string) {
+    console.log(district);
+    this.temp = district.split("&")[1];
+    this.addressService.getAllWard(this.temp).subscribe(data => {
+        this.wards = data.results;
+      },
+      error => {
+        console.log("can not district");
+      })
+  }
+
+  selectFile(event: any): void {
+    this.selectedFiles = event.target.files;
+  }
+
+  upload(): void {
+    if (this.selectedFiles) {
+      const file: File | null = this.selectedFiles.item(0);
+      this.selectedFiles = undefined;
+
+      if (file) {
+        this.currentFileUpload = new FileUpload(file);
+        this.employeeService.pushFileToStorage(this.currentFileUpload).subscribe(
+          url => {
+            this.avtUrl = url;
+            console.log(url)
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      }
+    }
+  }
+
+
+  resetMsgCode() {
+    this.msgCode = '';
 
   }
 
@@ -99,76 +215,22 @@ export class EmployeeEditComponent implements OnInit {
   }
 
   resetMsgEmail() {
-    this.msgCode = '';
+    this.msgEmail = '';
   }
 
   checkPassword(newPassword: string, confirmPassword: string) {
     if (newPassword !== confirmPassword) {
-      return this.msgConfirmPass = 'Mật khẩu phải trùng với mật khẩu mới.';
+      return this.msgConfirmPass = 'Mật khẩu trùng với mật khẩu mới';
     } else {
       return this.msgConfirmPass = '';
     }
   }
 
-  selectFile(event: any): void {
-    this.selectedFiles = event.target.files;
-  }
-
-
-  upload(): void {
-    if (this.selectedFiles) {
-      const file: File | null = this.selectedFiles.item(0);
-      this.selectedFiles = undefined;
-
-      if (file) {
-        this.currentFileUpload = new FileUpload(file);
-        this.employeeService.pushFileToStorage(this.currentFileUpload).subscribe(
-          url => {
-            this.avtUrl=url;
-          },
-          error => {
-            console.log(error);
-          }
-        );
-      }
-    }
-    console.log("url:"+this.currentFileUpload?.url);
-  }
-  getAllDistrict(province: string){
-    this.temp = province.split("&")[1];
-    this.addressService.getAllDistrict(this.temp).subscribe(data =>{
-        this.districts = data.results;
-        this.wards = [];
-      },
-      error => {
-        console.log("can not district");
-      }
-    )
-  }
-
-  getAllWard(district: string){
-    this.temp = district.split("&")[1];
-    this.addressService.getAllWard(this.temp).subscribe(data =>{
-        this.wards = data.results;
-      },
-      error => {
-        console.log("can not district");
-      })
-  }
-  getAllProvince(){
-    this.addressService.getAllProvince().subscribe(data =>{
-        this.provinces = data.result;
-      },
-      error => {
-        console.log("can not province");
-      }
-    )
-  }
-
   getCurrentDateTime(): string {
     return formatDate(new Date(), 'dd-MM-yyyyhhmmssa', 'en-US');
   }
-  checkStartWorkDate(data: AbstractControl): any{
+
+  checkStartWorkDate(data: AbstractControl): any {
     const startWorkDate = data.value;
     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', 'en-US');
     if (startWorkDate < currentDate) {
@@ -176,14 +238,22 @@ export class EmployeeEditComponent implements OnInit {
     }
     return null;
   }
+
   checkLevel(data: AbstractControl): any {
-    return data.value > 0 ? null : {invalidLevel: true};
+    return (data.value > 0 && data.value < 50) ? null : {invalidLevel: true};
   }
 
   checkYearOfExp(data: AbstractControl): any {
     return (data.value >= 0 && data.value < 50) ? null : {invalidYearOfExp: true};
   }
-  compareWith(val1: any, val2: any): boolean{
-    return val1.positionId === val2.positionId;
+
+  compareP(val1: any, val2: any): boolean {
+    return val1 && val2 ? val1.positionId === val2.positionId : val1 === val2;
+  }
+
+  private getPositionList() {
+    this.positionService.getPositionList().subscribe(data => {
+      this.positionList = data;
+    })
   }
 }

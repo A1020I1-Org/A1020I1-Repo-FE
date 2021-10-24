@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -10,10 +10,11 @@ export class AddressService {
   private readonly API_URL = 'https://vapi.vnappmob.com/api';
 
   constructor(private _httpClient: HttpClient) {
+
   }
 
   getAllProvince(): Observable<any> {
-    return this._httpClient.get<any>(this.API_URL+'/province' );
+    return this._httpClient.get<any>(this.API_URL+'/province');
   }
 
   getAllDistrict(id: string|undefined): Observable<any> {
