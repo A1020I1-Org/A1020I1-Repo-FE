@@ -8,7 +8,7 @@
           <mat-form-field>
             <mat-label>Choose service</mat-label>
             <mat-select formControlName="serviceName">
-              <mat-option *ngFor="let service of services" [value]="service.serviceName" [(ngModel)]='service.unit'>
+              <mat-option *ngFor="let service of services" [value]="service.serviceName">
                 {{service.serviceName}}
               </mat-option>
             </mat-select>

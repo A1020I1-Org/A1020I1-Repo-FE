@@ -15,19 +15,15 @@ export class CustomerService {
     return this.httpClient.get<Customer>(this.API_URL + '/' + id);
   }
 
-  checkExistingUsername(username: string): Observable<boolean>{
-    return this.httpClient.get<boolean>(this.API_URL + '/account' + '/' + username);
-  }
-
   create(customer: Customer): Observable<any>{
       return this.httpClient.post<any>(this.API_URL + '/create', customer);
   }
 
   edit(id: number, customer: Customer): Observable<any>{
-      return this.httpClient.put<any>(this.API_URL + '/edit' + '/' + id, customer);
+    return this.httpClient.put<any>(this.API_URL + '/edit' + '/' + id, customer);
   }
 
-  info(id: number, customer: Customer): Observable<any>{
+  infoEdit(id: number, customer: Customer): Observable<any>{
     return this.httpClient.put<any>(this.API_URL + '/info' + '/' + id, customer);
   }
 }

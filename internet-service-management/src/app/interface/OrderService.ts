@@ -7,7 +7,7 @@ export interface OrderService {
   quantity: number,
   unit: number,
   totalMoney: number,
-  order_date: string,
+  orderDate: string,
   status: boolean,
   service: Service,
   customer: Customer,

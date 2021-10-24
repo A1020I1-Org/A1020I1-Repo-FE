@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+
+import {ageValidator, passwordConfirm} from "../customer.validator";
 import {Customer} from "../../interface/Customer";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {CustomerService} from "../../services/customer.service";
-import {ActivatedRoute, Router} from "@angular/router";
 import {Province} from "../../interface/Province";
 import {District} from "../../interface/District";
 import {Commune} from "../../interface/Commune";
+import {CustomerService} from "../../services/customer.service";
 import {AddressSelectService} from "../../services/address-select.service";
-import {ageValidator, passwordConfirm} from "../customer.validator";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit',
@@ -41,7 +42,7 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {
     this.form = new FormGroup({
         customerId: new FormControl('', [Validators.required]),
-        fullName: new FormControl('', [Validators.required]),
+        fullName: new FormControl('', [Validators.required, Validators.pattern("^([a-zA-Z ])*$")]),
         province: new FormControl(''),
         district: new FormControl(''),
         commune: new FormControl(''),
@@ -59,31 +60,31 @@ export class EditComponent implements OnInit {
         validators: [passwordConfirm("password", "passwordRetype")]
       }
     );
-    this.getAllProvince();
-    this.customerId = this.route.snapshot.params['id'];
-    this.customerService.getById(this.customerId).subscribe((data: Customer) => {
-      this.customer = data;
-      this.form = new FormGroup({
+      this.getAllProvince();
+      this.customerId = this.route.snapshot.params['id'];
+      this.customerService.getById(this.customerId).subscribe((data: Customer) => {
+          this.customer = data;
+        this.form = new FormGroup({
           customerId: new FormControl(this.customer.customerId),
-          fullName: new FormControl(this.customer.fullName, [Validators.required]),
-          province: new FormControl(this.customer.province),
-          district: new FormControl(this.customer.district),
-          commune: new FormControl(this.customer.commune),
-          email: new FormControl(this.customer.email, [Validators.required,
-            Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")]),
-          phone: new FormControl(this.customer.phone, [Validators.required, Validators.pattern("^([0-9]{10}|[0-9]{12})$")]),
-          dateOfBirth: new FormControl(this.customer.dateOfBirth, [Validators.required, ageValidator(16)]),
-          status: new FormControl(this.customer.status, [Validators.required]),
-          username: new FormControl(this.customer.username, [Validators.required]),
-          password: new FormControl(this.customer.password, [Validators.required,
-            Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")]),
-          passwordRetype: new FormControl(this.customer.password, [Validators.required])
-        },
-        {
-          validators: [passwordConfirm("password", "passwordRetype")]
-        }
-      );
-    });
+            fullName: new FormControl(this.customer.fullName, [Validators.required]),
+            province: new FormControl(this.customer.province),
+            district: new FormControl(this.customer.district),
+            commune: new FormControl(this.customer.commune),
+            email: new FormControl(this.customer.email, [Validators.required,
+              Validators.pattern("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")]),
+            phone: new FormControl(this.customer.phone, [Validators.required, Validators.pattern("^([0-9]{10}|[0-9]{12})$")]),
+            dateOfBirth: new FormControl(this.customer.dateOfBirth, [Validators.required, ageValidator(16)]),
+            status: new FormControl(this.customer.status, [Validators.required]),
+            username: new FormControl(this.customer.username, [Validators.required]),
+            password: new FormControl(this.customer.password, [Validators.required,
+              Validators.pattern("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")]),
+            passwordRetype: new FormControl(this.customer.password, [Validators.required])
+          },
+          {
+            validators: [passwordConfirm("password", "passwordRetype")]
+          }
+        );
+      });
     //   this.selectedProvinceName = this.customer?.province?.split('&')[0];
     //   this.selectedDistrictName = this.customer?.district?.split('&')[0];
     //   this.selectedCommuneName = this.customer?.commune?.split('&')[0];
@@ -144,7 +145,9 @@ export class EditComponent implements OnInit {
     if (this.form.valid) {
       this.customerService.edit(this.customerId, this.form.value).subscribe(res => {
         this.editSuccess = true;
-        this.fadeOutLink();      })
+        this.fadeOutLink();
+        console.log(this.customer);
+      })
     }
   }
 }
