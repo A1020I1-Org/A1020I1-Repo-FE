@@ -4,9 +4,19 @@ import {ComputerRoutingModule} from "./computer/computer-routing.module";
 import {NgxPaginationModule} from "ngx-pagination";
 
 
-const routes: Routes = [];
+
+const routes: Routes = [
+
+];
 
 @NgModule({
+  imports: [
+    RouterModule.forRoot(routes),
+  ],
+  exports: [RouterModule],
+  declarations: [
+
+  ]
   imports: [RouterModule.forRoot(routes), ComputerRoutingModule, NgxPaginationModule ],
   exports: [RouterModule]
 })
