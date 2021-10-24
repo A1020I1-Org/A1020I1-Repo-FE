@@ -82,7 +82,7 @@ export class EmployeeEditComponent implements OnInit {
     }, {
       validators: [validConfirmPassword("password", "confirmPassword")]
     });
-    this.employeeService.getEmployeeById("NV-0101").subscribe(data => {
+    this.employeeService.getEmployeeById(this.id).subscribe(data => {
       console.log(data);
       let addressArr = data.address.split(',');
       this.getAllDistrict(addressArr[0]);
