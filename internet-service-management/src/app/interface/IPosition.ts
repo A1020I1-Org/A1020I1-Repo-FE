@@ -5,4 +5,5 @@ export interface IPosition {
   positionName: string;
   employeeList?: IEmployee[];
 
+  employeeList: IEmployee[];
 }

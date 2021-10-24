@@ -5,6 +5,15 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { EmployeeEditComponent } from './employee-edit/employee-edit.component';
 import { EmployeeDetailComponent } from './employee-detail/employee-detail.component';
 import {EmployeeRouterModule} from "./employee-router.module";
+import { ListEmployeeComponent } from './list-employee/list-employee.component';
+import { DeleteEmployeeComponent } from './delete-employee/delete-employee.component';
+import {EmployeeRouterModule} from "./employee-router.module";
+import {NgxPaginationModule} from "ngx-pagination";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
+import {ReactiveFormsModule} from "@angular/forms";
+import {RouterModule} from "@angular/router";
+import {PhonePipe} from "../phone.pipe";
 
 
 
@@ -23,6 +32,24 @@ import {EmployeeRouterModule} from "./employee-router.module";
     CommonModule,
     ReactiveFormsModule,
     EmployeeRouterModule
+=======
+  declarations: [
+    ListEmployeeComponent,
+    DeleteEmployeeComponent,
+    PhonePipe
+  ],
+  exports: [
+    ListEmployeeComponent,
+    PhonePipe
+  ],
+  imports: [
+    CommonModule,
+    EmployeeRouterModule,
+    NgxPaginationModule,
+    MatDialogModule,
+    MatButtonModule,
+    ReactiveFormsModule,
+    RouterModule,
   ]
 })
 export class EmployeeModule { }

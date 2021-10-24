@@ -7,3 +7,5 @@ html, body {
 a{
   text-decoration: none;
 }
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import '~ngx-toastr/toastr';

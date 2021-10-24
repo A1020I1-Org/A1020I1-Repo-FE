@@ -1,6 +1,7 @@
 
 import {IPosition} from "./IPosition";
 import {IAccount} from "./IAccount";
+import {IPosition} from "./IPosition";
 
 export interface IEmployee {
   employeeId: string;
@@ -22,4 +23,5 @@ export interface IEmployee {
   status?: boolean;
   msgPassword?: string;
 
+  position: IPosition;
 }
