@@ -4,6 +4,15 @@
       <div class="alert" role="alert" style="background: white; text-align: center">
         <h1>Thông tin tài khoản</h1>
       </div>
+
+      <div class="row mt-3 justify-content-center">
+        <div class="col-3 text-center">
+          <div *ngIf="editSuccess" class="alert alert-success" role="alert" style="width: max-content">
+            <strong>Chỉnh sửa thành công ✓</strong>
+          </div>
+        </div>
+      </div>
+
       <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="row mt-3">
           <input type="hidden" readonly formControlName="customerId">
@@ -88,7 +97,7 @@
             <label class="fontFamily"><strong>Địa chỉ:</strong></label><span style="color: red"> *</span>
           </div>
           <div class="col-9">
-            <span #addressDisplay>{{customer?.province}}, {{customer?.district}}, {{customer?.commune}}</span>
+            <span #addressDisplay>{{customer?.province.slice(0, -3)}}, {{customer?.district.slice(0, -4)}}, {{customer?.commune.slice(0, -6)}}</span>
             <div class="row" [hidden]="!addressDisplay.hidden" (blur)="addressDisplay.hidden=false;">
               <div class="col-12 d-inline-flex">
                 <div class="col-4">
