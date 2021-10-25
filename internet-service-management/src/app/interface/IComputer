@@ -8,7 +8,9 @@ export interface IComputer {
   computerStartUsedDate: string,
   computerWarrantyPeriod: string,
   computerConfiguration: string,
+  computerIpLocal: string,
   manufacturer: IManufacturer,
   status: IStatus,
-  type: IType
+  type: IType,
+
 }

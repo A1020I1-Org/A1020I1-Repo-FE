@@ -7,7 +7,7 @@ import {NgxPaginationModule} from "ngx-pagination";
 const routes: Routes = [];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), ComputerRoutingModule, NgxPaginationModule ],
+  imports: [RouterModule.forRoot(routes), ComputerRoutingModule, NgxPaginationModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

@@ -8,26 +8,21 @@ import {IComputer} from "../interface/IComputer";
   providedIn: 'root'
 })
 export class ComputerService {
-
-  public API: string = '';
+  public API: string = 'http://localhost:8080/computer';
 
   constructor(private http: HttpClient) {
   }
 
-  getAllComputer(): Observable<any> {
-    return this.http.get(this.API + "?sort=computerId&_oder=asc");
+  findById(id: string): Observable<IComputer> {
+    return this.http.get<IComputer>(this.API + "/edit/" + id);
   }
 
-  findById(id: number): Observable<IComputer> {
-    return this.http.get<IComputer>(this.API + "/" + id);
-  }
-
-  create(computer: IComputer): Observable<any> {
-    return this.http.post<any>(this.API, computer);
+  create(computer: IComputer): Observable<IComputer> {
+    return this.http.post<any>(this.API + '/create', computer);
   }
 
   update(id: any, computer: IComputer): Observable<IComputer> {
-    return this.http.put<IComputer>(this.API + "/" + id, computer);
+    return this.http.put<IComputer>(this.API + "/update/" + id, computer);
   }
 
 }
