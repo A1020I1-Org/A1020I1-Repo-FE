@@ -33,7 +33,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/js/menu_left.js",
+
               "node_modules/jquery/dist/jquery.js"
             ]
           },
