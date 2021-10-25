@@ -23,8 +23,5 @@ export class CustomerService {
     return this.httpClient.put<any>(this.API_URL + '/edit' + '/' + id, customer);
   }
 
-  infoEdit(id: number, customer: Customer): Observable<any>{
-    return this.httpClient.put<any>(this.API_URL + '/info' + '/' + id, customer);
-  }
 }
 

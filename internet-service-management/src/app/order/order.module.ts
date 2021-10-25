@@ -3,21 +3,24 @@ import { CommonModule } from '@angular/common';
 import { OrderServiceComponent } from './order-service/order-service.component';
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { OrderDetailComponent } from './order-detail/order-detail.component';
+import { OrderServiceDetailComponent } from './order-service-detail/order-service-detail.component';
+import {OrderRoutingModule} from "./order-routing.module";
 
 @NgModule({
   declarations: [
     OrderServiceComponent,
-    OrderDetailComponent,
+    OrderServiceDetailComponent,
   ],
   imports: [
     CommonModule,
+    OrderRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
     MatOptionModule,
     MatSelectModule,
-    FormsModule,
-    HttpClientModule,
   ]
 })
 export class OrderModule { }

@@ -64,8 +64,8 @@ export class EditComponent implements OnInit {
       this.customerId = this.route.snapshot.params['id'];
       this.customerService.getById(this.customerId).subscribe((data: Customer) => {
           this.customer = data;
-        this.form = new FormGroup({
-          customerId: new FormControl(this.customer.customerId),
+          this.form = new FormGroup({
+            customerId: new FormControl(this.customer.customerId),
             fullName: new FormControl(this.customer.fullName, [Validators.required]),
             province: new FormControl(this.customer.province),
             district: new FormControl(this.customer.district),
@@ -104,6 +104,7 @@ export class EditComponent implements OnInit {
       }
     )
   }
+
   getAllDistrict(province: string){
     this.temp = province.split("&")[1];
     this.addressSelectService.getAllDistrict(this.temp).subscribe(data =>{

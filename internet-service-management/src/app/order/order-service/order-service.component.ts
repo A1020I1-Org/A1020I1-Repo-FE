@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Service} from "../../interface/Service";
-import {OrderService} from "../../interface/OrderService";
 import {ServiceService} from "../../services/service.service";
 import {Router} from "@angular/router";
-import {ageValidator, passwordConfirm} from "../../customer/customer.validator";
+import {OrderServiceService} from "../../services/order-service.service";
+import {OrderService} from "../../interface/OrderService";
+
 
 @Component({
   selector: 'app-order-service',
@@ -15,35 +16,47 @@ export class OrderServiceComponent implements OnInit {
 
   public orderServiceCreateForm!: FormGroup;
   public services!: Service[];
-  public orderServices!: OrderService[];
+  service: Service;
+  orderService: OrderService;
+
+
 
   constructor(public serviceService: ServiceService,
-              public orderService: OrderService,
-              public formBuilder:FormBuilder,
+              public orderServiceService: OrderServiceService,
               public router: Router) { }
 
   ngOnInit(): void {
+    this.getAllService();
     this.orderServiceCreateForm = new FormGroup({
-        id: new FormControl('', [Validators.required]),
-        quantity: new FormControl('', [Validators.required]),
+        id: new FormControl(''),
+        quantity: new FormControl('', [Validators.required, Validators.min(1)]),
         unit: new FormControl(''),
         totalMoney: new FormControl(''),
         orderDate: new FormControl(''),
-        status: new FormControl('', [Validators.required]),
-        service: new FormControl('', [Validators.required, Validators.pattern("^([0-9]{10}|[0-9]{12})$")]),
-        customer: new FormControl('', [Validators.required, ageValidator(16)]),
-
+        status: new FormControl(''),
+        service: new FormControl(''),
+        customerId: new FormControl(''),
       },
     );
-
-
-
   }
 
   getAllService(){
     this.serviceService.getAllServices().subscribe(data =>{
       this.services = data
     });
+  }
+
+  submit(){
+    if (this.orderServiceCreateForm.valid){
+      this.orderServiceService.create(this.orderServiceCreateForm.value).subscribe(res => {
+        this.router.navigate(['order/list-order'])
+      });
+      console.log(this.orderService)
+    }
+  }
+
+  refresh(): void {
+    window.location.reload();
   }
 
 }

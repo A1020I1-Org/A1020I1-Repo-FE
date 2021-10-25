@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import {CustomerModule} from "./customer/customer.module";
 import {HttpClientModule} from "@angular/common/http";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {OrderRoutingModule} from "./order/order-routing.module";
+import {OrderModule} from "./order/order.module";
 
 @NgModule({
   declarations: [
@@ -15,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     CustomerModule,
+    OrderModule,
     HttpClientModule,
     BrowserAnimationsModule
   ],
