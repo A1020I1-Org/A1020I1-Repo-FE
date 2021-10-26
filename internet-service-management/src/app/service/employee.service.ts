@@ -20,9 +20,12 @@ export class EmployeeService {
   httpOptions: any;
   constructor(public httpClient: HttpClient, private db: AngularFireDatabase, private storage: AngularFireStorage) {
     this.httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'}),
-      'Access-Control-Allow-Origin': 'http://localhost:4200',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // 'Authorization': `Bearer` + this.tokenStorage.getToken(),
+        'Access-Control-Allow-Origin': 'http://localhost:4200',
+        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH,OPTIONS'
+      }),
     };
   }
 
