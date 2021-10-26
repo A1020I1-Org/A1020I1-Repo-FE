@@ -25,7 +25,6 @@ export class EmployeeEditComponent implements OnInit {
   selectedFiles?: FileList;
   currentFileUpload?: FileUpload;
   positionList: any;
-  percentage = 0;
   msgCode = '';
   msgDateOfBirth = '';
   msgStartWorkDate = '';
@@ -62,7 +61,6 @@ export class EmployeeEditComponent implements OnInit {
     this.employeeEditForm = new FormGroup({
       employeeId: new FormControl('', [Validators.required, Validators.pattern('^NV-\\d{4}$')]),
       fullName: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(10), Validators.pattern('^[a-zA-Z\'-\'\\sáàảãạăâắằấầặẵẫậéèẻ ẽẹếềểễệóêòỏõọôốồổỗộ ơớờởỡợíìỉĩịđùúủũụưứ� �ửữựÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠ ƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼ� ��ỀỂỄỆỈỊỌỎỐỒỔỖỘỚỜỞ ỠỢỤỨỪỬỮỰỲỴÝỶỸửữựỵ ỷỹ]*$')]),
-      // positionId: new FormControl(),
       position: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email, Validators.maxLength(20)]),
       dateOfBirth: new FormControl('', [Validators.required, validAgeValidators(18, 35)]),
@@ -83,9 +81,9 @@ export class EmployeeEditComponent implements OnInit {
       validators: [validConfirmPassword("password", "confirmPassword")]
     });
     this.employeeService.getEmployeeById(this.id).subscribe(data => {
-      console.log(data);
+      // console.log(data);
       let addressArr = data.address.split(',');
-      this.getAllDistrict(addressArr[0]);
+      this.getAllDistrict(addressArr[2]);
       this.getAllWard(addressArr[1]);
       this.employeeEditForm.patchValue({
         employeeId: data.employeeId,
@@ -94,9 +92,9 @@ export class EmployeeEditComponent implements OnInit {
         dateOfBirth: data.dateOfBirth,
         email: data.email,
         address: {
-          province: addressArr[0],
+          ward: addressArr[0],
           district: addressArr[1],
-          ward: addressArr[2]
+          province: addressArr[2],
         },
         phone: data.phone,
         startWorkDate: data.startWorkDate,
@@ -104,10 +102,10 @@ export class EmployeeEditComponent implements OnInit {
         yearOfExp: data.yearOfExp,
         userName: data.userName,
         password: data.password,
-        avtUrl: data.avtUrl
+        avtUrl: data.avtUrl,
       });
       this.avtUrl = data.avtUrl;
-      console.log(this.employeeEditForm)
+      // console.log(this.employeeEditForm)
 
     });
 
@@ -123,17 +121,17 @@ export class EmployeeEditComponent implements OnInit {
         this.address = formValue.address.province;
       }
       if (formValue.address.ward == " " && formValue.address.district != " " && formValue.address.province != " ") {
-        this.address = formValue.address.district + ', ' + formValue.address.province;
+        this.address = formValue.address.district + ',' + formValue.address.province;
       } else {
-        this.address = formValue.address.ward + ', ' + formValue.address.district + ', ' + formValue.address.province;
+        this.address = formValue.address.ward + ',' + formValue.address.district + ',' + formValue.address.province;
       }
     }
     this.employee = new Employee(formValue.employeeId, formValue.fullName, formValue.dateOfBirth, formValue.email, this.address,
-      formValue.phone, formValue.level, formValue.startWorkDate, formValue.yearOfExp, formValue.avtUrl,
+      formValue.phone, formValue.level, formValue.startWorkDate, formValue.yearOfExp, this.avtUrl,
       formValue.position, formValue.userName, formValue.password);
-    console.log(this.employee);
+    // console.log(this.employee);
     this.employeeService.editEmployee(this.employeeEditForm.value.employeeId, this.employee).subscribe(data => {
-        // this.router.navigateByUrl('employee-list');
+        this.router.navigateByUrl('listEmployee');
 
       }, error => {
         console.log(error)
@@ -153,7 +151,6 @@ export class EmployeeEditComponent implements OnInit {
   }
 
   getAllDistrict(province: string) {
-    console.log(province);
     this.temp = province.split("&")[1];
     this.addressService.getAllDistrict(this.temp).subscribe(data => {
         this.districts = data.results;
@@ -166,7 +163,6 @@ export class EmployeeEditComponent implements OnInit {
   }
 
   getAllWard(district: string) {
-    console.log(district);
     this.temp = district.split("&")[1];
     this.addressService.getAllWard(this.temp).subscribe(data => {
         this.wards = data.results;
@@ -184,16 +180,23 @@ export class EmployeeEditComponent implements OnInit {
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       this.selectedFiles = undefined;
-
       if (file) {
         this.currentFileUpload = new FileUpload(file);
+        let temp = new FileUpload(file);
+
         this.employeeService.pushFileToStorage(this.currentFileUpload).subscribe(
           url => {
             this.avtUrl = url;
-            console.log(url)
           },
           error => {
-            console.log(error);
+            this.employeeService.pushFileToStorage(temp).subscribe(
+              url => {
+                this.avtUrl = url;
+              },
+              error => {
+                console.log('error');
+              }
+            );
           }
         );
       }

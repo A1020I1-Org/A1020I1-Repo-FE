@@ -7,6 +7,7 @@ import {AddressService} from "../../service/address.service";
 import {IProvince} from "../../interface/IProvince";
 import {IDistrict} from "../../interface/IDistrict";
 import {IWard} from "../../interface/IWard";
+import {IEmployeeCreate} from "../../interface/IEmployeeCreate";
 
 
 @Component({
@@ -15,6 +16,7 @@ import {IWard} from "../../interface/IWard";
   styleUrls: ['./employee-detail.component.css']
 })
 export class EmployeeDetailComponent implements OnInit {
+
 
   positionList: any;
   provinces: IProvince[] = [];
@@ -59,7 +61,7 @@ export class EmployeeDetailComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((paramMap) =>{
       this.employeeService.getEmployeeById(this.id).subscribe((data =>{
         let addressArr = data.address.split(',');
-        this.getAllDistrict(addressArr[0]);
+        this.getAllDistrict(addressArr[2]);
         this.getAllWard(addressArr[1]);
         this.viewEmployeeForm.patchValue({
           employeeId: data.employeeId,
@@ -68,9 +70,9 @@ export class EmployeeDetailComponent implements OnInit {
           dateOfBirth: data.dateOfBirth,
           email: data.email,
           address: {
-            province: addressArr[0],
+            ward: addressArr[0],
             district: addressArr[1],
-            ward: addressArr[2]
+            province: addressArr[2],
           },
           phone: data.phone,
           startWorkDate: data.startWorkDate,
@@ -94,7 +96,6 @@ export class EmployeeDetailComponent implements OnInit {
     )
   }
   getAllDistrict(province: string){
-    console.log(province)
     this.temp = province.split("&")[1];
     this.addressService.getAllDistrict(this.temp).subscribe(data =>{
         this.districts = data.results;
@@ -107,7 +108,6 @@ export class EmployeeDetailComponent implements OnInit {
   }
 
   getAllWard(district: string){
-    console.log(district)
     this.temp = district.split("&")[1];
     this.addressService.getAllWard(this.temp).subscribe(data =>{
         this.wards = data.results;
@@ -116,17 +116,11 @@ export class EmployeeDetailComponent implements OnInit {
         console.log("can not district");
       })
   }
-
-
-
-  compareFn(val1: any, val2: any): boolean {
-    return val1 && val2 ? val1.positionId === val2.positionId : val1 === val2;
-  }
-
   private getPositionList() {
     this.positionService.getPositionList().subscribe(data =>{
       this.positionList = data;
     })
   }
+
 
 }

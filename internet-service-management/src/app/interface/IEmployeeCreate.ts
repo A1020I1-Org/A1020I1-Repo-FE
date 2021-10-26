@@ -10,8 +10,6 @@ export interface IEmployeeCreate {
   startWorkDate: string,
   yearOfExp: number,
   avtUrl: string,
-  // positionId: number;
-  // positionName: string;
   userName: string,
   positionId: number;
   password: string,

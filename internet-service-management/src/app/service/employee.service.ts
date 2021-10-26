@@ -39,7 +39,6 @@ export class EmployeeService {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload);
-          return downloadURL;
         });
       })
     ).subscribe();

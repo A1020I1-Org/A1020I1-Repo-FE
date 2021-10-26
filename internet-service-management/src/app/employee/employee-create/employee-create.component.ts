@@ -116,18 +116,23 @@ export class EmployeeCreateComponent implements OnInit {
     if (this.selectedFiles) {
       const file: File | null = this.selectedFiles.item(0);
       this.selectedFiles = undefined;
-
       if (file) {
         this.currentFileUpload = new FileUpload(file);
+        let temp = new FileUpload(file);
+
         this.employeeService.pushFileToStorage(this.currentFileUpload).subscribe(
           url => {
-            // this.employeeForm.value.avtUrl = url;
             this.avtUrl = url;
-            // this.isImage = true;
-            console.log(url)
           },
           error => {
-            console.log(error);
+            this.employeeService.pushFileToStorage(temp).subscribe(
+              url => {
+                this.avtUrl = url;
+              },
+              error => {
+                console.log('error');
+              }
+            );
           }
         );
       }
@@ -135,6 +140,19 @@ export class EmployeeCreateComponent implements OnInit {
   }
 
   createEmployee() {
+    const formValue = this.employeeForm.value;
+    if (formValue.address.ward == " " && formValue.address.district == " " && formValue.address.province == " ") {
+      this.address = "";
+    } else {
+      if (formValue.address.ward == " " && formValue.address.district == " " && formValue.address.province != " ") {
+        this.address = formValue.address.province;
+      }
+      if (formValue.address.ward == " " && formValue.address.district != " " && formValue.address.province != " ") {
+        this.address = formValue.address.district + ', ' + formValue.address.province;
+      } else {
+        this.address = formValue.address.province + ', ' + formValue.address.district + ', ' + formValue.address.ward;
+      }
+    }
     this.employeeForm.value.url = this.avtUrl;
     console.log(this.avtUrl);
     this.employeeService.createEmployee({
@@ -143,8 +161,8 @@ export class EmployeeCreateComponent implements OnInit {
           positionId: this.employeeForm.controls.position.value,
           dateOfBirth: this.employeeForm.controls.dateOfBirth.value ,
           email: this.employeeForm.controls.email.value,
-          address: this.employeeForm.controls.address.value.province + ',' + this.employeeForm.controls.address.value.district + ','
-          + this.employeeForm.controls.address.value.ward + '',
+          address: this.employeeForm.controls.address.value.ward + ',' + this.employeeForm.controls.address.value.district + ','
+          + this.employeeForm.controls.address.value.province + '',
           phone: this.employeeForm.controls.phone.value,
           startWorkDate: this.employeeForm.controls.startWorkDate.value,
           level: this.employeeForm.controls.level.value ,
