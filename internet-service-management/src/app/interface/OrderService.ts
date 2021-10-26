@@ -11,5 +11,5 @@ export interface OrderService {
   status: boolean;
   service: Service;
   customer: number;
-  payId: number;
+  pay: number;
 }

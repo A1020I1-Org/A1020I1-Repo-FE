@@ -156,8 +156,9 @@
             <label for="password"><strong>Mật khẩu</strong></label><span class="text-danger"> *</span>
 
             <mat-form-field >
-              <input matInput type="password" id="password" formControlName="password" minlength="3" maxlength="50" autofocus #editPass>
+              <input matInput type="password" id="password" [type]="hide ? 'password' : 'text'" formControlName="password" minlength="3" maxlength="50" autofocus #editPass>
               <mat-hint align="end">{{editPass.value.length}} / 128</mat-hint>
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </mat-form-field>
 
             <div class="alert alert-danger col-12 mt-2" *ngIf=" form.get('password').touched && form.get('password').hasError('required')">Password không được để trống.
@@ -168,8 +169,9 @@
             <label for="passwordRetype"><strong>Nhập lại mật khẩu</strong></label><span class="text-danger"> *</span>
 
             <mat-form-field >
-              <input matInput type="password" id="passwordRetype" formControlName="passwordRetype" minlength="3" maxlength="50" autofocus #editPassRe>
+              <input matInput type="password" id="passwordRetype" [type]="hide ? 'password' : 'text'" formControlName="passwordRetype" minlength="3" maxlength="50" autofocus #editPassRe>
               <mat-hint align="end">{{editPassRe.value.length}} / 128</mat-hint>
+              <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </mat-form-field>
 
 <!--            <input type="password" class="form-control" id="passwordRetype" formControlName="passwordRetype" >-->

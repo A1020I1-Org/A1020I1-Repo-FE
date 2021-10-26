@@ -31,6 +31,7 @@ export class DetailComponent implements OnInit {
   selectedDistrictId: string;
   selectedCommuneId: string;
   temp: string = "";
+  hide = true;
 
 
   constructor(public customerService: CustomerService,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Service} from "../../interface/Service";
 import {OrderService} from "../../interface/OrderService";
@@ -11,26 +11,29 @@ import {Router} from "@angular/router";
   templateUrl: './order-service-detail.component.html',
   styleUrls: ['./order-service-detail.component.css']
 })
-export class OrderServiceDetailComponent implements OnInit {
+export class OrderServiceDetailComponent implements OnInit, OnChanges{
 
-  orderServiceCreateForm!: FormGroup;
-  services!: Service[];
   service: Service;
+  @Input()
   orderServices: OrderService[];
-  orderService: OrderService;
 
   constructor(public serviceService: ServiceService,
               public orderServiceService: OrderServiceService,
               public router: Router) { }
 
   ngOnInit(): void {
-    this.orderServiceService.getAll().subscribe(data => {
-        this.orderServices = data;
-        console.log(this.orderServices);
-      },
-      error => {
-        console.log("CÓ lỗi xảy ra!")
-      });
+    // this.orderServiceService.getAll().subscribe(data => {
+    //     this.orderServices = data;
+    //     console.log(this.orderServices);
+    //   },
+    //   error => {
+    //     console.log("CÓ lỗi xảy ra!")
+    //   });
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+
   }
 
 }
