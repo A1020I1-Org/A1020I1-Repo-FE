@@ -13,9 +13,9 @@
     <li>
       <a href="#">
         <i class="bx bx-grid-alt fas fa-desktop"></i>
-        <span class="links_name">Danh Sách Máy Tính</span>
+        <span class="links_name" [routerLink]="['/listComputer']">Danh Sách Máy Tính</span>
       </a>
-      <span class="tooltip">Danh Sách Máy Tính</span>
+      <span class="tooltip" [routerLink]="['/listComputer']">Danh Sách Máy Tính</span>
     </li>
     <li>
       <a href="#">
@@ -48,9 +48,9 @@
     <li>
       <a href="#">
         <i class="bx bx-heart fab fa-paypal"></i>
-        <span class="links_name">Thanh Toán</span>
+        <span class="links_name" [routerLink]="['/list-payment']">Thanh Toán</span>
       </a>
-      <span class="tooltip">Thanh Toán</span>
+      <span class="tooltip" [routerLink]="['/list-payment']">Thanh Toán</span>
     </li>
     <li>
       <a href="#">
@@ -64,10 +64,10 @@
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
              alt="profileImg">
         <div class="name_job">
-          <div class="name">Trung Thông</div>
+          <div class="name">{{employeeLogined.fullName}}</div>
         </div>
       </div>
-      <a href=""><i class="bx bx-log-out fa fa-sign-out-alt" id="log_out"></i></a>
+      <a href=""><i class="bx bx-log-out fa fa-sign-out-alt" id="log_out" (click)="signOut()"></i></a>
     </li>
   </ul>
 </div>
