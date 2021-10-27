@@ -62,6 +62,8 @@ export class PaymentPayComponent implements OnInit {
       });
       // this.paymentService.getPaymentCustomerById(this.payment.id);
       this.dialogRef.close();
+      let message = "successfully"
+      this.document.location.href = "http://localhost:4200/payment-customer?message=" + message
       // this.paymentService.getListPayment();
     })
   }
