@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {ComputerService} from "../../service/computer.service";
-import {ManufacturerService} from "../../service/manufacturer.service";
-import {StatusService} from "../../service/status.service";
-import {TypeService} from "../../service/type.service";
+import {Component, Inject, OnInit} from '@angular/core';
+import {ComputerService} from "../../services/computer.service";
+import {ManufacturerService} from "../../services/manufacturer.service";
+import {StatusService} from "../../services/status.service";
+import {TypeService} from "../../services/type.service";
 import {Router} from "@angular/router";
 import {IManufacturer} from "../../interface/IManufacturer";
 import {IStatus} from "../../interface/IStatus";
 import {IType} from "../../interface/IType";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+
 
 @Component({
   selector: 'app-computer-create',
@@ -20,35 +21,81 @@ export class ComputerCreateComponent implements OnInit {
               private _statusService: StatusService, private _typeService: TypeService, private router: Router) {
   }
 
-  listManufacturer!: IManufacturer[];
-  listStatus!: IStatus[];
-  listType!: IType[];
+  public listManufacturer!: IManufacturer[];
+  public listStatus!: IStatus[];
+  public listType!: IType[];
 
   createForm = new FormGroup({
-      computerId: new FormControl('', [Validators.required, Validators.pattern("")])
+      computerId: new FormControl('', [Validators.required, Validators.pattern("^CP-[\\d]{4}$")]),
+      computerLocation: new FormControl('', [Validators.required, Validators.pattern('^[A-Z]{1}[\\d]{4}$')]),
+      computerStartUsedDate: new FormControl('', [Validators.required, Validators.pattern('')]),
+      computerWarrantyPeriod: new FormControl('', [Validators.required]),
+      computerConfiguration: new FormControl('', [Validators.required]),
+      computerIpLocal: new FormControl('', [Validators.required]),
+      manufacturer: new FormControl('', [Validators.required]),
+      status: new FormControl('', [Validators.required]),
+      type: new FormControl('', [Validators.required]),
     }
   );
 
+
+  getID() {
+    return this.createForm.get("computerId");
+  }
+
+  getComputerLocation() {
+    return this.createForm.get("computerLocation");
+  }
+
+  getComputerIpLocal() {
+    return this.createForm.get("computerIpLocal");
+  }
+
+  getComputerStartUsedDate() {
+    return this.createForm.get("computerStartUsedDate");
+  }
+
+  getComputerWarrantyPeriod() {
+    return this.createForm.get("computerWarrantyPeriod");
+  }
+
+  getComputerConfiguration() {
+    return this.createForm.get("computerConfiguration");
+  }
+
+  getManufacturer() {
+    return this.createForm.get("manufacturer");
+  }
+
+  getStatus() {
+    return this.createForm.get("status");
+  }
+
+  getType() {
+    return this.createForm.get("type");
+  }
+
   createComputer() {
     this._computerService.create(this.createForm.value).subscribe();
-    this.router.navigateByUrl('computer-list');
+    this.router.navigateByUrl('');
   }
 
   ngOnInit(): void {
 
     this._manufacturerService.getAllManufacturer().subscribe(data => {
-      // @ts-ignore
       this.listManufacturer = data;
+      console.log(data)
     });
 
     this._statusService.getAllStatus().subscribe(data => {
-      // @ts-ignore
       this.listStatus = data;
+      console.log(data)
+
     });
 
     this._typeService.getAllType().subscribe(data => {
-      // @ts-ignore
       this.listType = data;
+      console.log(data)
     });
   }
 

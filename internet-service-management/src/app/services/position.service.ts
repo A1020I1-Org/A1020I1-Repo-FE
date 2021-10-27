@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpEvent} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {IPosition} from "../interface/IPosition";
 
@@ -7,12 +7,15 @@ import {IPosition} from "../interface/IPosition";
   providedIn: 'root'
 })
 export class PositionService {
-  private baseURL = 'http://localhost:8080/employee/listPosition';
-  constructor(
-    private http: HttpClient
-  ) {
+  private API_POSITION = 'http://localhost:8080/position/listPosition';
+
+  constructor(private httpClient: HttpClient) {
+
   }
-  findAll(): Observable<IPosition[]>{
-    return this.http.get<IPosition[]>(this.baseURL);
+
+  getPositionList(): Observable<IPosition[]> {
+    return this.httpClient.get<IPosition[]>(this.API_POSITION);
   }
+
+
 }

@@ -1,7 +1,7 @@
-import {IEmployee} from "./IEmployee";
+import {IEmployeeCreate} from "./IEmployeeCreate";
 
 export interface IPosition {
   positionId: number;
   positionName: string;
-  employeeList: IEmployee[];
+  employeeList?: IEmployeeCreate[];
 }

@@ -1,13 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ComputerRoutingModule} from "./computer/computer-routing.module";
-import {NgxPaginationModule} from "ngx-pagination";
+import {ChatAdminComponent} from "./chat/chat-admin/chat-admin.component";
+import {ChatUserComponent} from "./chat/chat-user/chat-user.component";
 
-
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: "admin", component: ChatAdminComponent
+  },
+  {
+    path: "user", component: ChatUserComponent
+  }
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), ComputerRoutingModule, NgxPaginationModule ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

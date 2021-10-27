@@ -1,43 +1,37 @@
-
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {CustomerModule} from "./customer/customer.module";
-import { HttpClientModule} from "@angular/common/http";
-import {EmployeeModule} from "./employee/employee.module";
-import {StatisticalModule} from "./statistical/statistical.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ToastrModule} from "ngx-toastr";
-import { CreateEmployeeComponent } from './employee/create-employee/create-employee.component';
-import {RouterModule} from "@angular/router";
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {AngularFireModule} from "@angular/fire/compat";
+import {AngularFireDatabaseModule} from "@angular/fire/compat/database";
+import {environment} from "./environments/environment";
+import {ChatModule} from "./chat/chat.module";
 import {ComputerModule} from "./computer/computer.module";
+import {ReactiveFormsModule} from "@angular/forms";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {EmployeeModule} from "./employee/employee.module";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateEmployeeComponent,
-
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StatisticalModule,
-    HttpClientModule,
     ReactiveFormsModule,
-    FormsModule,
-    ToastrModule.forRoot(),
-    RouterModule,
+    FontAwesomeModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    ChatModule,
     ComputerModule,
+    BrowserAnimationsModule,
+    EmployeeModule
   ],
-
   providers: [],
-  exports: [
-
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
