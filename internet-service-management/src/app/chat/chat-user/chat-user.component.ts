@@ -5,6 +5,8 @@ import {ChatModel} from "../../model/Chat.model";
 import {FormControl, FormGroup} from "@angular/forms";
 import {ChatService} from "../../services/chat.service";
 import {map} from "rxjs/operators";
+import {Router} from "@angular/router";
+import {TokenStorageService} from "../../security/service/token-storage.service";
 
 @Component({
   selector: 'app-chat-user',
@@ -20,7 +22,7 @@ export class ChatUserComponent implements OnInit {
   faSmileBean = faSmileBeam;
 
   chat: ChatModel = {};
-  roomName: string = "room1";
+  roomName: string;
   chats?: ChatModel[] = [];
   chatForm!: FormGroup;
   displayChat: string = "display:none;"
@@ -41,10 +43,11 @@ export class ChatUserComponent implements OnInit {
 
 
 
-  constructor(private chatService: ChatService) {
+  constructor(private chatService: ChatService, private tokenStorageService: TokenStorageService) {
   }
 
   ngOnInit(): void {
+    this.roomName = this.tokenStorageService.getUser().account.userName;
     this.chatForm = new FormGroup({
       message: new FormControl('')
     });

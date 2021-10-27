@@ -7,6 +7,8 @@ import {IComputer} from "../interface/IComputer";
   providedIn: 'root'
 })
 export class ComputerService {
+  httpOptions: any;
+
   public API: string = 'http://localhost:8080/computer';
 
   constructor(private http: HttpClient) {
