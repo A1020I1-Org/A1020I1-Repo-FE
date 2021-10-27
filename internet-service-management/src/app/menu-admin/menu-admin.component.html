@@ -1,0 +1,73 @@
+<div class="sidebar">
+  <div class="logo-details">
+    <i class='bx bxl-c-plus-plus icon'></i>
+    <div class="logo_name">Cyber Game</div>
+    <i class="bx bx-menu fas fa-bars" id="btn"></i>
+  </div>
+  <ul class="nav-list">
+    <li>
+      <i class="bx bx-search fas fa-search"></i>
+      <input type="text" placeholder="Search...">
+      <span class="tooltip">Tìm kiếm</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-grid-alt fas fa-desktop"></i>
+        <span class="links_name">Danh Sách Máy Tính</span>
+      </a>
+      <span class="tooltip">Danh Sách Máy Tính</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-user far fa-user"></i>
+        <span class="links_name">Danh Sách Khách Hàng</span>
+      </a>
+      <span class="tooltip">Danh Sách Khách Hàng</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-chat far fa-user-circle"></i>
+        <span class="links_name" [routerLink]="['/listEmployee']">Danh Sách Nhân Viên</span>
+      </a>
+      <span class="tooltip" [routerLink]="['/listEmployee']">Danh Sách Nhân Viên</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-cart-alt fas fa-cart-plus"></i>
+        <span class="links_name" [routerLink]="['/service-list']">Danh Sách Dịch Vụ</span>
+      </a>
+      <span class="tooltip" [routerLink]="['/service-list']">Danh Sách Dịch Vụ</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-cart-alt far fa-comment-alt"></i>
+        <span class="links_name">Nhắn Tin</span>
+      </a>
+      <span class="tooltip">Nhắn Tin</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-heart fab fa-paypal"></i>
+        <span class="links_name">Thanh Toán</span>
+      </a>
+      <span class="tooltip">Thanh Toán</span>
+    </li>
+    <li>
+      <a href="#">
+        <i class="bx bx-cog fas fa-poll"></i>
+        <span class="links_name">Thống Kê</span>
+      </a>
+      <span class="tooltip">Thống Kê</span>
+    </li>
+    <li class="profile">
+      <div class="profile-details">
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+             alt="profileImg">
+        <div class="name_job">
+          <div class="name">Trung Thông</div>
+        </div>
+      </div>
+      <a href=""><i class="bx bx-log-out fa fa-sign-out-alt" id="log_out"></i></a>
+    </li>
+  </ul>
+</div>
